@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Padel Plaza | Nouveau Terrain</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #F8FAFC; }
+    </style>
+</head>
+<body class="flex min-h-screen">
+
+    @include('components.admin-sidebar')
+
+    <main class="flex-1 ml-64 p-10">
+        <div class="mb-10">
+            <nav class="flex text-slate-400 text-[10px] font-black uppercase tracking-widest mb-4 gap-2">
+                <a href="/admin/courts" class="hover:text-emerald-500 transition-colors">Terrains</a>
+                <span>/</span>
+                <span class="text-slate-900">Ajouter un nouveau court</span>
+            </nav>
+            <h2 class="text-3xl font-black text-slate-900 tracking-tight italic uppercase">Nouveau Terrain</h2>
+        </div>
+
+        <div class="max-w-4xl bg-white rounded-[2.5rem] border border-slate-100 shadow-sm overflow-hidden">
+            <form action="{{ route('admin.courts.store') }}" method="POST" enctype="multipart/form-data">
+                @csrf
+
+                <div class="grid grid-cols-1 md:grid-cols-3">
+                    
+                    <div class="p-10 border-r border-slate-50 bg-slate-50/30 flex flex-col items-center">
+                        <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-6 self-start">Photo du Court</label>
+                        
+                        <div class="relative group cursor-pointer w-full">
+                            <div class="w-full aspect-square rounded-[2rem] bg-white overflow-hidden relative border-4 border-dashed border-slate-200 flex flex-col items-center justify-center transition-all group-hover:border-emerald-500">
+                                <img id="preview" src="" class="hidden w-full h-full object-cover">
+                                
+                                <div id="placeholder" class="text-center">
+                                    <i class="fas fa-cloud-upload-alt text-4xl text-slate-200 mb-2 group-hover:text-emerald-500 transition-colors"></i>
+                                    <p class="text-[10px] font-black text-slate-300 uppercase tracking-widest group-hover:text-emerald-500">Choisir une image</p>
+                                </div>
+                            </div>
+                            <input type="file" name="image" class="absolute inset-0 opacity-0 cursor-pointer" onchange="previewImage(event)">
+                        </div>
+                    </div>
+
+                    <div class="md:col-span-2 p-10 space-y-8">
+                        
+                        <div class="group">
+                            <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 ml-1">Nom du Court</label>
+                            <input type="text" name="name" placeholder="Ex: Court Central Rabat" 
+                                class="w-full px-6 py-4 bg-slate-50 border-2 border-transparent rounded-2xl text-slate-900 font-bold focus:bg-white focus:border-emerald-500 transition-all outline-none shadow-sm italic">
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-6">
+                            <div class="group">
+                                <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 ml-1">Type d'installation</label>
+                                <select name="type" class="w-full px-6 py-4 bg-slate-50 border-2 border-transparent rounded-2xl text-slate-900 font-bold focus:bg-white focus:border-emerald-500 transition-all outline-none shadow-sm italic appearance-none cursor-pointer">
+                                    <option value="indoor">Indoor (Couvert)</option>
+                                    <option value="outdoor">Outdoor (Plein air)</option>
+                                </select>
+                            </div>
+
+                            <div class="group">
+                                <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 ml-1">Tarif Horaire</label>
+                                <div class="relative">
+                                    <input type="number" name="price_coins" placeholder="250" 
+                                        class="w-full pl-6 pr-14 py-4 bg-slate-50 border-2 border-transparent rounded-2xl text-emerald-600 font-black focus:bg-white focus:border-emerald-500 transition-all outline-none shadow-sm italic text-xl tracking-tighter">
+                                    <span class="absolute right-6 top-1/2 -translate-y-1/2 text-slate-300 font-black italic text-xs uppercase">PC</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-emerald-50/50 p-5 rounded-2xl border border-emerald-100 flex items-center justify-between">
+                            <div>
+                                <h4 class="text-sm font-black text-emerald-900 italic uppercase">Activer immédiatement</h4>
+                                <p class="text-[10px] font-bold text-emerald-600">Le terrain sera visible pour les réservations dès l'enregistrement.</p>
+                            </div>
+                            <label class="relative inline-flex items-center cursor-pointer">
+                                <input type="checkbox" name="is_active" value="1" class="sr-only peer" checked>
+                                <div class="w-11 h-6 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-emerald-500"></div>
+                            </label>
+                        </div>
+
+                        <div class="pt-6 flex gap-4">
+                            <button type="submit" class="flex-1 bg-slate-900 hover:bg-emerald-500 text-white font-black py-4 rounded-2xl transition-all shadow-xl shadow-slate-200 uppercase italic tracking-widest text-sm flex items-center justify-center gap-3">
+                                <i class="fas fa-plus-circle"></i> Créer le terrain
+                            </button>
+                            <a href="/admin/courts" class="px-8 py-4 text-slate-400 font-black rounded-2xl hover:text-slate-900 transition-all uppercase text-[10px] flex items-center justify-center italic">
+                                Retour
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <script>
+        function previewImage(event) {
+            const reader = new FileReader();
+            reader.onload = function() {
+                const output = document.getElementById('preview');
+                const placeholder = document.getElementById('placeholder');
+                output.src = reader.result;
+                output.classList.remove('hidden');
+                placeholder.classList.add('hidden');
+            }
+            reader.readAsDataURL(event.target.files[0]);
+        }
+    </script>
+
+</body>
+</html>
