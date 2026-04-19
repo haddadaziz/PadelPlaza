@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Padel Plaza | Paramètres</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #F8FAFC; }
+        .locked-input { background-color: #F1F5F9; cursor: not-allowed; border-color: transparent !important; }
+    </style>
+</head>
+<body class="flex min-h-screen">
+
+    @if(Auth::user()->role === 'admin')
+        @include('components.admin-sidebar')
+    @else
+        @include('components.player-sidebar')
+    @endif
+
+    <main class="flex-1 ml-64 p-10">
+        <div class="mb-10">
+            <h2 class="text-3xl font-black text-slate-900 tracking-tighter italic uppercase">Configuration Compte</h2>
+            <p class="text-slate-400 font-bold italic text-sm">Gérez vos accès et votre sécurité Plaza.</p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
+            
+            <div class="bg-slate-900 rounded-[3rem] p-10 text-center flex flex-col items-center justify-center shadow-2xl shadow-slate-200 relative overflow-hidden h-fit">
+                <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-10"></div>
+                
+                <div class="w-24 h-24 rounded-[2rem] bg-emerald-500 flex items-center justify-center text-white text-3xl font-black shadow-2xl shadow-emerald-500/20 mb-6 border-4 border-slate-800 relative z-10">
+                    {{ strtoupper(substr(Auth::user()->name, 0, 2)) }}
+                </div>
+                
+                <h3 class="text-xl font-black text-white italic uppercase tracking-tighter z-10">{{ Auth::user()->name }}</h3>
+                <p class="text-emerald-400 text-[10px] font-black uppercase tracking-[0.3em] mt-2 z-10 italic">{{ Auth::user()->role }}</p>
+                
+                <div class="mt-8 pt-8 border-t border-white/5 w-full grid grid-cols-2 gap-4 z-10">
+                    <div class="text-left">
+                        <p class="text-slate-500 text-[9px] font-black uppercase italic">Solde</p>
+                        <p class="text-white font-black text-lg italic tracking-tighter">{{ Auth::user()->coins ?? 0 }} <span class="text-emerald-500 text-[10px]">PC</span></p>
+                    </div>
+                    <div class="text-right">
+                        <p class="text-slate-500 text-[9px] font-black uppercase italic">Membre depuis</p>
+                        <p class="text-white font-bold text-sm italic">{{ Auth::user()->created_at->format('M Y') }}</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="lg:col-span-2 space-y-8">
+                
+                <div class="bg-white rounded-[2.5rem] border border-slate-100 p-10 shadow-sm group">
+                    <div class="flex justify-between items-center mb-8">
+                        <div class="flex items-center gap-4">
+                            <div class="w-10 h-10 bg-slate-50 rounded-xl flex items-center justify-center text-slate-400 group-hover:text-emerald-500 transition-colors">
+                                <i class="fas fa-id-card"></i>
+                            </div>
+                            <h4 class="text-sm font-black text-slate-900 uppercase italic tracking-widest">Informations fixes</h4>
+                        </div>
+                        @if(Auth::user()->role !== 'admin')
+                            <span class="text-[8px] font-black text-slate-400 bg-slate-100 px-3 py-1 rounded-full uppercase">Lecture seule</span>
+                        @endif
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="group">
+                            <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Nom Complet</label>
+                            <input type="text" value="{{ Auth::user()->name }}" {{ Auth::user()->role !== 'admin' ? 'readonly' : '' }} class="w-full mt-2 px-6 py-4 rounded-2xl font-bold italic outline-none transition-all {{ Auth::user()->role !== 'admin' ? 'locked-input text-slate-400' : 'bg-slate-50 focus:bg-white border-2 border-transparent focus:border-emerald-500' }}">
+                        </div>
+                        <div class="group">
+                            <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Email</label>
+                            <input type="email" value="{{ Auth::user()->email }}" {{ Auth::user()->role !== 'admin' ? 'readonly' : '' }} class="w-full mt-2 px-6 py-4 rounded-2xl font-bold italic outline-none transition-all {{ Auth::user()->role !== 'admin' ? 'locked-input text-slate-400' : 'bg-slate-50 focus:bg-white border-2 border-transparent focus:border-emerald-500' }}">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-[2.5rem] border border-slate-100 p-10 shadow-xl shadow-emerald-900/5 group">
+                    <div class="flex items-center gap-4 mb-8">
+                        <div class="w-10 h-10 bg-red-50 rounded-xl flex items-center justify-center text-red-500 group-hover:bg-red-500 group-hover:text-white transition-all">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <h4 class="text-sm font-black text-slate-900 uppercase italic tracking-widest">Changer le mot de passe</h4>
+                    </div>
+
+                    <form action="{{ route('profile.password') }}" method="POST" class="space-y-6">
+                        @csrf
+                        @method('PUT')
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="group">
+                                <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Nouveau mot de passe</label>
+                                <input type="password" name="password" placeholder="••••••••" class="w-full mt-2 px-6 py-4 bg-slate-50 border-2 border-transparent rounded-2xl text-slate-900 font-bold focus:bg-white focus:border-emerald-500 transition-all outline-none">
+                            </div>
+                            <div class="group">
+                                <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Confirmer nouveau</label>
+                                <input type="password" name="password_confirmation" placeholder="••••••••" class="w-full mt-2 px-6 py-4 bg-slate-50 border-2 border-transparent rounded-2xl text-slate-900 font-bold focus:bg-white focus:border-emerald-500 transition-all outline-none">
+                            </div>
+                        </div>
+                        <button type="submit" class="bg-slate-900 hover:bg-emerald-500 text-white px-10 py-4 rounded-2xl font-black text-[11px] uppercase italic tracking-[0.2em] transition-all shadow-xl shadow-slate-200 active:scale-95">
+                            Mettre à jour
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+</body>
+</html>

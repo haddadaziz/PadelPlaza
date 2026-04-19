@@ -23,9 +23,9 @@
                 <h2 class="text-3xl font-black text-slate-900 tracking-tight">Planning des Réservations</h2>
                 <p class="text-slate-400 font-medium italic">Gérez les créneaux et les présences des joueurs.</p>
             </div>
-            <button class="bg-slate-900 hover:bg-emerald-600 text-white px-6 py-3 rounded-2xl font-bold shadow-xl shadow-slate-200 transition-all active:scale-95 flex items-center gap-2 uppercase text-sm tracking-tighter italic">
+            <a href="{{ route('admin.reservations.create') }}" class="bg-slate-900 hover:bg-emerald-600 text-white px-6 py-3 rounded-2xl font-bold shadow-xl shadow-slate-200 transition-all active:scale-95 flex items-center gap-2 uppercase text-sm tracking-tighter italic">
                 <i class="fas fa-plus-circle"></i> Ajouter manuellement
-            </button>
+            </a>
         </div>
 
         <div class="bg-white p-5 rounded-[2rem] border border-slate-100 shadow-sm mb-8 flex flex-wrap items-center gap-6">

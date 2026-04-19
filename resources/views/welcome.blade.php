@@ -214,7 +214,7 @@
             @foreach($courts as $court)
             <div class="group bg-white rounded-[3rem] border border-slate-100 shadow-sm overflow-hidden hover:shadow-2xl hover:shadow-emerald-900/10 transition-all duration-500 hover:-translate-y-2">
                 <div class="relative h-72 overflow-hidden bg-slate-100">
-                    <img src="https://images.unsplash.com/photo-1626224580175-340ad0e3a761?q=80&w=800" alt="Terrain Padel" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+<img src="{{ $court->image ? asset('storage/' . $court->image) : 'https://images.unsplash.com/photo-1626224580175-340ad0e3a761?q=80&w=800' }}" alt="{{ $court->name }}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
                     <div class="absolute top-6 right-6">
                         <span class="bg-white/90 backdrop-blur-md px-4 py-2 rounded-2xl text-[10px] font-black uppercase tracking-widest text-slate-900 shadow-xl">
                             {{ $court->type ?? 'Outdoor' }}
