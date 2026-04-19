@@ -79,9 +79,10 @@
                         </td>
                         <td class="px-8 py-6 text-right">
                             <div class="flex justify-end gap-2">
-                                <button title="Créditer Coins" class="w-9 h-9 flex items-center justify-center bg-emerald-50 text-emerald-600 rounded-xl hover:bg-emerald-500 hover:text-white transition-all">
-                                    <i class="fas fa-plus-circle"></i>
-                                </button>
+<a href="{{ route('admin.players.recharge', ['id' => $player->id]) }}" title="Créditer Coins" class="w-9 h-9 flex items-center justify-center bg-emerald-50 text-emerald-600 rounded-xl hover:bg-emerald-500 hover:text-white transition-all">
+       <i class="fas fa-plus-circle"></i>
+</a>
+
                                 <button title="Editer Profil" class="w-9 h-9 flex items-center justify-center bg-slate-50 text-slate-400 rounded-xl hover:bg-slate-900 hover:text-white transition-all">
                                     <i class="fas fa-user-edit"></i>
                                 </button>

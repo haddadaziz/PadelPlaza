@@ -11,6 +11,9 @@
         body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #F8FAFC; }
         .coin-card { background: linear-gradient(135deg, #064e3b 0%, #10b981 100%); }
         .glass-effect { background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(10px); }
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #E2E8F0; border-radius: 10px; }
     </style>
 </head>
 <body class="flex min-h-screen">
@@ -34,8 +37,6 @@
                 <p class="text-[10px] text-slate-400 font-black uppercase tracking-widest mt-1 italic">Membre Gold • <span class="text-emerald-500">En ligne</span></p>
             </div>
         </div>
-        
-
     </div>
 
     <div class="grid grid-cols-12 gap-6 flex-1">
@@ -57,9 +58,9 @@
                         <a href="{{ route('player.reservations.create') }}" class="bg-emerald-500 text-white px-8 py-4 rounded-2xl font-black text-[11px] uppercase italic tracking-widest hover:bg-white hover:text-emerald-600 transition-all shadow-xl shadow-emerald-500/20 flex items-center justify-center gap-3 active:scale-95">
                             <i class="fas fa-plus-circle"></i> Réserver
                         </a>
-                        <button class="bg-white/10 backdrop-blur-md text-white border border-white/10 px-8 py-4 rounded-2xl font-black text-[11px] uppercase italic tracking-widest hover:bg-white/20 transition-all flex items-center justify-center gap-3">
+                        <a href="{{ route('player.recharge') }}" class="bg-white/10 backdrop-blur-md text-white border border-white/10 px-8 py-4 rounded-2xl font-black text-[11px] uppercase italic tracking-widest hover:bg-white/20 transition-all flex items-center justify-center gap-3">
                             <i class="fas fa-wallet"></i> Recharger
-                        </button>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -67,7 +68,7 @@
             <div class="bg-white rounded-[2.5rem] border border-slate-100 p-8 shadow-sm flex-1">
                 <div class="flex justify-between items-center mb-6">
                     <h4 class="text-sm font-black text-slate-900 italic uppercase tracking-widest">Calendrier des matchs</h4>
-                    <span class="text-[9px] font-black text-slate-400 uppercase tracking-widest">2 Réservations actives</span>
+                    <span class="text-[9px] font-black text-slate-400 uppercase tracking-widest">Prochaines Réservations</span>
                 </div>
                 
                 <div class="space-y-3">
@@ -90,32 +91,65 @@
 
         <div class="col-span-4 flex flex-col gap-6">
             
-            <div class="bg-white rounded-[2.5rem] p-8 border border-slate-100 shadow-sm flex flex-col items-center justify-center flex-1">
-                <h4 class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-6">Saison Progression</h4>
+            <div class="bg-white rounded-[2.5rem] p-8 border border-slate-100 shadow-sm flex flex-col flex-1 overflow-hidden">
+                <div class="flex justify-between items-center mb-6 shrink-0">
+                    <h4 class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] italic">Activités Récentes</h4>
+                    <i class="fas fa-receipt text-slate-200"></i>
+                </div>
                 
-                <div class="relative w-40 h-40 mb-6">
-                    <svg class="w-full h-full rotate-[-90deg]">
-                        <circle cx="80" cy="80" r="72" stroke="currentColor" stroke-width="10" fill="transparent" class="text-slate-50" />
-                        <circle cx="80" cy="80" r="72" stroke="currentColor" stroke-width="10" fill="transparent" 
-                                stroke-dasharray="452.3" stroke-dashoffset="135"
-                                class="text-emerald-500 transition-all duration-1000 ease-out" />
-                    </svg>
-                    <div class="absolute inset-0 flex flex-col items-center justify-center">
-                        <span class="text-4xl font-[900] text-slate-900 italic leading-none">70<span class="text-sm">%</span></span>
-                        <span class="text-[8px] font-black text-slate-400 uppercase mt-2">Vers Niv. 13</span>
+                <div class="space-y-4 overflow-y-auto pr-1 custom-scrollbar flex-1">
+                    <div class="flex items-center justify-between group cursor-default">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-500 flex items-center justify-center text-xs shadow-sm group-hover:bg-emerald-500 group-hover:text-white transition-all duration-300">
+                                <i class="fas fa-plus-circle"></i>
+                            </div>
+                            <div>
+                                <p class="text-[11px] font-black text-slate-900 uppercase italic leading-none">Recharge</p>
+                                <p class="text-[9px] text-slate-400 font-bold mt-1">Via Stripe</p>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <p class="text-xs font-black text-emerald-500 italic">+100 PC</p>
+                            <p class="text-[8px] text-slate-300 font-bold uppercase mt-0.5">Hier</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center justify-between group cursor-default">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-xl bg-slate-50 text-slate-400 flex items-center justify-center text-xs shadow-sm group-hover:bg-slate-900 group-hover:text-white transition-all duration-300">
+                                <i class="fas fa-table-tennis-paddle-ball"></i>
+                            </div>
+                            <div>
+                                <p class="text-[11px] font-black text-slate-900 uppercase italic leading-none">Réservation</p>
+                                <p class="text-[9px] text-slate-400 font-bold mt-1">Court #1</p>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <p class="text-xs font-black text-slate-400 italic">-50 PC</p>
+                            <p class="text-[8px] text-slate-300 font-bold uppercase mt-0.5">14 Avr</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center justify-between group cursor-default">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-xl bg-amber-50 text-amber-500 flex items-center justify-center text-xs shadow-sm group-hover:bg-amber-500 group-hover:text-white transition-all duration-300">
+                                <i class="fas fa-gift"></i>
+                            </div>
+                            <div>
+                                <p class="text-[11px] font-black text-slate-900 uppercase italic leading-none">Cashback</p>
+                                <p class="text-[9px] text-slate-400 font-bold mt-1">Bonus PPC</p>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <p class="text-xs font-black text-amber-500 italic">+5 PC</p>
+                            <p class="text-[8px] text-slate-300 font-bold uppercase mt-0.5">12 Avr</p>
+                        </div>
                     </div>
                 </div>
 
-                <div class="text-center">
-                    <p class="text-sm font-black text-slate-900 uppercase italic tracking-tighter">Expert Player</p>
-                    <div class="mt-4 flex gap-1 justify-center">
-                        <div class="w-1.5 h-1.5 bg-emerald-500 rounded-full shadow-[0_0_8px_rgba(16,185,129,0.5)]"></div>
-                        <div class="w-1.5 h-1.5 bg-emerald-500 rounded-full"></div>
-                        <div class="w-1.5 h-1.5 bg-emerald-500 rounded-full"></div>
-                        <div class="w-1.5 h-1.5 bg-slate-100 rounded-full"></div>
-                        <div class="w-1.5 h-1.5 bg-slate-100 rounded-full"></div>
-                    </div>
-                </div>
+                <a href="#" class="mt-6 pt-4 text-center text-[9px] font-black text-slate-300 uppercase tracking-widest hover:text-emerald-500 transition-colors italic border-t border-slate-50">
+                    Voir tout l'historique <i class="fas fa-chevron-right ml-1"></i>
+                </a>
             </div>
 
             <div class="bg-emerald-500 rounded-[2.5rem] p-8 text-white relative overflow-hidden group">
@@ -127,5 +161,6 @@
         </div>
     </div>
 </main>
+@include('components.notif')
 </body>
 </html>

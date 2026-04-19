@@ -26,32 +26,32 @@
         </a>
 
         <a href="{{ route('admin.reservations') }}" 
-           class="flex items-center gap-4 px-4 py-3 rounded-2xl transition-all group {{ request()->routeIs('admin.reservations') ? 'bg-emerald-500 text-white shadow-lg shadow-emerald-100' : 'text-slate-500 hover:bg-slate-50' }}">
-            <div class="w-8 h-8 rounded-xl flex items-center justify-center transition-colors {{ request()->routeIs('admin.reservations') ? 'bg-white/20' : 'bg-slate-50 group-hover:bg-white' }}">
+           class="flex items-center gap-4 px-4 py-3 rounded-2xl transition-all group {{ request()->routeIs('admin.reservations*') ? 'bg-emerald-500 text-white shadow-lg shadow-emerald-100' : 'text-slate-500 hover:bg-slate-50' }}">
+            <div class="w-8 h-8 rounded-xl flex items-center justify-center transition-colors {{ request()->routeIs('admin.reservations*') ? 'bg-white/20' : 'bg-slate-50 group-hover:bg-white' }}">
                 <i class="fas fa-calendar-check text-sm"></i>
             </div>
             <span class="font-bold text-[11px] uppercase tracking-widest italic">Réservations</span>
         </a>
 
         <a href="{{ route('admin.courts') }}" 
-           class="flex items-center gap-4 px-4 py-3 rounded-2xl transition-all group {{ request()->routeIs('admin.courts') ? 'bg-emerald-500 text-white shadow-lg shadow-emerald-100' : 'text-slate-500 hover:bg-slate-50' }}">
-            <div class="w-8 h-8 rounded-xl flex items-center justify-center transition-colors {{ request()->routeIs('admin.courts') ? 'bg-white/20' : 'bg-slate-50 group-hover:bg-white' }}">
+           class="flex items-center gap-4 px-4 py-3 rounded-2xl transition-all group {{ request()->routeIs('admin.courts*') ? 'bg-emerald-500 text-white shadow-lg shadow-emerald-100' : 'text-slate-500 hover:bg-slate-50' }}">
+            <div class="w-8 h-8 rounded-xl flex items-center justify-center transition-colors {{ request()->routeIs('admin.courts*') ? 'bg-white/20' : 'bg-slate-50 group-hover:bg-white' }}">
                 <i class="fas fa-table-tennis-paddle-ball text-sm"></i>
             </div>
             <span class="font-bold text-[11px] uppercase tracking-widest italic">Gestion Courts</span>
         </a>
 
         <a href="{{ route('admin.equipments') }}" 
-           class="flex items-center gap-4 px-4 py-3 rounded-2xl transition-all group {{ request()->routeIs('admin.equipments') ? 'bg-emerald-500 text-white shadow-lg shadow-emerald-100' : 'text-slate-500 hover:bg-slate-50' }}">
-            <div class="w-8 h-8 rounded-xl flex items-center justify-center transition-colors {{ request()->routeIs('admin.equipments') ? 'bg-white/20' : 'bg-slate-50 group-hover:bg-white' }}">
+           class="flex items-center gap-4 px-4 py-3 rounded-2xl transition-all group {{ request()->routeIs('admin.equipments*') ? 'bg-emerald-500 text-white shadow-lg shadow-emerald-100' : 'text-slate-500 hover:bg-slate-50' }}">
+            <div class="w-8 h-8 rounded-xl flex items-center justify-center transition-colors {{ request()->routeIs('admin.equipments*') ? 'bg-white/20' : 'bg-slate-50 group-hover:bg-white' }}">
                 <i class="fas fa-boxes text-sm"></i>
             </div>
             <span class="font-bold text-[11px] uppercase tracking-widest italic">Équipements</span>
         </a>
 
         <a href="{{ route('admin.players') }}" 
-           class="flex items-center gap-4 px-4 py-3 rounded-2xl transition-all group {{ request()->routeIs('admin.players') ? 'bg-emerald-500 text-white shadow-lg shadow-emerald-100' : 'text-slate-500 hover:bg-slate-50' }}">
-            <div class="w-8 h-8 rounded-xl flex items-center justify-center transition-colors {{ request()->routeIs('admin.players') ? 'bg-white/20' : 'bg-slate-50 group-hover:bg-white' }}">
+           class="flex items-center gap-4 px-4 py-3 rounded-2xl transition-all group {{ request()->routeIs('admin.players*') ? 'bg-emerald-500 text-white shadow-lg shadow-emerald-100' : 'text-slate-500 hover:bg-slate-50' }}">
+            <div class="w-8 h-8 rounded-xl flex items-center justify-center transition-colors {{ request()->routeIs('admin.players*') ? 'bg-white/20' : 'bg-slate-50 group-hover:bg-white' }}">
                 <i class="fas fa-users text-sm"></i>
             </div>
             <span class="font-bold text-[11px] uppercase tracking-widest italic">Joueurs</span>

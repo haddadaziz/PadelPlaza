@@ -59,7 +59,7 @@ class AuthController extends Controller
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate(); // Régénère la session pour éviter les failles de sécurité (Fixation de session)
 
-            return redirect()->route('home')->with('success', 'Connexion réussie ! Bon retour parmis nous, ' . Auth::user()->name . ' 👋');
+            return redirect()->route('home')->with('success', 'Connexion réussie ! Bon retour parmis nous, ' . Auth::user()->name . '');
         }
 
         // 3. Si échec
@@ -76,7 +76,7 @@ class AuthController extends Controller
         $request->session()->invalidate(); // On détruit la session actuelle
         $request->session()->regenerateToken(); // On détruit le Token CSRF
 
-        return redirect()->route('login')
+        return redirect()->route('welcome')
             ->with('success', 'Déconnexion réussie. À très vite ! 🎾');
     }
 }

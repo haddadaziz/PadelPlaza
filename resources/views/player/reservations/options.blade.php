@@ -113,7 +113,7 @@
 
                     <div class="space-y-4">
                         <button type="submit" class="w-full bg-emerald-500 hover:bg-emerald-400 text-white py-5 rounded-2xl font-black uppercase italic tracking-widest transition-all shadow-xl shadow-emerald-500/20 flex items-center justify-center gap-3">
-                            Étape Finale <i class="fas fa-credit-card text-[10px]"></i>
+                            Réserver
                         </button>
                         <a href="{{ route('player.reservations.create') }}" class="w-full flex items-center justify-center text-[10px] font-black text-slate-500 uppercase hover:text-white transition-colors tracking-widest italic">
                             <i class="fas fa-chevron-left mr-2"></i> Modifier le terrain

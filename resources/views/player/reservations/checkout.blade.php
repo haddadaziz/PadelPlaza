@@ -162,7 +162,7 @@
                 </div>
 
                 <button type="submit" id="submit-button" class="mt-4 bg-emerald-500 text-white w-full py-5 rounded-[1.8rem] font-[900] uppercase italic tracking-widest hover:bg-slate-900 transition-all shadow-2xl shadow-emerald-200 flex items-center justify-center gap-3 shrink-0 active:scale-95">
-                    Confirmer la réservation <i class="fas fa-shield-alt text-[10px]"></i>
+                    Confirmer la réservation
                 </button>
             </div>
         </form>

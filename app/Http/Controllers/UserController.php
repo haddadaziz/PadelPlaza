@@ -58,5 +58,30 @@ class UserController extends Controller
 
         return redirect()->back()->with('success', 'Mot de passe sécurisé à jour ! 🔒');
     }
+    // ==========================================
+    // GESTION ADMIN : RECHARGE MANUELLE
+    // ==========================================
+
+    public function adminRechargeForm($id)
+    {
+        // On récupère le joueur sélectionné
+        $player = \App\Models\User::findOrFail($id);
+        return view('admin.players.recharge', compact('player'));
+    }
+
+    public function adminRechargeProcess(\Illuminate\Http\Request $request, $id)
+    {
+        $player = \App\Models\User::findOrFail($id);
+
+        // On regarde si l'admin a tapé un montant libre, sinon on prend le pack radio
+        $pcToAdd = $request->custom_amount ? (int)$request->custom_amount : (int)$request->amount;
+
+        if ($pcToAdd > 0) {
+            $player->coins_balance += $pcToAdd;
+            $player->save();
+        }
+
+        return redirect()->route('admin.players')->with('success', "Le compte de {$player->name} a bien été crédité de {$pcToAdd} PC en caisse !");
+    }
 
 }
