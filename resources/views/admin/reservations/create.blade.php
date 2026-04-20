@@ -13,6 +13,7 @@
         .custom-scrollbar::-webkit-scrollbar { width: 4px; }
         .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: #E2E8F0; border-radius: 10px; }
+        .qty-input::-webkit-inner-spin-button, .qty-input::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
     </style>
 </head>
 <body class="flex min-h-screen">
@@ -36,25 +37,26 @@
             <div class="col-span-7 flex flex-col min-h-0 space-y-6 overflow-y-auto pr-4 custom-scrollbar pb-10">
                 
                 <div class="bg-white p-8 rounded-[2.5rem] border border-slate-100 shadow-sm">
-                    <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-4 block italic">Client / Joueur</label>
-                    <select name="user_id" class="w-full bg-slate-50 border-none rounded-2xl px-6 py-4 font-bold text-slate-900 focus:ring-2 focus:ring-emerald-500 transition-all outline-none">
-                        <option value="" disabled selected>Rechercher un joueur...</option>
-                        @foreach($players as $player)
-                            <option value="{{ $player->id }}">{{ $player->name }} ({{ $player->email }})</option>
-                        @endforeach
-                    </select>
-                    <p class="mt-3 text-[9px] text-slate-400 font-bold italic uppercase"><i class="fas fa-info-circle mr-1"></i> Si le joueur n'existe pas, créez son compte d'abord.</p>
+                    <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-4 block italic">Rechercher le Joueur</label>
+                    <div class="relative group">
+                        <div class="absolute left-6 top-1/2 -translate-y-1/2 text-slate-300 group-focus-within:text-emerald-500 transition-colors">
+                            <i class="fas fa-search"></i>
+                        </div>
+                        <input type="text" name="player_identifier" required
+                            placeholder="Email ou PP ID (ex: 42)"
+                            class="w-full pl-14 pr-6 py-4 bg-slate-50 border-2 border-transparent rounded-2xl font-bold text-slate-900 focus:bg-white focus:border-emerald-500 transition-all outline-none italic">
+                    </div>
                 </div>
 
                 <div class="bg-white p-8 rounded-[2.5rem] border border-slate-100 shadow-sm">
                     <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-6 block italic">Sélectionner le Court</label>
-                    <div class="space-y-3">
+                    <div class="grid grid-cols-1 gap-3">
                         @foreach($courts as $court)
                         <label class="relative block cursor-pointer group">
                             <input type="radio" name="court_id" value="{{ $court->id }}" class="peer sr-only" required onchange="fetchSlots()">
                             <div class="p-4 rounded-2xl bg-slate-50 border-2 border-transparent peer-checked:border-emerald-500 peer-checked:bg-emerald-50/50 transition-all flex items-center justify-between">
                                 <div class="flex items-center gap-4">
-                                    <div class="w-12 h-12 rounded-xl bg-white flex items-center justify-center text-emerald-500 shadow-sm">
+                                    <div class="w-10 h-10 rounded-xl bg-white flex items-center justify-center text-emerald-500 shadow-sm">
                                         <i class="fas fa-table-tennis text-sm"></i>
                                     </div>
                                     <span class="font-black text-slate-900 uppercase italic text-sm">{{ $court->name }}</span>
@@ -66,20 +68,26 @@
                     </div>
                 </div>
 
-                <div class="bg-slate-900 p-8 rounded-[2.5rem] shadow-xl relative overflow-hidden">
-                    <div class="absolute top-0 right-0 w-32 h-32 bg-emerald-500/10 rounded-full -mr-16 -mt-16 blur-3xl"></div>
-                    <label class="text-[10px] font-black text-emerald-500 uppercase tracking-widest mb-4 block italic relative z-10">Statut du paiement</label>
-                    <div class="flex gap-4 relative z-10">
-                        <label class="flex-1 cursor-pointer">
-                            <input type="radio" name="payment_status" value="paid" class="peer sr-only" checked>
-                            <div class="py-3 text-center rounded-xl bg-white/5 border border-white/10 text-white font-black text-[10px] uppercase tracking-widest italic peer-checked:bg-emerald-500 peer-checked:border-emerald-500 transition-all">Déjà payé</div>
-                        </label>
-                        <label class="flex-1 cursor-pointer">
-                            <input type="radio" name="payment_status" value="pending" class="peer sr-only">
-                            <div class="py-3 text-center rounded-xl bg-white/5 border border-white/10 text-white font-black text-[10px] uppercase tracking-widest italic peer-checked:bg-amber-500 peer-checked:border-amber-500 transition-all">À payer sur place</div>
-                        </label>
+                <div class="bg-white p-8 rounded-[2.5rem] border border-slate-100 shadow-sm">
+                    <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-6 block italic">Équipements & Matériel</label>
+                    <div class="grid grid-cols-2 gap-4">
+                        @foreach($equipments as $item)
+                        <div class="p-4 rounded-2xl bg-slate-50 border border-slate-100 flex items-center justify-between group hover:border-emerald-200 transition-all">
+                            <div class="flex flex-col">
+                                <span class="font-black text-slate-900 uppercase italic text-[11px] leading-none">{{ $item->name }}</span>
+                                <span class="text-[9px] text-emerald-500 font-bold mt-1">{{ $item->price_coins }} PC</span>
+                            </div>
+                            <div class="flex items-center gap-3 bg-white px-3 py-2 rounded-xl shadow-sm border border-slate-100">
+                                <button type="button" onclick="changeQty('{{ $item->id }}', -1)" class="text-slate-400 hover:text-red-500 transition-colors"><i class="fas fa-minus text-[10px]"></i></button>
+                                <input type="number" name="equipments[{{ $item->id }}]" id="qty-{{ $item->id }}" value="0" min="0" readonly
+                                    class="w-5 text-center font-black text-xs text-slate-900 border-none outline-none bg-transparent qty-input">
+                                <button type="button" onclick="changeQty('{{ $item->id }}', 1)" class="text-slate-400 hover:text-emerald-500 transition-colors"><i class="fas fa-plus text-[10px]"></i></button>
+                            </div>
+                        </div>
+                        @endforeach
                     </div>
                 </div>
+
             </div>
 
             <div class="col-span-5 flex flex-col min-h-0 gap-6">
@@ -98,11 +106,11 @@
                     </div>
 
                     <div id="time-slots-container" class="flex-1 overflow-y-auto pr-2 pb-4 grid grid-cols-2 gap-3 custom-scrollbar">
-                        <div class="col-span-2 text-center py-10 text-[10px] font-bold text-slate-400 italic uppercase">Choisissez un court et une date</div>
+                        <div class="col-span-2 text-center py-10 text-[10px] font-bold text-slate-400 italic uppercase">Prêt à réserver</div>
                     </div>
 
                     <button type="submit" id="submit-btn" disabled class="mt-4 bg-slate-900 text-white w-full py-5 rounded-[1.5rem] font-[900] uppercase italic tracking-widest hover:bg-emerald-500 transition-all shadow-xl shadow-slate-200 flex items-center justify-center gap-3 shrink-0 opacity-50 cursor-not-allowed">
-                        Enregistrer la réservation <i class="fas fa-save text-[10px]"></i>
+                        Valider la réservation <i class="fas fa-check-circle text-[10px]"></i>
                     </button>
                 </div>
             </div>
@@ -112,19 +120,28 @@
     <script>
         let allAvailableSlots = [];
 
+        function changeQty(id, delta) {
+            const input = document.getElementById('qty-' + id);
+            let newVal = parseInt(input.value) + delta;
+            if (newVal >= 0) input.value = newVal;
+        }
+
         function fetchSlots() {
             const courtId = document.querySelector('input[name="court_id"]:checked')?.value;
             const date = document.getElementById('date-input').value;
             const container = document.getElementById('time-slots-container');
 
             if (courtId && date) {
-                container.innerHTML = '<div class="col-span-2 text-center py-10"><i class="fas fa-circle-notch fa-spin text-emerald-500 text-xl"></i></div>';
+                container.innerHTML = '<div class="col-span-2 text-center py-10"><i class="fas fa-spinner fa-spin text-emerald-500 text-xl"></i></div>';
                 fetch(`/api/available-slots?court_id=${courtId}&date=${date}`)
                     .then(res => res.json())
                     .then(data => {
                         allAvailableSlots = data.available_slots;
-                        container.innerHTML = '<div class="col-span-2 text-center py-10 text-[10px] font-bold text-emerald-500 italic uppercase animate-pulse">Sélectionnez une période ↑</div>';
-                        document.querySelectorAll('.period-btn').forEach(btn => btn.classList.remove('bg-emerald-500', 'text-white'));
+                        container.innerHTML = '<div class="col-span-2 text-center py-10 text-[10px] font-bold text-emerald-500 italic uppercase animate-pulse">Filtrer par période ↑</div>';
+                        document.querySelectorAll('.period-btn').forEach(btn => {
+                            btn.classList.remove('bg-emerald-500', 'text-white');
+                            btn.classList.add('bg-slate-50', 'text-slate-500');
+                        });
                     });
             }
         }
@@ -151,7 +168,7 @@
 
             container.innerHTML = '';
             if (filtered.length === 0) {
-                container.innerHTML = '<div class="col-span-2 text-center py-10 text-[10px] font-bold text-red-400 italic uppercase">Aucun créneau libre</div>';
+                container.innerHTML = '<div class="col-span-2 text-center py-10 text-[10px] font-bold text-red-400 italic uppercase">Complet</div>';
             } else {
                 filtered.forEach((time, index) => {
                     container.insertAdjacentHTML('beforeend', `
@@ -172,6 +189,8 @@
                 });
             }
         }
-    </script>
+    </script>:
+
+    @include('components.notif')
 </body>
 </html>

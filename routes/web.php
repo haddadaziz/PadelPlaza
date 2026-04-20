@@ -60,6 +60,7 @@ Route::middleware('auth')->group(function () {
         Route::post('/api/create-recharge-intent', [\App\Http\Controllers\PlayerController::class , 'createRechargeIntent'])->name('api.create-recharge-intent');
         // Valiadation finale du paiement
         Route::post('/player/recharge/process', [\App\Http\Controllers\PlayerController::class , 'rechargeProcess'])->name('player.recharge.process');
+        Route::get('/player/transactions', [\App\Http\Controllers\PlayerController::class, 'transactions'])->name('player.transactions');
 
 
         // --- ESPACE ADMINISTRATEUR ---

@@ -112,7 +112,7 @@
                                 <span class="currency-label text-xs uppercase">PC</span>
                             </p>
                             <p id="promo-text" class="text-[9px] font-bold text-slate-400 uppercase tracking-widest mt-2 italic transition-all">
-                                10% de CashBack si vous payez avec vos PPC !
+                                5% de CashBack si vous réservez avec vos PPC !
                             </p>
                         </div>
                     </div>

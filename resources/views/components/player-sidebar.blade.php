@@ -13,8 +13,8 @@
     <nav class="flex-1 px-4 space-y-2 mt-4">
         <div class="px-4 py-4 text-[10px] font-black text-slate-500 uppercase tracking-[0.25em]">Mon Espace</div>
         
-        <a href="/player/dashboard" class="flex items-center gap-4 px-4 py-3 rounded-2xl transition-all group {{ request()->is('player/dashboard') ? 'bg-emerald-500 text-white shadow-lg shadow-emerald-500/20' : 'text-slate-400 hover:bg-slate-800 hover:text-white' }}">
-            <div class="w-8 h-8 rounded-xl flex items-center justify-center {{ request()->is('player/dashboard') ? 'bg-white/20' : 'bg-slate-800 group-hover:bg-slate-700' }}">
+        <a href="/player/dashboard" class="flex items-center gap-4 px-4 py-3 rounded-2xl transition-all group {{ request()->is('player/dashboard','player/recharge') ? 'bg-emerald-500 text-white shadow-lg shadow-emerald-500/20' : 'text-slate-400 hover:bg-slate-800 hover:text-white' }}">
+            <div class="w-8 h-8 rounded-xl flex items-center justify-center {{ request()->is('player/dashboard', 'player/recharge') ? 'bg-white/20' : 'bg-slate-800 group-hover:bg-slate-700' }}">
                 <i class="fas fa-home text-sm"></i>
             </div>
             <span class="font-bold text-[11px] uppercase tracking-widest italic">Mon Arena</span>
@@ -33,6 +33,13 @@
             </div>
             <span class="font-bold text-[11px] uppercase tracking-widest italic">Mes Matchs</span>
         </a>
+                <a href="{{ route('player.transactions') }}" class="flex items-center gap-4 px-4 py-3 rounded-2xl transition-all group {{ request()->is('player/transactions*') ? 'bg-emerald-500 text-white shadow-lg shadow-emerald-500/20' : 'text-slate-400 hover:bg-slate-800 hover:text-white' }}">
+            <div class="w-8 h-8 rounded-xl flex items-center justify-center {{ request()->is('player/transactions*') ? 'bg-white/20' : 'bg-slate-800 group-hover:bg-slate-700' }}">
+               <i class="fas fa-receipt text-sm"></i>
+           </div>
+           <span class="font-bold text-[11px] uppercase tracking-widest italic">Transactions</span>
+       </a>
+
     </nav>
 
     <div class="p-6 mt-auto border-t border-slate-800 space-y-3">

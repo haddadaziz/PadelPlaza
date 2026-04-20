@@ -79,7 +79,15 @@ class UserController extends Controller
         if ($pcToAdd > 0) {
             $player->coins_balance += $pcToAdd;
             $player->save();
+
+            \App\Models\Transaction::create([
+                'user_id' => $player->id,
+                'amount' => $pcToAdd,
+                'type' => 'recharge_admin',
+                'description' => 'En caisse'
+            ]);
         }
+
 
         return redirect()->route('admin.players')->with('success', "Le compte de {$player->name} a bien été crédité de {$pcToAdd} PC en caisse !");
     }

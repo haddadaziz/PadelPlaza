@@ -98,56 +98,57 @@
                 </div>
                 
                 <div class="space-y-4 overflow-y-auto pr-1 custom-scrollbar flex-1">
-                    <div class="flex items-center justify-between group cursor-default">
-                        <div class="flex items-center gap-3">
-                            <div class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-500 flex items-center justify-center text-xs shadow-sm group-hover:bg-emerald-500 group-hover:text-white transition-all duration-300">
-                                <i class="fas fa-plus-circle"></i>
-                            </div>
-                            <div>
-                                <p class="text-[11px] font-black text-slate-900 uppercase italic leading-none">Recharge</p>
-                                <p class="text-[9px] text-slate-400 font-bold mt-1">Via Stripe</p>
-                            </div>
-                        </div>
-                        <div class="text-right">
-                            <p class="text-xs font-black text-emerald-500 italic">+100 PC</p>
-                            <p class="text-[8px] text-slate-300 font-bold uppercase mt-0.5">Hier</p>
-                        </div>
-                    </div>
+                    @forelse($transactions as $tx)
+                        <div class="flex items-center justify-between group cursor-default">
+                            <div class="flex items-center gap-3">
+                                
+                                @if($tx->type == 'recharge_stripe' || $tx->type == 'recharge_admin')
+                                    <div class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-500 flex items-center justify-center text-xs shadow-sm group-hover:bg-emerald-500 group-hover:text-white transition-all duration-300">
+                                        <i class="fas fa-plus-circle"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-[11px] font-black text-slate-900 uppercase italic leading-none">Recharge</p>
+                                        <p class="text-[9px] text-slate-400 font-bold mt-1">{{ $tx->description }}</p>
+                                    </div>
+                                
+                                @elseif($tx->type == 'reservation')
+                                    <div class="w-10 h-10 rounded-xl bg-slate-50 text-slate-400 flex items-center justify-center text-xs shadow-sm group-hover:bg-slate-900 group-hover:text-white transition-all duration-300">
+                                        <i class="fas fa-table-tennis-paddle-ball"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-[11px] font-black text-slate-900 uppercase italic leading-none">Réservation</p>
+                                        <p class="text-[9px] text-slate-400 font-bold mt-1">{{ $tx->description }}</p>
+                                    </div>
+                                    
+                                @elseif($tx->type == 'cashback')
+                                    <div class="w-10 h-10 rounded-xl bg-amber-50 text-amber-500 flex items-center justify-center text-xs shadow-sm group-hover:bg-amber-500 group-hover:text-white transition-all duration-300">
+                                        <i class="fas fa-gift"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-[11px] font-black text-slate-900 uppercase italic leading-none">Cashback</p>
+                                        <p class="text-[9px] text-slate-400 font-bold mt-1">{{ $tx->description }}</p>
+                                    </div>
+                                @endif
 
-                    <div class="flex items-center justify-between group cursor-default">
-                        <div class="flex items-center gap-3">
-                            <div class="w-10 h-10 rounded-xl bg-slate-50 text-slate-400 flex items-center justify-center text-xs shadow-sm group-hover:bg-slate-900 group-hover:text-white transition-all duration-300">
-                                <i class="fas fa-table-tennis-paddle-ball"></i>
                             </div>
-                            <div>
-                                <p class="text-[11px] font-black text-slate-900 uppercase italic leading-none">Réservation</p>
-                                <p class="text-[9px] text-slate-400 font-bold mt-1">Court #1</p>
-                            </div>
-                        </div>
-                        <div class="text-right">
-                            <p class="text-xs font-black text-slate-400 italic">-50 PC</p>
-                            <p class="text-[8px] text-slate-300 font-bold uppercase mt-0.5">14 Avr</p>
-                        </div>
-                    </div>
-
-                    <div class="flex items-center justify-between group cursor-default">
-                        <div class="flex items-center gap-3">
-                            <div class="w-10 h-10 rounded-xl bg-amber-50 text-amber-500 flex items-center justify-center text-xs shadow-sm group-hover:bg-amber-500 group-hover:text-white transition-all duration-300">
-                                <i class="fas fa-gift"></i>
-                            </div>
-                            <div>
-                                <p class="text-[11px] font-black text-slate-900 uppercase italic leading-none">Cashback</p>
-                                <p class="text-[9px] text-slate-400 font-bold mt-1">Bonus PPC</p>
+                            <div class="text-right">
+                                <!-- La couleur (+ / -) change automatiquement selon que le montant soit bénéficiaire ou un achat ! -->
+                                <p class="text-xs font-black {{ $tx->amount > 0 ? ($tx->type == 'cashback' ? 'text-amber-500' : 'text-emerald-500') : 'text-slate-900' }} italic">
+                                    {{ $tx->amount > 0 ? '+' : '' }}{{ $tx->amount }} PC
+                                </p>
+                                <p class="text-[8px] text-slate-300 font-bold uppercase mt-0.5">{{ $tx->created_at->diffForHumans(null, true) }}</p>
                             </div>
                         </div>
-                        <div class="text-right">
-                            <p class="text-xs font-black text-amber-500 italic">+5 PC</p>
-                            <p class="text-[8px] text-slate-300 font-bold uppercase mt-0.5">12 Avr</p>
+                    @empty
+                        <div class="text-center py-6 text-slate-400">
+                            <i class="fas fa-receipt text-3xl mb-3 opacity-20"></i>
+                            <p class="text-[10px] font-black uppercase tracking-widest italic">Aucune transaction</p>
                         </div>
-                    </div>
+                    @endforelse
                 </div>
 
-                <a href="#" class="mt-6 pt-4 text-center text-[9px] font-black text-slate-300 uppercase tracking-widest hover:text-emerald-500 transition-colors italic border-t border-slate-50">
+
+                <a href="{{route('player.transactions') }}" class="mt-6 pt-4 text-center text-[9px] font-black text-slate-300 uppercase tracking-widest hover:text-emerald-500 transition-colors italic border-t border-slate-50">
                     Voir tout l'historique <i class="fas fa-chevron-right ml-1"></i>
                 </a>
             </div>

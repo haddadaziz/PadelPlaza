@@ -34,4 +34,13 @@ class Reservation extends Model
     {
         return $this->belongsTo(Court::class);
     }
+
+        protected function casts(): array
+    {
+        return [
+            'start_time' => 'datetime',
+            'equipments_info' => 'array',
+        ];
+    }
+
 }

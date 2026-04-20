@@ -54,7 +54,7 @@
                         <input type="radio" name="court_id" value="{{ $court->id }}" class="peer sr-only court-radio" required>
                         <div class="bg-white p-6 rounded-[2.5rem] border-2 border-transparent peer-checked:border-emerald-500 peer-checked:bg-emerald-50/30 transition-all flex items-center gap-6 shadow-sm hover:shadow-md">
                             <div class="w-28 h-28 rounded-3xl bg-slate-100 overflow-hidden shrink-0">
-                                <img src="{{ asset('storage/'.$court->image) }}" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all">
+                                <img src="{{ asset('storage/'.$court->image) }}" class="w-full h-full object-cover transition-all">
                             </div>
                             <div class="flex-1">
                                 <div class="flex justify-between items-start">

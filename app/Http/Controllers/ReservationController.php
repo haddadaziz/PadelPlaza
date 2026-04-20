@@ -97,7 +97,8 @@ class ReservationController extends Controller
         ]);
     }
 
-    public function getAvailableSlots(Request $request)    {
+    public function getAvailableSlots(Request $request)
+    {
         // 1. On vérifie la requête
         $request->validate([
             'court_id' => 'required',
@@ -139,6 +140,10 @@ class ReservationController extends Controller
         // On récupère la date d'aujourd'hui (ex: "2026-04-19")
         $dateAujourdhui = date('Y-m-d');
 
+
+
+
+
         
 // On utilise 'now()' pour être certain d'avoir la bonne heure du fuseau local de l'application        $heureActuelle = (int)now()->format('H');
 
@@ -174,33 +179,63 @@ class ReservationController extends Controller
         // 6. On renvoie enfin nos heures disponibles au navigateur web !
         return response()->json([
             'available_slots' => $heuresDisponibles
-        ]);    }
+        ]);
+    }
     public function process(\Illuminate\Http\Request $request)
     {
         // 1. On recalcule le montant (règle de sécurité : ne jamais faire confiance au Javascript pour les prix)
         $court = \App\Models\Court::findOrFail($request->court_id);
         $totalPrice = $court->price_coins;
 
+        $equipmentsInfo = []; // <--- Le chariot virtuel de l'admin
+
         if ($request->has('equipments')) {
             foreach ($request->equipments as $id => $qty) {
                 if ((int)$qty > 0) {
                     $equipment = \App\Models\Equipment::findOrFail($id);
                     $totalPrice += ($equipment->price_coins * $qty);
+
+                    // On enregistre ce qu'il a pris pour l'Affichage Admin !
+                    $equipmentsInfo[] = [
+                        'name' => $equipment->name,
+                        'qty' => (int)$qty,
+                    ];
                 }
             }
         }
 
+
         $user = \Illuminate\Support\Facades\Auth::user();
 
-        // 2. Traitement des Plaza Coins 🪙
+        // 2. Traitement des Plaza Coins et du CASHBACK
         if ($request->payment_method === 'coins') {
             if ($user->coins_balance < $totalPrice) {
-                // Le joueur est fauché
                 return redirect()->back()->withErrors(['Erreur : Vous n\'avez pas assez de Plaza Coins.']);
             }
-            // On lui débite le compte !
-            $user->coins_balance -= $totalPrice;
-            $user->save();
+
+            // Calcul du cashback (5% de la réservation)
+            $cashback = ceil($totalPrice * 0.05);
+
+            // 3. Mise à jour instantanée et ultra-sécurisée du solde en BDD
+            $user->decrement('coins_balance', $totalPrice);
+            $user->increment('coins_balance', $cashback);
+
+
+            // 1) Ligne Historique de la Dépense
+            \App\Models\Transaction::create([
+                'user_id' => $user->id,
+                'amount' => -$totalPrice,
+                'type' => 'reservation',
+                'description' => $court->name
+            ]);
+
+            // 2) Ligne Historique du Gain (Cashback)
+            \App\Models\Transaction::create([
+                'user_id' => $user->id,
+                'amount' => $cashback,
+                'type' => 'cashback',
+                'description' => 'Cashback de réservation'
+            ]);
         }
 
         // 3. Conversion de la date pour la BDD (ex: "2026-04-19" + "18:30" => "2026-04-19 18:30:00")
@@ -212,55 +247,92 @@ class ReservationController extends Controller
         $reservation->court_id = $court->id;
         $reservation->start_time = $start_time;
         $reservation->status = 'confirmed'; // Confirmé d'office car payé !
+
+        // --- ON AJOUTE LES DÉTAILS ICI ---
+        $reservation->total_price = $totalPrice;
+        $reservation->equipments_info = $equipmentsInfo;
         $reservation->save();
 
         // 5. On termine en l'envoyant sur son Dashboard avec un message Flash de gloire
         return redirect('/player/dashboard')->with('success', 'Ton match est confirmé ! Prépare tes balles !');
     }
-        // ==========================================
+    // ==========================================
     // SECTION ADMINISTRATEUR
     // ==========================================
 
     public function adminCreate()
     {
-        // On récupère uniquement ceux qui ont le rôle 'player' (pour ne pas réserver un terrain au nom de l'admin)
-        // Note: Si tu n'utilises pas un champ 'role', remplace le where par un User::all()
-        $players = \App\Models\User::where('role', 'player')->get();
-        
-        // Et tous les terrains
-        $courts = \App\Models\Court::all();
+        // On récupère les terrains ouverts
+        $courts = \App\Models\Court::where('is_active', true)->get();
 
-        return view('admin.reservations.create', compact('players', 'courts'));
+        // On récupère les équipements en stock
+        $equipments = \App\Models\Equipment::where('stock', '>', 0)->get();
+
+        return view('admin.reservations.create', compact('courts', 'equipments'));
     }
+
 
     public function adminStore(\Illuminate\Http\Request $request)
     {
-        // 1. On contrôle que l'admin a tout bien rempli
+        // 1. Validation (On utilise player_identifier au lieu de user_id)
         $request->validate([
-            'user_id' => 'required',
+            'player_identifier' => 'required',
             'court_id' => 'required',
             'date' => 'required|date',
-            'time_slot' => 'required',
-            'payment_status' => 'required'
+            'time_slot' => 'required'
         ]);
 
-        // 2. Formatage de la date (ex: "2026-04-19 14:00")
+        // 2. Recherche Intelligente du Joueur 🦸‍♂️
+        // Si c'est un chiffre, on cherche par ID, sinon on cherche par Email
+        $query = \App\Models\User::query();
+        if (is_numeric($request->player_identifier)) {
+            $query->where('id', $request->player_identifier);
+        } else {
+            $query->where('email', $request->player_identifier);
+        }
+        $user = $query->first();
+
+        // Sécurité : si on n'a trouvé personne
+        if (!$user) {
+            return redirect()->back()->withErrors(['Aucun joueur trouvé avec cet email ou ID.']);
+        }
+
+        // 3. Calculs des Prix et Equipements (Comme pour le joueur !)
+        $court = \App\Models\Court::findOrFail($request->court_id);
+        $totalPrice = $court->price_coins;
+        $equipmentsInfo = [];
+
+        if ($request->has('equipments')) {
+            foreach ($request->equipments as $id => $qty) {
+                if ((int)$qty > 0) {
+                    $equipment = \App\Models\Equipment::findOrFail($id);
+                    $totalPrice += ($equipment->price_coins * $qty);
+
+                    $equipmentsInfo[] = [
+                        'name' => $equipment->name,
+                        'qty' => (int)$qty,
+                    ];
+                }
+            }
+        }
+
+        // 4. Formatage de la date
         $start_time = \Carbon\Carbon::createFromFormat('Y-m-d H:i', $request->date . ' ' . $request->time_slot);
 
-        // 3. Enregistrement !
+        // 5. Enregistrement en Base de Données
         $reservation = new \App\Models\Reservation();
-        $reservation->user_id = $request->user_id;
+        $reservation->user_id = $user->id; // On met le vrai ID trouvé !
         $reservation->court_id = $request->court_id;
         $reservation->start_time = $start_time;
-        
-        // Si "Déjà payé", on valide. Si "À payer sur place", on garde ça en attente (pending).
-        $reservation->status = ($request->payment_status === 'paid') ? 'confirmed' : 'pending';
-        
+
+        // Le statut dépend de la sélection de l'admin (Encaissé = confirmed, Attente = pending)
+$reservation->status = 'confirmed';        
+        $reservation->total_price = $totalPrice;
+        $reservation->equipments_info = $equipmentsInfo;
+
         $reservation->save();
 
-        // 4. On redirige vers la liste des réservations avec un message de succès !
-        // (Assure-toi que la route admin.reservations.index existe, sinon change cette ligne)
-        return redirect()->back()->with('success', 'Réservation ajoutée manuellement avec succès !');
+        // 6. Succès ! Retour à la liste
+        return redirect()->route('admin.reservations')->with('success', 'Réservation traitée avec succès !');
     }
-
 }

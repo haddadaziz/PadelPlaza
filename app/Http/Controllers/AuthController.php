@@ -77,6 +77,6 @@ class AuthController extends Controller
         $request->session()->regenerateToken(); // On détruit le Token CSRF
 
         return redirect()->route('welcome')
-            ->with('success', 'Déconnexion réussie. À très vite ! 🎾');
+            ->with('success', 'Déconnexion réussie. À très vite !');
     }
 }
