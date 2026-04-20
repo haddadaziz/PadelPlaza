@@ -77,9 +77,14 @@
                         <!-- JOUEUR -->
                         <td class="px-8 py-6">
                             <div class="flex items-center gap-4">
-                                <div class="w-12 h-12 rounded-full bg-slate-900 border-2 border-slate-100 shadow-sm flex items-center justify-center font-black text-emerald-400 uppercase">
-                                    {{ substr($reservation->user->name, 0, 2) }}
-                                </div>
+<div class="w-12 h-12 rounded-full bg-slate-900 border-2 border-slate-100 shadow-sm flex items-center justify-center font-black text-emerald-400 uppercase overflow-hidden">
+    @if($reservation->user->profile_image)
+        <img src="{{ asset('storage/' . $reservation->user->profile_image) }}" alt="Photo" class="w-full h-full object-cover">
+    @else
+        {{ substr($reservation->user->name, 0, 2) }}
+    @endif
+</div>
+
                                 <div>
                                     <p class="font-bold text-slate-900 italic text-base">{{ $reservation->user->name }}</p>
                                     <p class="text-[10px] text-slate-400 font-black uppercase tracking-widest mt-0.5">#RSV-{{ $reservation->id }}</p>

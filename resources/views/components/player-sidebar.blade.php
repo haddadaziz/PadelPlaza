@@ -44,8 +44,12 @@
 
     <div class="p-6 mt-auto border-t border-slate-800 space-y-3">
         <a href="{{ route('profile') }}" class="group block bg-slate-800/50 rounded-[1.5rem] p-4 flex items-center gap-3 shadow-xl border border-white/5 hover:bg-emerald-600 transition-all duration-500">
-            <div class="w-10 h-10 rounded-xl bg-emerald-500 group-hover:bg-white group-hover:text-emerald-600 flex items-center justify-center font-black text-white text-xs shadow-lg transition-colors">
-                {{ strtoupper(substr(Auth::user()->name, 0, 2)) }} 
+            <div class="w-10 h-10 rounded-xl bg-emerald-500 group-hover:bg-white group-hover:text-emerald-600 flex items-center justify-center font-black text-white text-xs shadow-lg transition-colors overflow-hidden">
+                @if(Auth::user()->profile_image)
+                    <img src="{{ asset('storage/' . Auth::user()->profile_image) }}" class="w-full h-full object-cover">
+                @else
+                    {{ strtoupper(substr(Auth::user()->name, 0, 2)) }} 
+                @endif
             </div>
             <div class="overflow-hidden">
                 <p class="text-[11px] font-bold text-white truncate italic uppercase tracking-tight">Mon Profil</p>

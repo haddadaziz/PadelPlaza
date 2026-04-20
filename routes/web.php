@@ -44,6 +44,7 @@ Route::middleware('auth')->group(function () {
 
 
         // --- GESTION DU PROFIL ---
+        Route::patch('/profile/image', [\App\Http\Controllers\UserController::class , 'updateProfileImage'])->name('profile.image');
         Route::get('/profile', [\App\Http\Controllers\UserController::class , 'profile'])->name('profile');
         Route::put('/profile/info', [\App\Http\Controllers\UserController::class , 'updateProfileInfo'])->name('profile.info');
         Route::put('/profile/password', [\App\Http\Controllers\UserController::class , 'updateProfilePassword'])->name('profile.password');
@@ -60,7 +61,7 @@ Route::middleware('auth')->group(function () {
         Route::post('/api/create-recharge-intent', [\App\Http\Controllers\PlayerController::class , 'createRechargeIntent'])->name('api.create-recharge-intent');
         // Valiadation finale du paiement
         Route::post('/player/recharge/process', [\App\Http\Controllers\PlayerController::class , 'rechargeProcess'])->name('player.recharge.process');
-        Route::get('/player/transactions', [\App\Http\Controllers\PlayerController::class, 'transactions'])->name('player.transactions');
+        Route::get('/player/transactions', [\App\Http\Controllers\PlayerController::class , 'transactions'])->name('player.transactions');
 
 
         // --- ESPACE ADMINISTRATEUR ---

@@ -52,14 +52,15 @@
                     <tr class="group hover:bg-slate-50/50 transition-all">
                         <td class="px-8 py-6">
                             <div class="flex items-center gap-4">
-                                <!-- Initials du nom -->
-                                <div class="w-12 h-12 rounded-full bg-emerald-100 border-2 border-white shadow-sm flex items-center justify-center font-black text-emerald-600 uppercase">
-                                    {{ substr($player->name, 0, 2) }}
-                                </div>
-                                <div>
-                                    <p class="font-bold text-slate-900 italic text-base">{{ $player->name }}</p>
-                                    <p class="text-[11px] text-slate-400 font-medium">{{ $player->email }}</p>
-                                </div>
+<!-- Photo ou Initiales -->
+<div class="w-12 h-12 rounded-full bg-emerald-100 border-2 border-white shadow-sm flex items-center justify-center font-black text-emerald-600 uppercase overflow-hidden">
+    @if($player->profile_image)
+        <img src="{{ asset('storage/' . $player->profile_image) }}" alt="Photo de {{ $player->name }}" class="w-full h-full object-cover">
+    @else
+        {{ substr($player->name, 0, 2) }}
+    @endif
+</div>
+
                             </div>
                         </td>
                         <td class="px-8 py-6">
@@ -75,7 +76,7 @@
                             <span class="font-black text-emerald-500 text-lg tracking-tighter italic">{{ $player->coins_balance }} <span class="text-[10px] text-slate-300">PC</span></span>
                         </td>
                         <td class="px-8 py-6">
-                            <span class="text-xs font-bold text-slate-500 italic">Il y a {{ $player->created_at->diffForHumans(null, true) }}</span>
+                            <span class="text-xs font-bold text-slate-500 italic">Il y a {{ $player->updated_at->diffForHumans(null, true) }}</span>
                         </td>
                         <td class="px-8 py-6 text-right">
                             <div class="flex justify-end gap-2">
@@ -101,14 +102,18 @@
             </table>
         </div>
 
-        <div class="mt-8 flex justify-between items-center px-4">
-            <p class="text-xs font-bold text-slate-400 italic uppercase">Affichage de 1 sur 128 joueurs</p>
-            <div class="flex gap-2">
-                <button class="w-10 h-10 flex items-center justify-center bg-white border border-slate-100 rounded-xl text-slate-400 hover:text-emerald-500 transition-all"><i class="fas fa-chevron-left"></i></button>
-                <button class="w-10 h-10 flex items-center justify-center bg-emerald-500 text-white rounded-xl font-bold shadow-lg shadow-emerald-100">1</button>
-                <button class="w-10 h-10 flex items-center justify-center bg-white border border-slate-100 rounded-xl text-slate-400 hover:text-emerald-500 transition-all"><i class="fas fa-chevron-right"></i></button>
-            </div>
-        </div>
+<div class="mt-8 flex flex-col md:flex-row justify-between items-center px-4 gap-4">
+    <p class="text-xs font-bold text-slate-400 italic uppercase">
+        Page {{ $players->currentPage() }} • {{ $players->total() }} Joueurs au total dans le club
+    </p>
+
+
+    <!-- La magie Laravel génère les flèches et les numéros toute seule ! -->
+    <div class="mt-4 md:mt-0">
+        {{ $players->links() }}
+    </div>
+</div>
+
 
     </main>
     @include('components.notif')

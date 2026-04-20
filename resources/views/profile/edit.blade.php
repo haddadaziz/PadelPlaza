@@ -31,9 +31,31 @@
             <div class="bg-slate-900 rounded-[3rem] p-10 text-center flex flex-col items-center justify-center shadow-2xl shadow-slate-200 relative overflow-hidden h-fit">
                 <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-10"></div>
                 
-                <div class="w-24 h-24 rounded-[2rem] bg-emerald-500 flex items-center justify-center text-white text-3xl font-black shadow-2xl shadow-emerald-500/20 mb-6 border-4 border-slate-800 relative z-10">
-                    {{ strtoupper(substr(Auth::user()->name, 0, 2)) }}
-                </div>
+                <form action="{{ route('profile.image') }}" method="POST" enctype="multipart/form-data" class="relative group z-10 mb-6">
+                    @csrf
+                    @method('PATCH')
+                    <div class="w-32 h-32 rounded-[2.5rem] bg-emerald-500 overflow-hidden shadow-2xl border-4 border-slate-800 relative transition-transform group-hover:scale-105 duration-500">
+                        @if(Auth::user()->profile_image)
+                            <img src="{{ asset('storage/' . Auth::user()->profile_image) }}" class="w-full h-full object-cover">
+                        @else
+                            <div class="w-full h-full flex items-center justify-center text-white text-4xl font-black italic">
+                                {{ strtoupper(substr(Auth::user()->name, 0, 2)) }}
+                            </div>
+                        @endif
+                        
+                        @if(Auth::user()->role === 'player')
+                            <label for="profile_image" class="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer">
+                                <i class="fas fa-camera text-white text-xl"></i>
+                            </label>
+                        @endif
+                    </div>
+                    
+                    <input type="file" name="image" id="profile_image" class="hidden" onchange="this.form.submit()">
+                    
+                    <div class="absolute -bottom-2 -right-2 w-10 h-10 bg-white rounded-2xl shadow-lg flex items-center justify-center text-slate-900 border-4 border-slate-900 group-hover:bg-emerald-500 group-hover:text-white transition-colors duration-300">
+                        <i class="fas fa-pen text-xs"></i>
+                    </div>
+                </form>
                 
                 <h3 class="text-xl font-black text-white italic uppercase tracking-tighter z-10">{{ Auth::user()->name }}</h3>
                 <p class="text-emerald-400 text-[10px] font-black uppercase tracking-[0.3em] mt-2 z-10 italic">{{ Auth::user()->role }}</p>
@@ -41,7 +63,7 @@
                 <div class="mt-8 pt-8 border-t border-white/5 w-full grid grid-cols-2 gap-4 z-10">
                     <div class="text-left">
                         <p class="text-slate-500 text-[9px] font-black uppercase italic">Solde</p>
-                        <p class="text-white font-black text-lg italic tracking-tighter">{{ Auth::user()->coins ?? 0 }} <span class="text-emerald-500 text-[10px]">PC</span></p>
+                        <p class="text-white font-black text-lg italic tracking-tighter">{{ Auth::user()->coins_balance ?? 0 }} <span class="text-emerald-500 text-[10px]">PC</span></p>
                     </div>
                     <div class="text-right">
                         <p class="text-slate-500 text-[9px] font-black uppercase italic">Membre depuis</p>

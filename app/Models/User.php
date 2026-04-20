@@ -22,7 +22,8 @@ class User extends Authenticatable
         'avatar',
         'coins_balance',
         'xp_points',
-        'level_id'
+        'level_id',
+        'profile_image'
     ];
 
     protected $hidden = [

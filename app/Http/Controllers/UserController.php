@@ -5,21 +5,44 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
     // Affiche la liste des joueurs pour l'Admin
-    public function indexAdmin()
+    public function indexAdmin(\Illuminate\Http\Request $request)
     {
-        if (Auth::user()->role !== 'admin') {
+        // 1. Sécurité anti-intrus
+        if (\Illuminate\Support\Facades\Auth::user()->role !== 'admin') {
             return redirect('/home');
         }
 
-        // On récupère TOUS les comptes qui sont des 'player', du plus récent au plus ancien
-        $players = User::where('role', 'player')->latest()->get();
+        // 2. On prépare la base de notre requête (tous les joueurs)
+        $query = User::where('role', 'player')->latest();
+
+        // 3. LA RECHERCHE MAGIQUE 🔍
+        if ($request->filled('q')) {
+            $search = $request->q;
+
+            $query->where(function ($q) use ($search) {
+                // Si l'admin a tapé un numéro, on cherche la correspondance parfaite sur l'ID
+                if (is_numeric($search)) {
+                    $q->where('id', $search);
+                }
+                else {
+                    // Sinon, on cherche dans le nom et l'email (ILIKE évite les soucis Majuscule/Minuscule sur PostgreSQL !)
+                    $q->where('name', 'ilike', '%' . $search . '%')
+                        ->orWhere('email', 'ilike', '%' . $search . '%');
+                }
+            });
+        }
+
+        // 4. On paginate, et le petit "appends" permet de conserver ta recherche quand tu passes à la page 2 !
+        $players = $query->paginate(10)->appends($request->query());
 
         return view('admin.players', compact('players'));
     }
+
     // Afficher la page Profil
     public function profile()
     {
@@ -42,6 +65,38 @@ class UserController extends Controller
         auth()->user()->update($validated); // On met à jour l'utilisateur connecté
 
         return redirect()->back()->with('success', 'Vos informations ont bien été mises à jour !');
+    }
+
+    public function updateProfileImage(Request $request)
+    {
+        // 1. Sécurité : Seuls les joueurs ont la permission
+        if (auth()->user()->role !== 'player') {
+            return redirect()->back()->withErrors(['Les administrateurs n\'ont pas de photo.']);
+        }
+
+        // 2. Validation poussée (image, extension, 2Mo max)
+        $request->validate([
+            'image' => 'required|image|mimes:jpeg,png,jpg,webp|max:2048',
+        ]);
+
+        $user = auth()->user();
+
+        // 3. Téléversement intelligent
+        if ($request->hasFile('image')) {
+            // On la stocke dans storage/app/public/profiles
+            $path = $request->file('image')->store('profiles', 'public');
+
+            // 4. Si le joueur avait déjà une photo, on la supprime du disque pour économiser de la place
+            if ($user->profile_image) {
+                \Illuminate\Support\Facades\Storage::disk('public')->delete($user->profile_image);
+            }
+
+            // 5. Sauvegarde en BDD
+            $user->profile_image = $path;
+            $user->save();
+        }
+
+        return redirect()->back()->with('success', 'Photo de profil mise à jour ! 📸');
     }
 
     // Changer de mot de passe
