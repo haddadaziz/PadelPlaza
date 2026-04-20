@@ -1,17 +1,15 @@
 <aside class="w-64 bg-white border-r border-slate-100 flex flex-col fixed h-full transition-all z-50">
-    <div class="p-8">
-        <div class="flex items-center gap-3 group cursor-pointer">
-            <div class="w-11 h-11 bg-emerald-500 rounded-2xl flex items-center justify-center shadow-lg shadow-emerald-200 group-hover:rotate-6 transition-transform duration-300">
-                <svg class="w-7 h-7 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                    <path d="M7 15V5c0-1.1.9-2 2-2h4a4 4 0 1 1 0 8H9" stroke-linecap="round" />
-                    <circle cx="16" cy="16" r="4" fill="currentColor" fill-opacity="0.2" />
-                    <circle cx="16" cy="16" r="1.5" fill="white" />
-                </svg>
+    <div class="px-6 py-7">
+        <a href="{{ route('home') }}" class="flex items-center gap-3 group w-full">
+            <div class="w-10 h-10 bg-emerald-500 rounded-xl flex items-center justify-center shadow-lg shadow-emerald-200 shrink-0 group-hover:scale-110 transition-transform duration-300">
+                <i class="fas fa-table-tennis text-white text-lg"></i>
             </div>
-            <span class="text-xl font-black text-slate-900 tracking-tighter italic uppercase leading-none">
-                PADEL<span class="text-emerald-500">PLAZA</span>
-            </span>
-        </div>
+            <div class="flex flex-col leading-none">
+                <span class="text-[22px] font-[900] text-slate-900 tracking-tighter italic uppercase leading-none">PADEL<span class="text-emerald-500">PLAZA</span></span>
+                <span class="text-[8px] font-black text-slate-400 uppercase tracking-[0.3em] mt-0.5">Club · Arena</span>
+            </div>
+        </a>
+    </div>
     </div>
 
     <nav class="flex-1 px-4 space-y-2">

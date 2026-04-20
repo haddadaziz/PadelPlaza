@@ -36,14 +36,15 @@
 
     <nav class="fixed top-0 w-full z-50 bg-white/90 backdrop-blur-xl border-b border-slate-100 px-6 py-4">
         <div class="max-w-7xl mx-auto flex justify-between items-center">
-            <div class="flex items-center gap-3">
-                <div
-                    class="w-10 h-10 bg-emerald-500 rounded-xl flex items-center justify-center shadow-lg shadow-emerald-200">
-                    <span class="text-white font-black italic text-xl">P</span>
+            <a href="/" class="flex items-center gap-3 group">
+                <div class="w-10 h-10 bg-emerald-500 rounded-xl flex items-center justify-center shadow-lg shadow-emerald-200 shrink-0 group-hover:scale-110 transition-transform duration-300">
+                    <i class="fas fa-table-tennis text-white text-lg"></i>
                 </div>
-                <span class="text-2xl font-black tracking-tighter italic uppercase">PADEL<span
-                        class="text-emerald-500">PLAZA</span></span>
-            </div>
+                <div class="flex flex-col leading-none">
+                    <span class="text-[22px] font-[900] text-slate-900 tracking-tighter italic uppercase leading-none">PADEL<span class="text-emerald-500">PLAZA</span></span>
+                    <span class="text-[8px] font-black text-slate-400 uppercase tracking-[0.3em] mt-0.5">Club · Arena</span>
+                </div>
+            </a>
 
             <div
                 class="hidden md:flex items-center gap-10 text-[11px] font-black uppercase tracking-[0.2em] text-slate-500">

@@ -64,13 +64,18 @@
                                 @elseif($transaction->type == 'cashback') Bonus Fidélité
                                 @endif
                             </p>
-                            @if($transaction->type == 'reservation' && $matchDate)
-                                <p class="text-[10px] text-slate-400 font-bold italic">Match le {{ $matchDate }}</p>
-                            @elseif($transaction->type == 'cashback')
-                                <p class="text-[10px] text-slate-300 font-bold italic">Suite à une réservation</p>
-                            @else
-                                <p class="text-[10px] text-slate-300 font-bold italic">Via Stripe</p>
-                            @endif
+@if($transaction->type == 'reservation' && $matchDate)
+    <p class="text-[10px] text-slate-400 font-bold italic">Match le {{ $matchDate }}</p>
+@elseif($transaction->type == 'cashback')
+    <p class="text-[10px] text-slate-300 font-bold italic">Suite à une réservation</p>
+@elseif($transaction->type == 'recharge_admin')
+    <p class="text-[10px] text-slate-300 font-bold italic">Par l'administration</p>
+@elseif($transaction->type == 'recharge_stripe')
+    <p class="text-[10px] text-slate-300 font-bold italic">Via Stripe</p>
+@else
+    <p class="text-[10px] text-slate-300 font-bold italic">—</p>
+@endif
+
                         </div>
                     </div>
 

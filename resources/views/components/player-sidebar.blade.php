@@ -1,13 +1,14 @@
 <aside class="w-64 bg-slate-900 border-r border-slate-800 flex flex-col fixed h-full transition-all z-50">
-    <div class="p-8">
-        <div class="flex items-center gap-3 group cursor-pointer">
-            <div class="w-11 h-11 bg-emerald-500 rounded-2xl flex items-center justify-center shadow-lg shadow-emerald-500/30 group-hover:rotate-6 transition-transform duration-300">
-                <i class="fas fa-table-tennis text-white text-xl"></i>
+    <div class="px-6 py-7">
+        <a href="{{ route('player.dashboard') }}" class="flex items-center gap-3 group w-full">
+            <div class="w-10 h-10 bg-emerald-500 rounded-xl flex items-center justify-center shadow-lg shadow-emerald-500/30 shrink-0 group-hover:scale-110 transition-transform duration-300">
+                <i class="fas fa-table-tennis text-white text-lg"></i>
             </div>
-            <span class="text-xl font-black text-white tracking-tighter italic uppercase leading-none">
-                PADEL<span class="text-emerald-500">PLAZA</span>
-            </span>
-        </div>
+            <div class="flex flex-col leading-none">
+                <span class="text-[22px] font-[900] text-white tracking-tighter italic uppercase leading-none">PADEL<span class="text-emerald-500">PLAZA</span></span>
+                <span class="text-[8px] font-black text-slate-500 uppercase tracking-[0.3em] mt-0.5">Club · Arena</span>
+            </div>
+        </a>
     </div>
 
     <nav class="flex-1 px-4 space-y-2 mt-4">
