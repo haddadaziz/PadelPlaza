@@ -14,6 +14,18 @@
         .custom-scrollbar::-webkit-scrollbar { width: 4px; }
         .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: #E2E8F0; border-radius: 10px; }
+        
+        /* Animation subtile pour la barre de progression */
+        @keyframes shine {
+            from { transform: translateX(-100%); }
+            to { transform: translateX(100%); }
+        }
+        .progress-shine {
+            position: absolute;
+            top: 0; left: 0; bottom: 0; right: 0;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            animation: shine 2s infinite;
+        }
     </style>
 </head>
 <body class="flex min-h-screen">
@@ -25,28 +37,34 @@
     <div class="flex justify-between items-center mb-6">
         <div class="flex items-center gap-4">
             <div class="relative">
-                <div class="w-14 h-14 bg-slate-900 rounded-2xl flex items-center justify-center text-emerald-400 font-black italic text-xl shadow-lg border-2 border-white">
-                    {{ Auth::user()->level ?? 12 }}
-                </div>
+<div class="w-14 h-14 bg-slate-900 rounded-2xl flex items-center justify-center text-emerald-400 font-black italic text-xl shadow-lg border-2 border-white overflow-hidden">
+    @if(Auth::user()->level && Auth::user()->level->badge_image)
+        <img src="{{ asset('storage/' . Auth::user()->level->badge_image) }}" alt="Badge Rang" class="w-full h-full object-cover">
+    @else
+        <!-- Si tu n'as pas encore mis d'image en Base de données, on affiche juste la 1ère lettre du rang -->
+        {{ substr(Auth::user()->level->level_name ?? 'Bois', 0, 1) }}
+    @endif
+</div>
+
                 <div class="absolute -bottom-1 -right-1 w-5 h-5 bg-emerald-500 rounded-full border-2 border-white flex items-center justify-center">
                     <i class="fas fa-check text-[8px] text-white"></i>
                 </div>
             </div>
             <div>
                 <h2 class="text-2xl font-[900] text-slate-900 tracking-tighter italic uppercase leading-none">Arena de {{ explode(' ', Auth::user()->name)[0] }}</h2>
-                <p class="text-[10px] text-slate-400 font-black uppercase tracking-widest mt-1 italic">Membre Gold • <span class="text-emerald-500">En ligne</span></p>
+                <p class="text-[10px] text-slate-400 font-black uppercase tracking-widest mt-1 italic">Rang : <span class="text-emerald-500">{{ Auth::user()->level->level_name ?? 'Bois' }}</span></p>
             </div>
         </div>
     </div>
 
     <div class="grid grid-cols-12 gap-6 flex-1">
         
-        <div class="col-span-8 space-y-6">
+        <div class="col-span-8 space-y-6 flex flex-col">
             
-            <div class="bg-slate-900 rounded-[2.5rem] p-8 shadow-2xl relative overflow-hidden group min-h-[220px] flex flex-col justify-center">
+            <div class="bg-slate-900 rounded-[2.5rem] p-8 shadow-2xl relative overflow-hidden group">
                 <div class="absolute top-0 right-0 w-80 h-80 bg-emerald-500/10 rounded-full -mr-20 -mt-20 blur-[100px]"></div>
                 
-                <div class="relative z-10 flex justify-between items-center">
+                <div class="relative z-10 flex justify-between items-center mb-8">
                     <div>
                         <p class="text-emerald-500 text-[10px] font-black uppercase tracking-[0.4em] mb-2 italic">Portefeuille Plaza</p>
                         <h3 class="text-6xl font-[900] text-white italic tracking-tighter leading-none">
@@ -61,6 +79,29 @@
                         <a href="{{ route('player.recharge') }}" class="bg-white/10 backdrop-blur-md text-white border border-white/10 px-8 py-4 rounded-2xl font-black text-[11px] uppercase italic tracking-widest hover:bg-white/20 transition-all flex items-center justify-center gap-3">
                             <i class="fas fa-wallet"></i> Recharger
                         </a>
+                    </div>
+                </div>
+
+                <div class="relative z-10 pt-4 border-t border-white/5">
+                    <div class="flex justify-between items-end mb-3">
+                        <div>
+                            <p class="text-[9px] font-black text-slate-500 uppercase tracking-widest mb-1">Progression du Rang</p>
+                            <h4 class="text-white text-sm font-black italic uppercase tracking-tighter">
+                                Vers le rang <span class="text-emerald-400">{{ $nextLevel ? $nextLevel->level_name : 'MAXIMUM' }}</span>
+                            </h4>
+                        </div>
+                        <div class="text-right">
+                            <p class="text-white font-black italic text-xs tracking-tighter">
+                                {{ Auth::user()->xp_points }} <span class="text-slate-500">/ {{ $targetXp }} XP</span>
+                            </p>
+                            <p class="text-[9px] text-emerald-500 font-bold uppercase tracking-widest">{{ $progress }}%</p>
+                        </div>
+                    </div>
+                    
+                    <div class="h-3 w-full bg-white/5 rounded-full overflow-hidden relative border border-white/5 p-0.5">
+                        <div class="h-full bg-gradient-to-r from-emerald-600 to-emerald-400 rounded-full relative overflow-hidden transition-all duration-1000" style="width: {{ $progress }}%">
+                            <div class="progress-shine"></div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -101,7 +142,6 @@
                     @forelse($transactions as $tx)
                         <div class="flex items-center justify-between group cursor-default">
                             <div class="flex items-center gap-3">
-                                
                                 @if($tx->type == 'recharge_stripe' || $tx->type == 'recharge_admin')
                                     <div class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-500 flex items-center justify-center text-xs shadow-sm group-hover:bg-emerald-500 group-hover:text-white transition-all duration-300">
                                         <i class="fas fa-plus-circle"></i>
@@ -110,7 +150,6 @@
                                         <p class="text-[11px] font-black text-slate-900 uppercase italic leading-none">Recharge</p>
                                         <p class="text-[9px] text-slate-400 font-bold mt-1">{{ $tx->description }}</p>
                                     </div>
-                                
                                 @elseif($tx->type == 'reservation')
                                     <div class="w-10 h-10 rounded-xl bg-slate-50 text-slate-400 flex items-center justify-center text-xs shadow-sm group-hover:bg-slate-900 group-hover:text-white transition-all duration-300">
                                         <i class="fas fa-table-tennis-paddle-ball"></i>
@@ -119,7 +158,6 @@
                                         <p class="text-[11px] font-black text-slate-900 uppercase italic leading-none">Réservation</p>
                                         <p class="text-[9px] text-slate-400 font-bold mt-1">{{ $tx->description }}</p>
                                     </div>
-                                    
                                 @elseif($tx->type == 'cashback')
                                     <div class="w-10 h-10 rounded-xl bg-amber-50 text-amber-500 flex items-center justify-center text-xs shadow-sm group-hover:bg-amber-500 group-hover:text-white transition-all duration-300">
                                         <i class="fas fa-gift"></i>
@@ -129,10 +167,8 @@
                                         <p class="text-[9px] text-slate-400 font-bold mt-1">{{ $tx->description }}</p>
                                     </div>
                                 @endif
-
                             </div>
                             <div class="text-right">
-                                <!-- La couleur (+ / -) change automatiquement selon que le montant soit bénéficiaire ou un achat ! -->
                                 <p class="text-xs font-black {{ $tx->amount > 0 ? ($tx->type == 'cashback' ? 'text-amber-500' : 'text-emerald-500') : 'text-slate-900' }} italic">
                                     {{ $tx->amount > 0 ? '+' : '' }}{{ $tx->amount }} PC
                                 </p>
@@ -146,7 +182,6 @@
                         </div>
                     @endforelse
                 </div>
-
 
                 <a href="{{route('player.transactions') }}" class="mt-6 pt-4 text-center text-[9px] font-black text-slate-300 uppercase tracking-widest hover:text-emerald-500 transition-colors italic border-t border-slate-50">
                     Voir tout l'historique <i class="fas fa-chevron-right ml-1"></i>

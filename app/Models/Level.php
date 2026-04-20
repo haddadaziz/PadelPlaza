@@ -11,7 +11,8 @@ class Level extends Model
 
     protected $fillable = [
         'level_name',
-        'min_xp'
+        'min_xp',
+        'badge_image'
     ];
 
     // Un Level concerne plusieurs Users

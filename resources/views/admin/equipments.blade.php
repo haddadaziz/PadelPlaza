@@ -27,11 +27,33 @@
 
         </div>
 
-        <div class="flex gap-4 mb-8">
-            <span class="px-4 py-2 bg-emerald-500 text-white rounded-xl text-[10px] font-black uppercase tracking-widest shadow-lg shadow-emerald-100 cursor-pointer">Tous</span>
-            <span class="px-4 py-2 bg-white text-slate-400 border border-slate-100 rounded-xl text-[10px] font-black uppercase tracking-widest hover:text-emerald-500 transition-all cursor-pointer">Raquettes</span>
-            <span class="px-4 py-2 bg-white text-slate-400 border border-slate-100 rounded-xl text-[10px] font-black uppercase tracking-widest hover:text-emerald-500 transition-all cursor-pointer">Accessoires</span>
-        </div>
+<div class="flex gap-4 mb-8">
+    <!-- TOUS -->
+    <a href="{{ route('admin.equipments') }}" 
+       class="px-5 py-2.5 transition-all rounded-xl text-[10px] font-black uppercase tracking-widest {{ !request('type') ? 'bg-emerald-500 text-white shadow-lg shadow-emerald-100' : 'bg-white text-slate-400 border border-slate-100 hover:text-emerald-500' }}">
+        Tous
+    </a>
+    
+    <!-- RAQUETTES -->
+    <a href="{{ route('admin.equipments', ['type' => 'raquette']) }}" 
+       class="px-5 py-2.5 transition-all rounded-xl text-[10px] font-black uppercase tracking-widest {{ request('type') == 'raquette' ? 'bg-emerald-500 text-white shadow-lg shadow-emerald-100' : 'bg-white text-slate-400 border border-slate-100 hover:text-emerald-500' }}">
+        Raquettes
+    </a>
+    
+    <!-- BALLES (Corrigé avec un "s") -->
+    <a href="{{ route('admin.equipments', ['type' => 'balles']) }}" 
+       class="px-5 py-2.5 transition-all rounded-xl text-[10px] font-black uppercase tracking-widest {{ request('type') == 'balles' ? 'bg-emerald-500 text-white shadow-lg shadow-emerald-100' : 'bg-white text-slate-400 border border-slate-100 hover:text-emerald-500' }}">
+        Balles
+    </a>
+
+    <!-- ACCESSOIRES / AUTRES -->
+    <a href="{{ route('admin.equipments', ['type' => 'accessoires']) }}" 
+       class="px-5 py-2.5 transition-all rounded-xl text-[10px] font-black uppercase tracking-widest {{ request('type') == 'accessoires' ? 'bg-emerald-500 text-white shadow-lg shadow-emerald-100' : 'bg-white text-slate-400 border border-slate-100 hover:text-emerald-500' }}">
+        Accessoires
+    </a>
+</div>
+
+
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             

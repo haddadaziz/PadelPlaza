@@ -253,6 +253,17 @@ class ReservationController extends Controller
         $reservation->equipments_info = $equipmentsInfo;
         $reservation->save();
 
+        // --- MISE A JOUR DE L'XP (GAMIFICATION) ---
+        // Le prix total payé en Plaza Coins = L'XP gagnée !
+        $user->xp_points += $totalPrice;
+        
+        // On vérifie immédiatement si ce nouvel XP permet de débloquer le rang supérieur
+        $newLevel = \App\Models\Level::where('min_xp', '<=', $user->xp_points)->orderBy('min_xp', 'desc')->first();
+        if ($newLevel) {
+            $user->level_id = $newLevel->id;
+        }
+        $user->save();
+
         // 5. On termine en l'envoyant sur son Dashboard avec un message Flash de gloire
         return redirect('/player/dashboard')->with('success', 'Ton match est confirmé ! Prépare tes balles !');
     }
@@ -331,6 +342,15 @@ $reservation->status = 'confirmed';
         $reservation->equipments_info = $equipmentsInfo;
 
         $reservation->save();
+
+        // --- MISE A JOUR DE L'XP (SI ADMIN PAYE) ---
+        $user->xp_points += $totalPrice;
+        
+        $newLevel = \App\Models\Level::where('min_xp', '<=', $user->xp_points)->orderBy('min_xp', 'desc')->first();
+        if ($newLevel) {
+            $user->level_id = $newLevel->id;
+        }
+        $user->save();
 
         // 6. Succès ! Retour à la liste
         return redirect()->route('admin.reservations')->with('success', 'Réservation traitée avec succès !');

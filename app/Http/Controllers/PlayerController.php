@@ -8,10 +8,25 @@ class PlayerController extends Controller
 {
     public function dashboard()
     {
-        // On récupère les 5 dernières transactions du joueur
-        $transactions = \Illuminate\Support\Facades\Auth::user()->transactions()->latest()->take(5)->get();
-        return view('player.dashboard', compact('transactions'));
+        $user = \Illuminate\Support\Facades\Auth::user();
+        $transactions = $user->transactions()->latest()->take(5)->get();
+
+        // 1. On interroge la BDD pour trouver le PREMIER niveau dont l'XP min dépasse l'XP actuelle
+        $nextLevel = \App\Models\Level::where('min_xp', '>', $user->xp_points)->orderBy('min_xp', 'asc')->first();
+
+        // 2. Sécurité : au cas où le joueur est déjà "Au Max"
+        $progress = 100;
+        $targetXp = $user->xp_points;
+
+        if ($nextLevel) {
+            $targetXp = $nextLevel->min_xp;
+            // 3. On calcule le pourcentage propre pour la barre : (actuel / total) * 100
+            $progress = min(100, round(($user->xp_points / $targetXp) * 100));
+        }
+
+        return view('player.dashboard', compact('transactions', 'nextLevel', 'progress', 'targetXp'));
     }
+
 
     public function recharge()
     {

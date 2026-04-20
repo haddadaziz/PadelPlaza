@@ -26,10 +26,13 @@
                 <p class="text-slate-400 font-medium">Gérez les comptes, les niveaux et les Plaza Coins.</p>
             </div>
             <div class="flex gap-4">
-                <div class="relative">
-                    <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
-                    <input type="text" placeholder="Rechercher un joueur..." class="pl-12 pr-6 py-3.5 bg-white border border-slate-100 rounded-2xl text-sm font-semibold outline-none focus:ring-2 focus:ring-emerald-500 transition-all w-64 shadow-sm">
-                </div>
+<form action="{{ route('admin.players') }}" method="GET" class="relative">
+    <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
+    <!-- On a ajouté name="q", et on conserve la valeur cherchée avec value="" -->
+    <input type="text" name="q" value="{{ request('q') }}" placeholder="Taper puis Entrer..." 
+           class="pl-12 pr-6 py-3.5 bg-white border border-slate-100 rounded-2xl text-sm font-semibold outline-none focus:ring-2 focus:ring-emerald-500 transition-all w-64 shadow-sm">
+</form>
+
                 <button class="bg-slate-900 text-white px-6 py-3.5 rounded-2xl font-black text-xs uppercase italic tracking-widest hover:bg-emerald-600 transition-all">
                     Exporter CSV
                 </button>

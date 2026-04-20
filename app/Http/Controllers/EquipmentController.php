@@ -6,11 +6,22 @@ use Illuminate\Http\Request;
 
 class EquipmentController extends Controller
 {
-    public function index()
+    public function index(\Illuminate\Http\Request $request)
     {
-        $equipments = \App\Models\Equipment::all(); // On va chercher tout le stock
+        // On prépare la récupération du stock
+        $query = \App\Models\Equipment::query();
+
+        // Si l'URL contient un filtre "?type=raquette" par exemple, on filtre !
+        if ($request->filled('type')) {
+            $query->where('type', $request->type);
+        }
+
+        // On exécute la requête
+        $equipments = $query->get();
+        
         return view('admin.equipments', compact('equipments'));
     }
+
     // Affiche la page HTML d'édition
     public function edit($id)
     {
@@ -76,7 +87,7 @@ class EquipmentController extends Controller
 
         $equipment->delete();
 
-        return redirect()->route('admin.equipments')->with('success', 'Article retiré définitivement du stock ! 🗑️');
+        return redirect()->route('admin.equipments')->with('success', 'Article retiré avec succès !');
     }
 
 }

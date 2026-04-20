@@ -47,7 +47,6 @@
                             </div>
                             <input type="file" name="image" class="absolute inset-0 opacity-0 cursor-pointer" onchange="previewImage(event)">
                         </div>
-                        <p class="text-[9px] text-slate-400 font-bold italic mt-6 text-center leading-relaxed">Préférez un fond blanc ou transparent pour un rendu optimal dans le store.</p>
                     </div>
 
                     <div class="md:col-span-2 p-10 space-y-8">
