@@ -144,8 +144,8 @@ class ReservationController extends Controller
 
 
 
-        
-// On utilise 'now()' pour être certain d'avoir la bonne heure du fuseau local de l'application        $heureActuelle = (int)now()->format('H');
+        // On utilise 'now()' pour être certain d'avoir la bonne heure du fuseau local de l'application
+        $heureActuelle = (int)now()->format('H');
 
 
         // On passe une à une sur les 24 heures de la journée
@@ -221,12 +221,17 @@ class ReservationController extends Controller
             $user->increment('coins_balance', $cashback);
 
 
+
+        // 3. Conversion de la date pour la BDD (ex: "2026-04-19" + "18:30" => "2026-04-19 18:30:00")
+        $start_time = \Carbon\Carbon::createFromFormat('Y-m-d H:i', $request->date . ' ' . $request->time_slot);
+
+        if ($request->payment_method === 'coins') {
             // 1) Ligne Historique de la Dépense
             \App\Models\Transaction::create([
                 'user_id' => $user->id,
                 'amount' => -$totalPrice,
                 'type' => 'reservation',
-                'description' => $court->name
+                'description' => $court->name . '|' . $start_time->format('d/m/Y à H:i')
             ]);
 
             // 2) Ligne Historique du Gain (Cashback)
@@ -237,9 +242,6 @@ class ReservationController extends Controller
                 'description' => 'Cashback de réservation'
             ]);
         }
-
-        // 3. Conversion de la date pour la BDD (ex: "2026-04-19" + "18:30" => "2026-04-19 18:30:00")
-        $start_time = \Carbon\Carbon::createFromFormat('Y-m-d H:i', $request->date . ' ' . $request->time_slot);
 
         // 4. Enregistrement du terrain ! 🎾
         $reservation = new \App\Models\Reservation();

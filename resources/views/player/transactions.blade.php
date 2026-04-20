@@ -50,19 +50,30 @@
                             <i class="fas {{ $transaction->amount > 0 ? ($transaction->type == 'cashback' ? 'fa-gift' : 'fa-plus-circle') : 'fa-table-tennis-paddle-ball' }}"></i>
                         </div>
                         <div>
+                            @php
+                                $parts = explode('|', $transaction->description ?? '');
+                                $courtName = $parts[0] ?? $transaction->description;
+                                $matchDate = $parts[1] ?? null;
+                            @endphp
                             <p class="text-sm font-black text-slate-900 uppercase italic tracking-tight">
                                 @if(str_contains($transaction->type, 'recharge')) Recharge de compte
-                                @elseif($transaction->type == 'reservation') Match de Padel
+                                @elseif($transaction->type == 'reservation') {{ $courtName }}
                                 @elseif($transaction->type == 'cashback') Bonus Fidélité
                                 @endif
                             </p>
-                            <p class="text-[10px] text-slate-400 font-bold">Réf: #PPC-{{ $transaction->id }} • {{ $transaction->description }}</p>
+                            @if($transaction->type == 'reservation' && $matchDate)
+                                <p class="text-[10px] text-slate-400 font-bold italic">Match le {{ $matchDate }}</p>
+                            @elseif($transaction->type == 'cashback')
+                                <p class="text-[10px] text-slate-300 font-bold italic">Suite à une réservation</p>
+                            @else
+                                <p class="text-[10px] text-slate-300 font-bold italic">Via Stripe</p>
+                            @endif
                         </div>
                     </div>
 
                     <div class="col-span-3 text-center">
                         <p class="text-xs font-black text-slate-600 italic uppercase leading-none">{{ $transaction->created_at->format('d M Y') }}</p>
-                        <p class="text-[9px] text-slate-300 font-bold mt-1">{{ $transaction->created_at->format('H:i') }}</p>
+                        <p class="text-[9px] text-slate-300 font-bold mt-1">Réservé à {{ $transaction->created_at->format('H:i') }}</p>
                     </div>
 
                     <div class="col-span-2 flex justify-center">

@@ -27,8 +27,8 @@
             <span class="font-bold text-[11px] uppercase tracking-widest italic">Réserver</span>
         </a>
 
-        <a href="#" class="flex items-center gap-4 px-4 py-3 rounded-2xl transition-all group text-slate-400 hover:bg-slate-800 hover:text-white">
-             <div class="w-8 h-8 rounded-xl flex items-center justify-center bg-slate-800 group-hover:bg-slate-700">
+        <a href="{{ route('player.matchs') }}" class="flex items-center gap-4 px-4 py-3 rounded-2xl transition-all group {{ request()->is('player/matchs*') ? 'bg-emerald-500 text-white shadow-lg shadow-emerald-500/20' : 'text-slate-400 hover:bg-slate-800 hover:text-white' }}">
+             <div class="w-8 h-8 rounded-xl flex items-center justify-center {{ request()->is('player/matchs*') ? 'bg-white/20' : 'bg-slate-800 group-hover:bg-slate-700' }}">
                 <i class="fas fa-history text-sm"></i>
             </div>
             <span class="font-bold text-[11px] uppercase tracking-widest italic">Mes Matchs</span>
@@ -53,7 +53,7 @@
             </div>
             <div class="overflow-hidden">
                 <p class="text-[11px] font-bold text-white truncate italic uppercase tracking-tight">Mon Profil</p>
-                <p class="text-[8px] text-emerald-400 group-hover:text-white uppercase font-black tracking-[0.2em] italic">Sécurité</p>
+                <p class="text-[8px] text-emerald-400 group-hover:text-white uppercase font-black tracking-[0.2em] italic">Modifier Profil</p>
             </div>
             <i class="fas fa-chevron-right ml-auto text-slate-600 group-hover:text-white text-[10px] transition-colors"></i>
         </a>

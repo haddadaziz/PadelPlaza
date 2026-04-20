@@ -55,6 +55,8 @@ Route::middleware('auth')->group(function () {
         Route::get('/player/reservations/options', [\App\Http\Controllers\ReservationController::class , 'options'])->name('player.reservations.options');
         Route::get('/player/reservations/checkout', [\App\Http\Controllers\ReservationController::class , 'checkout'])->name('player.reservations.checkout');
         Route::post('/player/reservations/process', [\App\Http\Controllers\ReservationController::class , 'process'])->name('player.reservations.process');
+        Route::get('/player/matchs', [\App\Http\Controllers\PlayerController::class , 'matchs'])->name('player.matchs');
+
         // Afficher la page
         Route::get('/player/recharge', [\App\Http\Controllers\PlayerController::class , 'recharge'])->name('player.recharge');
         // Le "Serveur Magique" pour Stripe (c'est lui qui calcule le vrai prix au lieu du JS !)

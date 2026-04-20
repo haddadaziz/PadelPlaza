@@ -24,7 +24,17 @@ class PlayerController extends Controller
             $progress = min(100, round(($user->xp_points / $targetXp) * 100));
         }
 
-        return view('player.dashboard', compact('transactions', 'nextLevel', 'progress', 'targetXp'));
+        // --- NOUVEAU : On récupère les prochains matchs ---
+        $upcomingReservations = $user->reservations()
+            ->with('court') // Charge le nom du terrain
+            ->where('start_time', '>=', now())
+            ->where('status', '!=', 'canceled')
+            ->orderBy('start_time', 'asc')
+            ->get();
+
+        $nextMatch = $upcomingReservations->first();
+
+        return view('player.dashboard', compact('transactions', 'nextLevel', 'progress', 'targetXp', 'upcomingReservations', 'nextMatch'));
     }
 
 
@@ -75,7 +85,8 @@ class PlayerController extends Controller
         $pcToAdd = (int)$request->verified_pc;
 
         if ($pcToAdd > 0) {
-            // Jackpot, on ajoute l'argent !            $user->coins_balance += $pcToAdd;
+            // Jackpot, on ajoute l'argent !
+            $user->coins_balance += $pcToAdd;
             $user->save();
             // On sauvegarde la transaction dans l'historique
             \App\Models\Transaction::create([
@@ -93,6 +104,19 @@ class PlayerController extends Controller
         // On demande toutes les transactions classées de la plus récente à la plus ancienne !
         $transactions = \Illuminate\Support\Facades\Auth::user()->transactions()->latest()->get();
         return view('player.transactions', compact('transactions'));
+    }
+
+    public function matchs()
+    {
+        $user = \Illuminate\Support\Facades\Auth::user();
+
+        // Matchs à venir (Date >= Aujourd'hui)
+        $upcomingMatches = $user->reservations()->with('court')->where('start_time', '>=', now())->orderBy('start_time', 'asc')->get();
+
+        // Matchs passés (Date < Aujourd'hui)
+        $pastMatches = $user->reservations()->with('court')->where('start_time', '<', now())->orderBy('start_time', 'desc')->get();
+
+        return view('player.matchs', compact('upcomingMatches', 'pastMatches'));
     }
 
 }

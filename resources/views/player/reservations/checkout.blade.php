@@ -30,6 +30,7 @@
     </style>
 </head>
 <body class="flex min-h-screen">
+    @include('components.notif')
 
     @include('components.player-sidebar')
 
