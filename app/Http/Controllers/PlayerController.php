@@ -93,7 +93,6 @@ class PlayerController extends Controller
                 'user_id' => $user->id,
                 'amount' => $pcToAdd,
                 'type' => 'recharge_stripe',
-                'description' => 'Via Stripe'
             ]);
         }
 
@@ -102,7 +101,8 @@ class PlayerController extends Controller
     public function transactions()
     {
         // On demande toutes les transactions classées de la plus récente à la plus ancienne !
-        $transactions = \Illuminate\Support\Facades\Auth::user()->transactions()->latest()->get();
+        $transactions = \Illuminate\Support\Facades\Auth::user()->transactions()->with('reservation.court')->latest()->get();
+
         return view('player.transactions', compact('transactions'));
     }
 

@@ -11,13 +11,20 @@ class Transaction extends Model
 
     protected $fillable = [
         'user_id',
+        'reservation_id',
         'amount',
-        'type'
+        'type',
     ];
 
     // Une Transaction appartient à un User
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    // Une Transaction est liée à une Réservation
+    public function reservation()
+    {
+        return $this->belongsTo(Reservation::class);
     }
 }

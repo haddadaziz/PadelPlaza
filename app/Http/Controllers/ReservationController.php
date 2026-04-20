@@ -180,22 +180,17 @@ class ReservationController extends Controller
         return response()->json([
             'available_slots' => $heuresDisponibles
         ]);
-    }
-    public function process(\Illuminate\Http\Request $request)
-    {
-        // 1. On recalcule le montant (règle de sécurité : ne jamais faire confiance au Javascript pour les prix)
+    }    public function process(\Illuminate\Http\Request $request)    {
+        // 1. On recalcule le montant côté serveur (sécurité anti-triche)
         $court = \App\Models\Court::findOrFail($request->court_id);
         $totalPrice = $court->price_coins;
-
-        $equipmentsInfo = []; // <--- Le chariot virtuel de l'admin
+        $equipmentsInfo = [];
 
         if ($request->has('equipments')) {
             foreach ($request->equipments as $id => $qty) {
                 if ((int)$qty > 0) {
                     $equipment = \App\Models\Equipment::findOrFail($id);
                     $totalPrice += ($equipment->price_coins * $qty);
-
-                    // On enregistre ce qu'il a pris pour l'Affichage Admin !
                     $equipmentsInfo[] = [
                         'name' => $equipment->name,
                         'qty' => (int)$qty,
@@ -204,71 +199,62 @@ class ReservationController extends Controller
             }
         }
 
-
         $user = \Illuminate\Support\Facades\Auth::user();
 
-        // 2. Traitement des Plaza Coins et du CASHBACK
+        // 2. Vérification du solde si paiement par Coins
         if ($request->payment_method === 'coins') {
             if ($user->coins_balance < $totalPrice) {
                 return redirect()->back()->withErrors(['Erreur : Vous n\'avez pas assez de Plaza Coins.']);
             }
-
-            // Calcul du cashback (5% de la réservation)
-            $cashback = ceil($totalPrice * 0.05);
-
-            // 3. Mise à jour instantanée et ultra-sécurisée du solde en BDD
-            $user->decrement('coins_balance', $totalPrice);
-            $user->increment('coins_balance', $cashback);
-
-
-
-        // 3. Conversion de la date pour la BDD (ex: "2026-04-19" + "18:30" => "2026-04-19 18:30:00")
-        $start_time = \Carbon\Carbon::createFromFormat('Y-m-d H:i', $request->date . ' ' . $request->time_slot);
-
-        if ($request->payment_method === 'coins') {
-            // 1) Ligne Historique de la Dépense
-            \App\Models\Transaction::create([
-                'user_id' => $user->id,
-                'amount' => -$totalPrice,
-                'type' => 'reservation',
-                'description' => $court->name . '|' . $start_time->format('d/m/Y à H:i')
-            ]);
-
-            // 2) Ligne Historique du Gain (Cashback)
-            \App\Models\Transaction::create([
-                'user_id' => $user->id,
-                'amount' => $cashback,
-                'type' => 'cashback',
-                'description' => 'Cashback de réservation'
-            ]);
         }
 
-        // 4. Enregistrement du terrain ! 🎾
+        // 3. Conversion de la date
+        $start_time = \Carbon\Carbon::createFromFormat('Y-m-d H:i', $request->date . ' ' . $request->time_slot);
+
+        // 4. Enregistrement de la réservation EN PREMIER pour avoir son ID
         $reservation = new \App\Models\Reservation();
         $reservation->user_id = $user->id;
         $reservation->court_id = $court->id;
         $reservation->start_time = $start_time;
-        $reservation->status = 'confirmed'; // Confirmé d'office car payé !
-
-        // --- ON AJOUTE LES DÉTAILS ICI ---
+        $reservation->status = 'confirmed';
         $reservation->total_price = $totalPrice;
         $reservation->equipments_info = $equipmentsInfo;
-        $reservation->save();
+        $reservation->save(); // ← On sauvegarde D'ABORD pour obtenir l'ID
 
-        // --- MISE A JOUR DE L'XP (GAMIFICATION) ---
-        // Le prix total payé en Plaza Coins = L'XP gagnée !
+        // 5. Traitement financier et transactions (seulement si paiement Coins)
+        if ($request->payment_method === 'coins') {
+            $cashback = ceil($totalPrice * 0.05);
+
+            $user->decrement('coins_balance', $totalPrice);
+            $user->increment('coins_balance', $cashback);
+
+            // Transaction de dépense (liée à la réservation)
+            \App\Models\Transaction::create([
+                'user_id' => $user->id,
+                'reservation_id' => $reservation->id, // ← le vrai ID maintenant disponible
+                'amount' => -$totalPrice,
+                'type' => 'reservation',
+            ]);
+
+            // Transaction de cashback
+            \App\Models\Transaction::create([
+                'user_id' => $user->id,
+                'reservation_id' => $reservation->id,
+                'amount' => $cashback,
+                'type' => 'cashback',
+            ]);
+        }
+
+        // 6. Mise à jour de l'XP (Gamification)
         $user->xp_points += $totalPrice;
-        
-        // On vérifie immédiatement si ce nouvel XP permet de débloquer le rang supérieur
         $newLevel = \App\Models\Level::where('min_xp', '<=', $user->xp_points)->orderBy('min_xp', 'desc')->first();
         if ($newLevel) {
             $user->level_id = $newLevel->id;
         }
         $user->save();
 
-        // 5. On termine en l'envoyant sur son Dashboard avec un message Flash de gloire
-        return redirect('/player/dashboard')->with('success', 'Ton match est confirmé ! Prépare tes balles !');
-    }
+        return redirect('/player/dashboard')->with('success', 'Ton match est confirmé ! Prépare tes balles !');    }
+
     // ==========================================
     // SECTION ADMINISTRATEUR
     // ==========================================
@@ -300,7 +286,8 @@ class ReservationController extends Controller
         $query = \App\Models\User::query();
         if (is_numeric($request->player_identifier)) {
             $query->where('id', $request->player_identifier);
-        } else {
+        }
+        else {
             $query->where('email', $request->player_identifier);
         }
         $user = $query->first();
@@ -338,8 +325,7 @@ class ReservationController extends Controller
         $reservation->court_id = $request->court_id;
         $reservation->start_time = $start_time;
 
-        // Le statut dépend de la sélection de l'admin (Encaissé = confirmed, Attente = pending)
-$reservation->status = 'confirmed';        
+        // Le statut dépend de la sélection de l'admin (Encaissé = confirmed, Attente = pending)        $reservation->status = 'confirmed';
         $reservation->total_price = $totalPrice;
         $reservation->equipments_info = $equipmentsInfo;
 
@@ -347,7 +333,7 @@ $reservation->status = 'confirmed';
 
         // --- MISE A JOUR DE L'XP (SI ADMIN PAYE) ---
         $user->xp_points += $totalPrice;
-        
+
         $newLevel = \App\Models\Level::where('min_xp', '<=', $user->xp_points)->orderBy('min_xp', 'desc')->first();
         if ($newLevel) {
             $user->level_id = $newLevel->id;

@@ -139,7 +139,6 @@ class UserController extends Controller
                 'user_id' => $player->id,
                 'amount' => $pcToAdd,
                 'type' => 'recharge_admin',
-                'description' => 'En caisse'
             ]);
         }
 

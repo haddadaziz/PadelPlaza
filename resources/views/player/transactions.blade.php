@@ -50,11 +50,14 @@
                             <i class="fas {{ $transaction->amount > 0 ? ($transaction->type == 'cashback' ? 'fa-gift' : 'fa-plus-circle') : 'fa-table-tennis-paddle-ball' }}"></i>
                         </div>
                         <div>
-                            @php
-                                $parts = explode('|', $transaction->description ?? '');
-                                $courtName = $parts[0] ?? $transaction->description;
-                                $matchDate = $parts[1] ?? null;
-                            @endphp
+@php
+    $courtName = $transaction->reservation?->court?->name ?? 'Transaction';
+    $matchDate = $transaction->reservation?->start_time
+                    ? \Carbon\Carbon::parse($transaction->reservation->start_time)->format('d/m/Y à H:i')
+                    : null;
+@endphp
+
+
                             <p class="text-sm font-black text-slate-900 uppercase italic tracking-tight">
                                 @if(str_contains($transaction->type, 'recharge')) Recharge de compte
                                 @elseif($transaction->type == 'reservation') {{ $courtName }}
