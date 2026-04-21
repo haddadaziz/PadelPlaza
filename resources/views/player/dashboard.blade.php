@@ -159,9 +159,14 @@
                     <div class="h-1.5 w-full bg-slate-50 rounded-full overflow-hidden">
                         <div class="h-full bg-emerald-500 rounded-full" style="width: {{ $progress }}%"></div>
                     </div>
-                    <p class="text-[9px] text-black-300 font-bold mt-2 italic uppercase">
-                        {{ $targetXp - Auth::user()->xp_points }} XP restants pour le rang {{ $nextLevel ? $nextLevel->level_name : 'Max' }}
-                    </p>
+<p class="text-[10px] font-black text-slate-400 uppercase italic">
+    @if($nextLevel)
+        Encore <span class="text-emerald-500">{{ $xpRemaining }} XP</span> pour atteindre le niveau {{ $nextLevel->level_name }}
+    @else
+        Niveau Maximum atteint !
+    @endif
+</p>
+
                 </div>
             </div>
 

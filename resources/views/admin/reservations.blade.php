@@ -7,11 +7,170 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <style>
         body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #F8FAFC; overflow-x: hidden; }
         .arena-gradient { background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); }
         .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: #E2E8F0; border-radius: 10px; }
+
+        /* ===== DARK SELECT THEME (matching Flatpickr) ===== */
+        .dark-select {
+            background: #0F172A;
+            color: white;
+            border: 1px solid rgba(16,185,129,0.2);
+            border-radius: 1.5rem;
+            padding: 1rem 2.5rem 1rem 3rem;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 11px;
+            font-weight: 900;
+            font-style: italic;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            outline: none;
+            cursor: pointer;
+            appearance: none;
+            -webkit-appearance: none;
+            width: 100%;
+            transition: all 0.2s;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+        }
+        .dark-select:focus {
+            border-color: rgba(16,185,129,0.5);
+            box-shadow: 0 0 0 3px rgba(16,185,129,0.08), 0 4px 20px rgba(0,0,0,0.2);
+        }
+        .dark-select:hover { border-color: rgba(16,185,129,0.35); }
+        .dark-select option {
+            background: #1e293b;
+            color: white;
+            font-weight: 700;
+            font-style: italic;
+            text-transform: uppercase;
+            padding: 8px;
+        }
+        .dark-select-wrap { position: relative; }
+        .dark-select-wrap .icon-left {
+            position: absolute;
+            left: 1.25rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #10B981;
+            pointer-events: none;
+            font-size: 13px;
+            z-index: 1;
+        }
+        .dark-select-wrap .icon-chevron {
+            position: absolute;
+            right: 1.25rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #10B981;
+            pointer-events: none;
+            font-size: 9px;
+            z-index: 1;
+        }
+
+        /* ===== FLATPICKR CUSTOM THEME ===== */
+        .flatpickr-calendar {
+            background: #0F172A !important;
+            border: 1px solid rgba(16,185,129,0.15) !important;
+            border-radius: 1.75rem !important;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.6), 0 0 0 1px rgba(16,185,129,0.1) !important;
+            font-family: 'Plus Jakarta Sans', sans-serif !important;
+            padding: 1.25rem !important;
+            width: 320px !important;
+        }
+        .flatpickr-calendar::before, .flatpickr-calendar::after { display: none !important; }
+
+        .flatpickr-months {
+            padding: 0 0 0.75rem 0 !important;
+            border-bottom: 1px solid rgba(255,255,255,0.05) !important;
+            margin-bottom: 0.75rem !important;
+            align-items: center !important;
+        }
+        .flatpickr-month { color: white !important; fill: white !important; height: 36px !important; }
+        .flatpickr-current-month {
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            gap: 0.5rem !important;
+            padding: 0 !important;
+        }
+        .flatpickr-monthDropdown-months {
+            background: #1e293b !important;
+            color: white !important;
+            border: 1px solid rgba(16,185,129,0.3) !important;
+            border-radius: 0.75rem !important;
+            padding: 0.4rem 0.75rem !important;
+            font-family: 'Plus Jakarta Sans', sans-serif !important;
+            font-size: 13px !important;
+            font-weight: 900 !important;
+            font-style: italic !important;
+            text-transform: uppercase !important;
+            outline: none !important;
+            cursor: pointer !important;
+            -webkit-appearance: none !important;
+            appearance: none !important;
+        }
+        .flatpickr-monthDropdown-months:hover { border-color: #10B981 !important; }
+        .flatpickr-monthDropdown-months option { background: #0F172A !important; }
+
+        .numInputWrapper { flex-shrink: 0 !important; }
+        .numInputWrapper input.cur-year {
+            background: #1e293b !important;
+            color: white !important;
+            border: 1px solid rgba(16,185,129,0.3) !important;
+            border-radius: 0.75rem !important;
+            padding: 0.4rem 0.75rem !important;
+            font-family: 'Plus Jakarta Sans', sans-serif !important;
+            font-size: 13px !important;
+            font-weight: 900 !important;
+            font-style: italic !important;
+            width: 80px !important;
+            outline: none !important;
+        }
+        .numInputWrapper input.cur-year:focus { border-color: #10B981 !important; }
+        .numInputWrapper .arrowUp, .numInputWrapper .arrowDown { display: none !important; }
+
+        .flatpickr-prev-month, .flatpickr-next-month {
+            color: #10B981 !important; fill: #10B981 !important;
+            padding: 6px 10px !important;
+            border-radius: 0.75rem !important;
+            transition: all 0.2s !important;
+            height: 36px !important;
+            display: flex !important;
+            align-items: center !important;
+        }
+        .flatpickr-prev-month:hover, .flatpickr-next-month:hover {
+            background: #1e293b !important; color: white !important; fill: white !important;
+        }
+        .flatpickr-prev-month svg, .flatpickr-next-month svg { width: 14px !important; height: 14px !important; }
+
+        .flatpickr-weekdays { margin-bottom: 0.25rem !important; }
+        .flatpickr-weekday {
+            color: #10B981 !important; font-weight: 900 !important;
+            font-size: 10px !important; text-transform: uppercase !important;
+            letter-spacing: 0.1em !important;
+        }
+        .flatpickr-day {
+            color: #94a3b8 !important; border-radius: 0.75rem !important;
+            font-weight: 700 !important; font-size: 12px !important;
+            height: 36px !important; line-height: 36px !important;
+            max-width: 36px !important; margin: 2px auto !important;
+            border-color: transparent !important; transition: all 0.15s !important;
+        }
+        .flatpickr-day:hover { background: #1e293b !important; color: white !important; border-color: transparent !important; }
+        .flatpickr-day.selected {
+            background: #10B981 !important; border-color: #10B981 !important;
+            color: white !important; font-weight: 900 !important;
+            box-shadow: 0 4px 15px rgba(16,185,129,0.5) !important;
+        }
+        .flatpickr-day.today { border: 2px solid #10B981 !important; color: #10B981 !important; font-weight: 900 !important; }
+        .flatpickr-day.today.selected { color: white !important; }
+        .flatpickr-day.flatpickr-disabled, .flatpickr-day.prevMonthDay, .flatpickr-day.nextMonthDay {
+            color: #1e293b !important; background: transparent !important;
+        }
     </style>
 </head>
 <body class="flex min-h-screen">
@@ -31,35 +190,51 @@
             </a>
         </div>
 
-        <form action="{{ route('admin.reservations.index') }}" method="GET" class="bg-white p-6 rounded-[2.5rem] border border-slate-100 shadow-sm mb-8 flex items-end gap-6 shrink-0">
+        <form action="{{ route('admin.reservations') }}" method="GET" class="bg-white p-6 rounded-[2.5rem] border border-slate-100 shadow-sm mb-8 flex items-end gap-4 shrink-0">
+            
             <div class="flex-1 flex flex-col gap-2">
                 <label class="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] ml-2 italic">Jour de Match</label>
-                <div class="relative group">
-                    <div class="absolute inset-y-0 left-0 pl-5 flex items-center pointer-events-none text-emerald-500 group-focus-within:text-slate-900 transition-colors">
-                        <i class="fas fa-calendar-day"></i>
+                <div class="dark-select-wrap">
+                    <i class="fas fa-calendar-day icon-left"></i>
+                    <input type="hidden" name="date" id="date-hidden" value="{{ request('date', date('Y-m-d')) }}">
+                    <div id="date-display" class="dark-select cursor-pointer select-none flex items-center">
+                        &nbsp;
                     </div>
-                    <input type="date" name="date" value="{{ request('date', date('Y-m-d')) }}" 
-                           class="w-full bg-slate-50 border-2 border-transparent rounded-[1.5rem] pl-12 pr-6 py-4 text-xs font-[900] uppercase italic text-slate-700 outline-none focus:bg-white focus:border-emerald-500/30 focus:ring-4 focus:ring-emerald-500/5 transition-all cursor-pointer">
+                    <i class="fas fa-chevron-down icon-chevron"></i>
                 </div>
             </div>
 
             <div class="flex-1 flex flex-col gap-2">
                 <label class="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] ml-2 italic">Sélection Terrain</label>
-                <div class="relative group">
-                    <div class="absolute inset-y-0 left-0 pl-5 flex items-center pointer-events-none text-emerald-500 group-focus-within:text-slate-900 transition-colors">
-                        <i class="fas fa-table-tennis-paddle-ball"></i>
-                    </div>
-                    <select name="court_id" class="w-full bg-slate-50 border-2 border-transparent rounded-[1.5rem] pl-12 pr-10 py-4 text-xs font-[900] uppercase italic text-slate-700 outline-none focus:bg-white focus:border-emerald-500/30 focus:ring-4 focus:ring-emerald-500/5 transition-all cursor-pointer appearance-none">
+                <div class="dark-select-wrap">
+                    <i class="fas fa-table-tennis-paddle-ball icon-left"></i>
+                    <select name="court_id" class="dark-select">
                         <option value="">Tous les terrains</option>
                         @foreach($courts as $court)
                             <option value="{{ $court->id }}" {{ request('court_id') == $court->id ? 'selected' : '' }}>{{ $court->name }}</option>
                         @endforeach
                     </select>
-                    <div class="absolute inset-y-0 right-0 pr-5 flex items-center pointer-events-none text-slate-300">
-                        <i class="fas fa-chevron-down text-[10px]"></i>
-                    </div>
+                    <i class="fas fa-chevron-down icon-chevron"></i>
                 </div>
             </div>
+
+            <div class="flex-1 flex flex-col gap-2">
+                <label class="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] ml-2 italic">Tranche Horaire</label>
+                <div class="dark-select-wrap">
+                    <i class="fas fa-clock icon-left"></i>
+                    <select name="time_slot" class="dark-select">
+                        <option value="">Toute la journée</option>
+                        <option value="00-08" {{ request('time_slot') == '00-08' ? 'selected' : '' }}>00H à 08H</option>
+                        <option value="08-16" {{ request('time_slot') == '08-16' ? 'selected' : '' }}>08H à 16H</option>
+                        <option value="16-00" {{ request('time_slot') == '16-00' ? 'selected' : '' }}>16H à 00H</option>
+                    </select>
+                    <i class="fas fa-chevron-down icon-chevron"></i>
+                </div>
+            </div>
+
+            <a href="{{ route('admin.reservations') }}" class="w-14 h-14 bg-slate-50 border-2 border-slate-100 text-slate-400 rounded-[1.5rem] flex items-center justify-center hover:bg-red-50 hover:text-red-500 hover:border-red-100 transition-all active:scale-90" title="Réinitialiser">
+                <i class="fas fa-undo-alt text-sm"></i>
+            </a>
 
             <button type="submit" class="bg-slate-900 text-white px-10 h-14 rounded-[1.5rem] font-black text-[11px] uppercase tracking-widest italic hover:bg-emerald-500 hover:shadow-xl hover:shadow-emerald-500/20 transition-all active:scale-95 flex items-center gap-3">
                 <span>Filtrer</span>
@@ -68,13 +243,13 @@
         </form>
 
         <div class="flex-1 overflow-y-auto custom-scrollbar pr-4 space-y-4">
-            
             @forelse($reservations as $reservation)
             <div class="group bg-white rounded-[3rem] p-6 border border-slate-100 hover:border-emerald-200 transition-all duration-500 flex items-center gap-8 shadow-sm hover:shadow-xl">
                 
-                <div class="w-32 flex flex-col items-center justify-center border-r border-slate-50 px-4">
+                <div class="w-36 flex flex-col items-center justify-center border-r border-slate-50 px-4 gap-1">
                     <span class="text-2xl font-[900] text-slate-900 italic leading-none">{{ \Carbon\Carbon::parse($reservation->start_time)->format('H:i') }}</span>
-                    <span class="text-[9px] font-black text-emerald-500 uppercase tracking-widest mt-2">{{ $reservation->court->name }}</span>
+                    <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest">{{ \Carbon\Carbon::parse($reservation->start_time)->translatedFormat('d M Y') }}</span>
+                    <span class="text-[9px] font-black text-emerald-500 uppercase tracking-widest">{{ $reservation->court->name }}</span>
                 </div>
 
                 <div class="flex-1 flex items-center gap-5">
@@ -87,7 +262,7 @@
                     </div>
                     <div>
                         <h4 class="text-xl font-[900] text-slate-900 italic uppercase tracking-tighter leading-none">{{ $reservation->user->name }}</h4>
-                        <p class="text-[10px] font-black text-slate-400 uppercase italic mt-1">#RSV-{{ $reservation->id }} • {{ $reservation->user->coins_balance }} PC SOLDE</p>
+                        <p class="text-[10px] font-black text-slate-400 uppercase italic mt-1">SOLDE : {{ $reservation->user->coins_balance }} PPC</p>
                     </div>
                 </div>
 
@@ -105,23 +280,8 @@
                 </div>
 
                 <div class="flex items-center gap-6">
-                    <div class="text-right min-w-[100px]">
-                        @if($reservation->status == 'confirmed')
-                            <span class="px-5 py-2 bg-emerald-50 text-emerald-600 text-[9px] font-[900] rounded-full uppercase tracking-widest italic border border-emerald-100">Confirmé</span>
-                        @elseif($reservation->status == 'pending')
-                            <span class="px-5 py-2 bg-amber-50 text-amber-600 text-[9px] font-[900] rounded-full uppercase tracking-widest italic border border-amber-100 animate-pulse">À Régler</span>
-                        @else
-                            <span class="px-5 py-2 bg-slate-100 text-slate-400 text-[9px] font-[900] rounded-full uppercase tracking-widest italic border border-slate-200">Annulé</span>
-                        @endif
-                    </div>
-                    
                     <div class="flex gap-2">
-                        @if($reservation->status == 'pending')
-                        <button class="w-12 h-12 rounded-2xl bg-emerald-500 text-white shadow-lg shadow-emerald-200 hover:scale-110 transition-transform">
-                            <i class="fas fa-check-double"></i>
-                        </button>
-                        @endif
-                        <button class="w-12 h-12 rounded-2xl bg-white border border-slate-100 text-red-400 hover:bg-red-500 hover:text-white transition-all shadow-sm">
+                        <button class="w-12 h-12 rounded-2xl bg-white border border-slate-100 text-red-400 hover:bg-red-500 hover:text-white transition-all shadow-sm" title="Annuler la réservation">
                             <i class="fas fa-trash-alt text-sm"></i>
                         </button>
                     </div>
@@ -136,10 +296,33 @@
                 <p class="text-[10px] font-black uppercase italic tracking-[0.3em] text-slate-400">Aucun match trouvé</p>
             </div>
             @endforelse
-
         </div>
     </main>
 
     @include('components.notif')
+
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/fr.js"></script>
+    <script>
+        const display = document.getElementById('date-display');
+        const hiddenInput = document.getElementById('date-hidden');
+
+        const cal = flatpickr(display, {
+            locale: "fr",
+            dateFormat: "Y-m-d",
+            defaultDate: hiddenInput.value || new Date(),
+            disableMobile: true,
+            onReady: function(selectedDates) {
+                if (selectedDates.length > 0) {
+                    display.textContent = selectedDates[0].toLocaleDateString('fr-FR', { day: '2-digit', month: 'long', year: 'numeric' }).toUpperCase();
+                }
+            },
+            onChange: function(selectedDates, dateStr) {
+                hiddenInput.value = dateStr;
+                display.textContent = selectedDates[0].toLocaleDateString('fr-FR', { day: '2-digit', month: 'long', year: 'numeric' }).toUpperCase();
+            }
+        });
+        display.addEventListener('click', () => cal.open());
+    </script>
 </body>
 </html>

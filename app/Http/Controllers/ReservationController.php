@@ -17,10 +17,32 @@ class ReservationController extends Controller
         }
 
         // On récupère toutes les réservations en base de données.
-        // Le "with" est une astuce Laravel pour charger rapidement le nom du Terrain et du Joueur liés.
-        $reservations = Reservation::with(['user', 'court'])->latest()->get();
+        // Le "with" charge rapidement le nom du Terrain et du Joueur liés.
+        // Par défaut (sans filtre), on n'affiche que les réservations à venir.
+        $reservations = Reservation::with(['user', 'court'])
+            ->when(!request()->hasAny(['date', 'court_id', 'time_slot']), fn($q) => $q->where('start_time', '>=', now()))
+            ->when(request('date'), fn($q) => $q->whereDate('start_time', request('date')))
+            ->when(request('court_id'), fn($q) => $q->where('court_id', request('court_id')))
+            ->when(request('time_slot'), function ($q) {
+                $slot = request('time_slot');
+                if ($slot === '00-08') {
+                    $q->whereTime('start_time', '>=', '00:00:00')
+                      ->whereTime('start_time', '<', '08:00:00');
+                } elseif ($slot === '08-16') {
+                    $q->whereTime('start_time', '>=', '08:00:00')
+                      ->whereTime('start_time', '<', '16:00:00');
+                } elseif ($slot === '16-00') {
+                    $q->whereTime('start_time', '>=', '16:00:00')
+                      ->whereTime('start_time', '<', '24:00:00');
+                }
+            })
+            ->orderBy('start_time', 'asc')
+            ->get();
 
-        return view('admin.reservations', compact('reservations'));
+        $courts = \App\Models\Court::where('is_active', true)->get();
+
+        return view('admin.reservations', compact('reservations', 'courts'));
+
     }
     // Etape 1 : Afficher le choix du terrain et de l'heure
     public function create()
@@ -180,7 +202,9 @@ class ReservationController extends Controller
         return response()->json([
             'available_slots' => $heuresDisponibles
         ]);
-    }    public function process(\Illuminate\Http\Request $request)    {
+    }
+    public function process(\Illuminate\Http\Request $request)
+    {
         // 1. On recalcule le montant côté serveur (sécurité anti-triche)
         $court = \App\Models\Court::findOrFail($request->court_id);
         $totalPrice = $court->price_coins;
@@ -253,7 +277,8 @@ class ReservationController extends Controller
         }
         $user->save();
 
-        return redirect('/player/dashboard')->with('success', 'Ton match est confirmé ! Prépare tes balles !');    }
+        return redirect('/player/dashboard')->with('success', 'Ton match est confirmé ! Prépare tes balles !');
+    }
 
     // ==========================================
     // SECTION ADMINISTRATEUR

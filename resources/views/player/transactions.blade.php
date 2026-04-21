@@ -12,6 +12,34 @@
         .custom-scrollbar::-webkit-scrollbar { width: 4px; }
         .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: #E2E8F0; border-radius: 10px; }
+                /* Styles des filtres sombres */
+        .dark-select {
+            background: #0F172A;
+            color: white;
+            border: 1px solid rgba(16,185,129,0.1);
+            border-radius: 1.25rem;
+            padding: 0.6rem 2.5rem 0.6rem 2.5rem;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 10px;
+            font-weight: 900;
+            font-style: italic;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            outline: none;
+            cursor: pointer;
+            appearance: none;
+            -webkit-appearance: none;
+            width: auto;
+            min-width: 140px;
+            transition: all 0.2s;
+        }
+        .dark-select:focus { border-color: rgba(16,185,129,0.5); box-shadow: 0 0 0 3px rgba(16,185,129,0.08); }
+        .dark-select-wrap { position: relative; }
+        .dark-select-wrap .icon-chevron {
+            position: absolute; right: 0.8rem; top: 50%; transform: translateY(-50%);
+            color: #10B981; pointer-events: none; font-size: 8px; z-index: 1;
+        }
+
     </style>
 </head>
 <body class="flex min-h-screen">
@@ -22,8 +50,49 @@
         
         <div class="flex justify-between items-end mb-8 shrink-0">
             <div>
-                <h2 class="text-3xl font-[900] text-slate-900 tracking-tighter italic uppercase">Flux Financier</h2>
-                <p class="text-slate-400 font-bold italic text-sm mt-1">Historique complet de vos Plaza Coins (PC).</p>
+                <h2 class="text-3xl font-[900] text-slate-900 tracking-tighter italic uppercase">Flux <span class="text-emerald-500">Financier</span></h2>
+                
+                <form action="{{ route('player.transactions') }}" method="GET" class="flex items-center gap-3 mt-6">
+                    {{-- Type --}}
+                    <div class="dark-select-wrap">
+                        <select name="type" onchange="this.form.submit()" class="dark-select">
+                            <option value="">Tous les types</option>
+                            <option value="reservation" {{ request('type') == 'reservation' ? 'selected' : '' }}>Réservations</option>
+                            <option value="recharge" {{ request('type') == 'recharge' ? 'selected' : '' }}>Recharges</option>
+                            <option value="cashback" {{ request('type') == 'cashback' ? 'selected' : '' }}>Bonus Cashback</option>
+                        </select>
+                        <i class="fas fa-chevron-down icon-chevron"></i>
+                    </div>
+
+                    {{-- Mois --}}
+                    <div class="dark-select-wrap">
+                        <select name="month" onchange="this.form.submit()" class="dark-select" style="min-width: 110px;">
+                            <option value="">Tous les mois</option>
+                            @foreach(range(1, 12) as $m)
+                                <option value="{{ $m }}" {{ request('month') == $m ? 'selected' : '' }}>
+                                    {{ \Carbon\Carbon::create()->month($m)->translatedFormat('F') }}
+                                </option>
+                            @endforeach
+                        </select>
+                        <i class="fas fa-chevron-down icon-chevron"></i>
+                    </div>
+
+                    {{-- Année --}}
+                    <div class="dark-select-wrap">
+                        <select name="year" onchange="this.form.submit()" class="dark-select" style="min-width: 90px;">
+                            <option value="">Années</option>
+                            @foreach(range(date('Y'), date('Y')-2) as $y)
+                                <option value="{{ $y }}" {{ request('year') == $y ? 'selected' : '' }}>{{ $y }}</option>
+                            @endforeach
+                        </select>
+                        <i class="fas fa-chevron-down icon-chevron"></i>
+                    </div>
+
+                    {{-- Reset --}}
+                    <a href="{{ route('player.transactions') }}" class="w-10 h-10 bg-slate-900 border border-slate-800 text-emerald-500 rounded-xl flex items-center justify-center hover:bg-emerald-500 hover:text-white transition-all shadow-lg active:scale-90" title="Réinitialiser">
+                        <i class="fas fa-undo-alt text-xs"></i>
+                    </a>
+                </form>
             </div>
             
             <div class="bg-slate-900 px-6 py-4 rounded-[2rem] shadow-xl border border-slate-800">
@@ -31,6 +100,7 @@
                 <p class="text-2xl font-[900] text-white italic leading-none">{{ Auth::user()->coins_balance }} <span class="text-xs text-slate-500">PC</span></p>
             </div>
         </div>
+
 
         <div class="bg-white rounded-[3rem] border border-slate-100 shadow-sm flex-1 flex flex-col min-h-0 overflow-hidden">
             <div class="grid grid-cols-12 px-8 py-6 border-b border-slate-50 text-[10px] font-black text-slate-400 uppercase tracking-widest italic shrink-0">
@@ -81,7 +151,15 @@
 
                     <div class="col-span-3 text-center">
                         <p class="text-xs font-black text-slate-600 italic uppercase leading-none">{{ $transaction->created_at->format('d M Y') }}</p>
-                        <p class="text-[9px] text-slate-300 font-bold mt-1">Réservé à {{ $transaction->created_at->format('H:i') }}</p>
+<p class="text-[9px] text-slate-300 font-bold mt-1 uppercase italic tracking-tighter">
+    @if(str_contains($transaction->type, 'recharge'))
+        Crédité à {{ $transaction->created_at->format('H:i') }}
+    @elseif($transaction->type == 'cashback')
+        Obtenu à {{ $transaction->created_at->format('H:i') }}
+    @else
+        Réservé à {{ $transaction->created_at->format('H:i') }}
+    @endif
+</p>
                     </div>
 
                     <div class="col-span-2 flex justify-center">

@@ -146,4 +146,13 @@ class UserController extends Controller
         return redirect()->route('admin.players')->with('success', "Le compte de {$player->name} a bien été crédité de {$pcToAdd} PC en caisse !");
     }
 
+    public function toggleBlock($id)
+    {
+        $user = User::findOrFail($id);
+        $user->is_blocked = !$user->is_blocked;
+        $user->save();
+
+        $action = $user->is_blocked ? 'bloqué' : 'débloqué';
+        return back()->with('success', "Le joueur {$user->name} a bien été {$action}.");
+    }
 }

@@ -52,24 +52,30 @@
                 </thead>
                                 <tbody class="divide-y divide-slate-50">
                     @forelse($players as $player)
-                    <tr class="group hover:bg-slate-50/50 transition-all">
+                    <tr class="group hover:bg-slate-50/50 transition-all {{ $player->is_blocked ? 'opacity-60' : '' }}">
                         <td class="px-8 py-6">
                             <div class="flex items-center gap-4">
-<!-- Photo ou Initiales -->
-<div class="w-12 h-12 rounded-full bg-emerald-100 border-2 border-white shadow-sm flex items-center justify-center font-black text-emerald-600 uppercase overflow-hidden">
-    @if($player->profile_image)
-        <img src="{{ asset('storage/' . $player->profile_image) }}" alt="Photo de {{ $player->name }}" class="w-full h-full object-cover">
-    @else
-        {{ substr($player->name, 0, 2) }}
-    @endif
-</div>
-
+                                <!-- Photo ou Initiales -->
+                                <div class="w-12 h-12 rounded-full bg-emerald-100 border-2 border-white shadow-sm flex items-center justify-center font-black text-emerald-600 uppercase overflow-hidden">
+                                    @if($player->profile_image)
+                                        <img src="{{ asset('storage/' . $player->profile_image) }}" alt="Photo de {{ $player->name }}" class="w-full h-full object-cover">
+                                    @else
+                                        {{ substr($player->name, 0, 2) }}
+                                    @endif
+                                </div>
+                                <div>
+                                    <p class="font-bold text-slate-900 italic">{{ $player->name }}</p>
+                                    @if($player->is_blocked)
+                                        <span class="text-[8px] font-black text-red-500 uppercase tracking-widest bg-red-50 px-2 py-0.5 rounded-full border border-red-100">
+                                            <i class="fas fa-ban mr-1"></i> Bloqué
+                                        </span>
+                                    @endif
+                                </div>
                             </div>
                         </td>
                         <td class="px-8 py-6">
                             <div class="flex flex-col gap-1.5">
                                 <span class="px-3 py-1 lvl-badge text-white text-[9px] font-black rounded-full uppercase w-fit shadow-md shadow-emerald-100 italic">
-                                    <!-- Affiche le nom du niveau si relié, sinon "Débutant" -->
                                     {{ $player->level ? $player->level->level_name : 'Débutant' }}
                                 </span>
                                 <p class="text-[10px] font-bold text-slate-400 tracking-tighter uppercase italic">{{ $player->xp_points }} XP</p>
@@ -83,13 +89,21 @@
                         </td>
                         <td class="px-8 py-6 text-right">
                             <div class="flex justify-end gap-2">
-<a href="{{ route('admin.players.recharge', ['id' => $player->id]) }}" title="Créditer Coins" class="w-9 h-9 flex items-center justify-center bg-emerald-50 text-emerald-600 rounded-xl hover:bg-emerald-500 hover:text-white transition-all">
-       <i class="fas fa-plus-circle"></i>
-</a>
+                                <a href="{{ route('admin.players.recharge', ['id' => $player->id]) }}" title="Créditer Coins" class="w-9 h-9 flex items-center justify-center bg-emerald-50 text-emerald-600 rounded-xl hover:bg-emerald-500 hover:text-white transition-all">
+                                    <i class="fas fa-plus-circle"></i>
+                                </a>
 
-                                <button title="Editer Profil" class="w-9 h-9 flex items-center justify-center bg-slate-50 text-slate-400 rounded-xl hover:bg-slate-900 hover:text-white transition-all">
-                                    <i class="fas fa-user-edit"></i>
-                                </button>
+                                <form action="{{ route('admin.players.block', $player->id) }}" method="POST" onsubmit="return confirm('{{ $player->is_blocked ? 'Débloquer ce joueur ?' : 'Bloquer ce joueur ?' }}')">
+                                    @csrf
+                                    @method('PATCH')
+                                    <button type="submit" title="{{ $player->is_blocked ? 'Débloquer' : 'Bloquer' }}"
+                                        class="w-9 h-9 flex items-center justify-center rounded-xl transition-all
+                                            {{ $player->is_blocked
+                                                ? 'bg-emerald-50 text-emerald-500 hover:bg-emerald-500 hover:text-white'
+                                                : 'bg-red-50 text-red-400 hover:bg-red-500 hover:text-white' }}">
+                                        <i class="fas {{ $player->is_blocked ? 'fa-lock-open' : 'fa-ban' }} text-xs"></i>
+                                    </button>
+                                </form>
                             </div>
                         </td>
                     </tr>

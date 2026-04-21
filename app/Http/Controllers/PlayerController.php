@@ -11,22 +11,35 @@ class PlayerController extends Controller
         $user = \Illuminate\Support\Facades\Auth::user();
         $transactions = $user->transactions()->latest()->take(5)->get();
 
-        // 1. On interroge la BDD pour trouver le PREMIER niveau dont l'XP min dépasse l'XP actuelle
-        $nextLevel = \App\Models\Level::where('min_xp', '>', $user->xp_points)->orderBy('min_xp', 'asc')->first();
+        // 1. On récupère le niveau actuel et le niveau suivant
+        $currentLevel = $user->level; // Le niveau que le joueur a déjà atteint
+        $nextLevel = \App\Models\Level::where('min_xp', '>', $user->xp_points)
+            ->orderBy('min_xp', 'asc')
+            ->first();
 
-        // 2. Sécurité : au cas où le joueur est déjà "Au Max"
-        $progress = 100;
-        $targetXp = $user->xp_points;
+        // 2. Initialisation des variables de progression
+        $minXp = $currentLevel ? $currentLevel->min_xp : 0; // Palier du niveau actuel (ex: 500)
 
         if ($nextLevel) {
-            $targetXp = $nextLevel->min_xp;
-            // 3. On calcule le pourcentage propre pour la barre : (actuel / total) * 100
-            $progress = min(100, round(($user->xp_points / $targetXp) * 100));
+            $targetXp = $nextLevel->min_xp; // Palier à atteindre (ex: 1000)
+
+            // Calcul relatif : (XP actuel - Min du niveau) / (Cible - Min du niveau)
+            $xpInLevel = $user->xp_points - $minXp;
+            $xpNeededForNext = $targetXp - $minXp;
+
+            $progress = min(100, round(($xpInLevel / $xpNeededForNext) * 100));
+            $xpRemaining = $targetXp - $user->xp_points;
+        }
+        else {
+            // Si le joueur est au niveau maximum
+            $progress = 100;
+            $xpRemaining = 0;
+            $targetXp = $user->xp_points;
         }
 
-        // --- NOUVEAU : On récupère les prochains matchs ---
+        // --- On récupère les prochains matchs ---
         $upcomingReservations = $user->reservations()
-            ->with('court') // Charge le nom du terrain
+            ->with('court')
             ->where('start_time', '>=', now())
             ->where('status', '!=', 'canceled')
             ->orderBy('start_time', 'asc')
@@ -34,8 +47,17 @@ class PlayerController extends Controller
 
         $nextMatch = $upcomingReservations->first();
 
-        return view('player.dashboard', compact('transactions', 'nextLevel', 'progress', 'targetXp', 'upcomingReservations', 'nextMatch'));
+        return view('player.dashboard', compact(
+            'transactions',
+            'nextLevel',
+            'progress',
+            'targetXp',
+            'upcomingReservations',
+            'nextMatch',
+            'xpRemaining' // On passe aussi les points restants, c'est plus sympa à afficher
+        ));
     }
+
 
 
     public function recharge()
@@ -98,25 +120,119 @@ class PlayerController extends Controller
 
         return redirect('/player/dashboard')->with('success', 'Votre compte a été rechargé de ' . $pcToAdd . ' Plaza Coins avec succès !');
     }
-    public function transactions()
+    public function transactions(\Illuminate\Http\Request $request)
     {
-        // On demande toutes les transactions classées de la plus récente à la plus ancienne !
-        $transactions = \Illuminate\Support\Facades\Auth::user()->transactions()->with('reservation.court')->latest()->get();
+        $user = \Illuminate\Support\Facades\Auth::user();
+
+        // On prépare la requête
+        $query = $user->transactions()->with('reservation.court');
+
+        // 1. Filtre par TYPE (réservation, recharge, cashback)
+        if ($request->filled('type')) {
+            // Pour les recharges, on gère les deux types possibles (admin ou stripe)
+            if ($request->type === 'recharge') {
+                $query->whereIn('type', ['recharge_admin', 'recharge_stripe']);
+            }
+            else {
+                $query->where('type', $request->type);
+            }
+        }
+
+        // 2. Filtre par MOIS
+        if ($request->filled('month')) {
+            $query->whereMonth('created_at', $request->month);
+        }
+
+        // 3. Filtre par ANNÉE
+        if ($request->filled('year')) {
+            $query->whereYear('created_at', $request->year);
+        }
+
+        // On récupère le tout classé par date
+        $transactions = $query->latest()->get();
 
         return view('player.transactions', compact('transactions'));
     }
 
-    public function matchs()
+    public function matchs(Request $request)
     {
         $user = \Illuminate\Support\Facades\Auth::user();
 
-        // Matchs à venir (Date >= Aujourd'hui)
-        $upcomingMatches = $user->reservations()->with('court')->where('start_time', '>=', now())->orderBy('start_time', 'asc')->get();
+        // 1. Prochains matchs (aujourd'hui et après, statut confirmé)
+        $upcomingMatches = $user->reservations()
+            ->with('court')
+            ->where('start_time', '>=', now())
+            ->where('status', 'confirmed')
+            ->orderBy('start_time', 'asc')
+            ->get();
 
-        // Matchs passés (Date < Aujourd'hui)
-        $pastMatches = $user->reservations()->with('court')->where('start_time', '<', now())->orderBy('start_time', 'desc')->get();
+        // 2. Préparation de la requête pour l'Historique (matchs passés)
+        $query = $user->reservations()
+            ->with('court')
+            ->where('start_time', '<', now());
 
-        return view('player.matchs', compact('upcomingMatches', 'pastMatches'));
+        // Filtrage optionnel par mois et année
+        if ($request->filled('month')) {
+            $query->whereMonth('start_time', $request->month);
+        }
+        if ($request->filled('year')) {
+            $query->whereYear('start_time', $request->year);
+        }
+
+        // Tri (par défaut du plus récent au plus ancien)
+        $order = $request->input('sort', 'desc') === 'asc' ? 'asc' : 'desc';
+        $query->orderBy('start_time', $order);
+
+        // Cette variable contient les matchs filtrés pour l'affichage de la liste
+        $pastMatches = $query->get();
+
+        // --- 3. Calcul des statistiques GLOBALES (pour le footer) ---
+
+        // On récupère tous les matchs passés sans les filtres de recherche
+        $allPast = $user->reservations()->where('start_time', '<', now())->get();
+
+        // Ratio Victoire : (Wins / (Wins + Losses)) * 100
+        $wins = $allPast->where('result', 'win')->count();
+        $losses = $allPast->where('result', 'loss')->count();
+        $totalRated = $wins + $losses;
+        $winRate = $totalRated > 0 ? round(($wins / $totalRated) * 100) : 0;
+
+        // Temps de jeu : 1 match = 1 heure (count simple)
+        $totalPlayTime = $allPast->count();
+
+        return view('player.matchs', compact('upcomingMatches', 'pastMatches', 'winRate', 'totalPlayTime'));
     }
+
+    public function updateMatchResult($id, \Illuminate\Http\Request $request)
+    {
+        $user = \Illuminate\Support\Facades\Auth::user();
+
+        $reservation = \App\Models\Reservation::where('id', $id)
+            ->where('user_id', $user->id)
+            ->firstOrFail();
+
+        // On change le résultat
+        if ($reservation->result === $request->result) {
+            $reservation->result = null;
+        }
+        else {
+            $reservation->result = $request->result;
+        }
+        $reservation->save();
+
+        // --- NOUVEAU : On recalcule le ratio global pour le renvoyer à la vue ---
+        $allPast = $user->reservations()->where('start_time', '<', now())->get();
+        $wins = $allPast->where('result', 'win')->count();
+        $losses = $allPast->where('result', 'loss')->count();
+        $totalRated = $wins + $losses;
+        $newWinRate = $totalRated > 0 ? round(($wins / $totalRated) * 100) : 0;
+
+        // On renvoie le résultat ET le nouveau ratio
+        return response()->json([
+            'result' => $reservation->result,
+            'newRate' => $newWinRate
+        ]);
+    }
+
 
 }

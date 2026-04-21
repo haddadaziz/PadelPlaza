@@ -94,8 +94,12 @@ Route::middleware('auth')->group(function () {
         // Recharge manuelle par l'Admin
         Route::get('/admin/players/{id}/recharge', [\App\Http\Controllers\UserController::class , 'adminRechargeForm'])->name('admin.players.recharge');
         Route::post('/admin/players/{id}/recharge', [\App\Http\Controllers\UserController::class , 'adminRechargeProcess'])->name('admin.players.recharge.process');
+        Route::patch('/admin/players/{id}/block', [\App\Http\Controllers\UserController::class, 'toggleBlock'])->name('admin.players.block');
 
 
         // --- API / AJAX ---
         Route::get('/api/available-slots', [\App\Http\Controllers\ReservationController::class , 'getAvailableSlots'])->name('api.available-slots');
+
+        Route::patch('/player/matchs/{id}/result', [\App\Http\Controllers\PlayerController::class, 'updateMatchResult'])->name('player.matchs.result');
+
     }); // <-- C'est ici que les portes du vigile se ferment !

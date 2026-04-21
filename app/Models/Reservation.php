@@ -13,7 +13,8 @@ class Reservation extends Model
         'user_id',
         'court_id',
         'start_time',
-        'status'
+        'status',
+        'result'
     ];
 
     /**
