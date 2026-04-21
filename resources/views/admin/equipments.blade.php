@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Padel Plaza | Gestion Équipements</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #F8FAFC; }
+        body { font-family: 'Inter', sans-serif; background-color: #F8FAFC; }
     </style>
 </head>
 <body class="flex min-h-screen">
@@ -18,10 +18,10 @@
     <main class="flex-1 ml-64 p-10">
         <div class="flex justify-between items-end mb-10">
             <div>
-                <h2 class="text-3xl font-black text-slate-900 tracking-tight italic uppercase">Inventaire Équipements</h2>
-                <p class="text-slate-400 font-medium italic text-sm uppercase tracking-tighter">Gérez les raquettes, balles et accessoires en location.</p>
+                <h2 class="text-3xl font-black text-slate-900 tracking-tight uppercase">Inventaire Équipements</h2>
+                <p class="text-slate-400 font-medium text-sm uppercase tracking-tight">Gérez les raquettes, balles et accessoires en location.</p>
             </div>
-            <a href="{{ route('admin.equipments.create') }}" class="bg-slate-900 hover:bg-emerald-500 text-white px-8 py-4 rounded-[1.5rem] font-black shadow-xl shadow-slate-200 transition-all active:scale-95 flex items-center gap-3 uppercase text-xs tracking-widest italic">
+            <a href="{{ route('admin.equipments.create') }}" class="bg-slate-900 hover:bg-emerald-500 text-white px-8 py-4 rounded-[1.5rem] font-black shadow-xl shadow-slate-200 transition-all active:scale-95 flex items-center gap-3 uppercase text-xs tracking-widest">
                 <i class="fas fa-plus"></i> Ajouter un équipement
             </a>
 
@@ -65,7 +65,7 @@
                          class="h-full object-contain group-hover:scale-110 transition-transform duration-500" alt="{{ $equipment->name }}">
                     
                     <div class="absolute top-4 left-4">
-                        <span class="px-3 py-1 bg-white/90 backdrop-blur-sm text-slate-900 text-[9px] font-black rounded-lg shadow-sm uppercase tracking-tighter border border-slate-100 italic">
+                        <span class="px-3 py-1 bg-white/90 backdrop-blur-sm text-slate-900 text-[9px] font-black rounded-lg shadow-sm uppercase tracking-tight border border-slate-100">
                             Stock: {{ str_pad($equipment->stock, 2, '0', STR_PAD_LEFT) }}
                         </span>
                     </div>
@@ -73,23 +73,23 @@
 
                 <div class="p-6">
                     <div class="flex justify-between items-start mb-3">
-                        <h3 class="font-black text-slate-900 italic uppercase tracking-tighter text-sm">{{ $equipment->name }}</h3>
-                        <span class="text-emerald-500 font-black italic text-sm">{{ $equipment->price_coins }} PC</span>
+                        <h3 class="font-black text-slate-900 uppercase tracking-tight text-sm">{{ $equipment->name }}</h3>
+                        <span class="text-emerald-500 font-black text-sm">{{ $equipment->price_coins }} PC</span>
                     </div>
                     
                     <div class="flex items-center gap-2 mb-6">
                         <!-- PETITE LOGIQUE POUR LE STOCK ! -->
                         @if($equipment->stock > 0)
                             <span class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></span>
-                            <span class="text-[9px] font-black text-emerald-600 uppercase tracking-widest italic">Disponible</span>
+                            <span class="text-[9px] font-black text-emerald-600 uppercase tracking-widest">Disponible</span>
                         @else
                             <span class="w-2 h-2 bg-red-500 rounded-full"></span>
-                            <span class="text-[9px] font-black text-red-600 uppercase tracking-widest italic">Rupture</span>
+                            <span class="text-[9px] font-black text-red-600 uppercase tracking-widest">Rupture</span>
                         @endif
                     </div>
 
                     <div class="flex gap-2">
-                        <a href="{{ route('admin.equipments.edit', $equipment->id) }}" class="flex-1 bg-slate-50 hover:bg-slate-100 text-slate-400 hover:text-slate-900 py-3 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all text-center italic">
+                        <a href="{{ route('admin.equipments.edit', $equipment->id) }}" class="flex-1 bg-slate-50 hover:bg-slate-100 text-slate-400 hover:text-slate-900 py-3 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all text-center">
                             Modifier
                         </a>
                         <!-- Bouton Supprimer qui ouvre la Modale -->
@@ -123,17 +123,17 @@
                 <i class="fas fa-exclamation-triangle"></i>
             </div>
             
-            <h3 class="text-2xl font-black text-slate-900 uppercase italic tracking-tighter text-center mb-2">Attention !</h3>
+            <h3 class="text-2xl font-black text-slate-900 uppercase tracking-tight text-center mb-2">Attention !</h3>
             <p class="text-slate-400 text-xs font-bold text-center mb-8 px-4">Êtes-vous sûr de vouloir retirer cet article du catalogue ? L'action est irréversible.</p>
             
             <div class="flex gap-4">
-                <button onclick="closeDeleteModal()" class="flex-1 py-4 bg-slate-50 hover:bg-slate-100 text-slate-400 font-black rounded-2xl uppercase text-[10px] tracking-widest transition-all italic">
+                <button onclick="closeDeleteModal()" class="flex-1 py-4 bg-slate-50 hover:bg-slate-100 text-slate-400 font-black rounded-2xl uppercase text-[10px] tracking-widest transition-all">
                     Annuler
                 </button>
                 <form id="confirmDeleteForm" method="POST" class="flex-1">
                     @csrf
                     @method('DELETE')
-                    <button type="submit" class="w-full py-4 bg-red-500 hover:bg-red-600 text-white font-black rounded-2xl uppercase text-[10px] tracking-widest transition-all shadow-xl shadow-red-500/20 italic">
+                    <button type="submit" class="w-full py-4 bg-red-500 hover:bg-red-600 text-white font-black rounded-2xl uppercase text-[10px] tracking-widest transition-all shadow-xl shadow-red-500/20">
                         Supprimer
                     </button>
                 </form>

@@ -10,18 +10,29 @@ class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
-        // 1. On lance la création des niveaux et terrains
-        $this->call([
-            LevelSeeder::class,
-            CourtSeeder::class,
-        ]);
+        // On crée les niveaux en premier
+        $this->call([LevelSeeder::class , CourtSeeder::class]);
 
-        // 2. On se crée un compte Admin par défaut pour que tu puisses te connecter plus tard !
-        User::create([
+        $boisLevel = \App\Models\Level::where('level_name', 'Bois')->first();
+
+        // Admin : level_id reste NULL par défaut
+        \App\Models\User::create([
             'name' => 'Admin PadelPlaza',
             'email' => 'admin@padelplaza.com',
-            'password' => Hash::make('password'), 
+            'password' => \Illuminate\Support\Facades\Hash::make('password'),
             'role' => 'admin',
         ]);
+
+        // Joueur : on lui donne son niveau Bois
+        \App\Models\User::create([
+            'name' => 'Joueur Test',
+            'email' => 'player@padelplaza.com',
+            'password' => \Illuminate\Support\Facades\Hash::make('password'),
+            'role' => 'player',
+            'coins_balance' => 500,
+            'xp_points' => 0,
+            'level_id' => $boisLevel->id,
+        ]);
     }
+
 }

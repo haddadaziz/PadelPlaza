@@ -18,27 +18,34 @@ class AuthController extends Controller
     // Traite le formulaire d'inscription
     public function register(Request $request)
     {
-        // 1. Validation des données
-        $validated = $request->validate([
+        // 1. Validation STRICTE des données
+        $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:8|confirmed', // "confirmed" oblige à avoir un champ "password_confirmation"
+            'password' => 'required|string|min:8|confirmed',
         ]);
 
-        // 2. Création de l'utilisateur
-        $user = User::create([
-            'name' => $validated['name'],
-            'email' => $validated['email'],
-            'password' => Hash::make($validated['password']), // On crypte le mot de passe !
+        // 2. On récupère le niveau de base (Bois)
+        $defaultLevel = \App\Models\Level::where('min_xp', 0)->first();
+
+        // 3. Création de l'utilisateur avec son niveau
+        $user = \App\Models\User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => \Illuminate\Support\Facades\Hash::make($request->password),
             'role' => 'player',
+            'coins_balance' => 0,
+            'xp_points' => 0,
+            'level_id' => $defaultLevel ? $defaultLevel->id : null,
         ]);
 
-        // 3. On le connecte direct après l'inscription
-        Auth::login($user);
+        // 4. Connexion et redirection
+        \Illuminate\Support\Facades\Auth::login($user);
 
-        return redirect()->route('home')
-            ->with('success', 'Inscription réussie ! Bienvenue ' . Auth::user()->name . ' 👋');
+        return redirect('/player/dashboard')->with('success', 'Bienvenue au Club !');
     }
+
+
 
     // Affiche le formulaire de connexion
     public function showLogin()

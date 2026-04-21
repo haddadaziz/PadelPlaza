@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Padel Plaza | Communauté</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #F8FAFC; }
+        body { font-family: 'Inter', sans-serif; background-color: #F8FAFC; }
         .sidebar-item-active { background-color: #F0FDF4; color: #10B981; border-right: 4px solid #10B981; }
         .lvl-badge { background: linear-gradient(135deg, #10B981 0%, #059669 100%); }
     </style>
@@ -22,7 +22,7 @@
         
         <div class="flex justify-between items-center mb-10">
             <div>
-                <h2 class="text-3xl font-black text-slate-900 tracking-tight italic uppercase">Membres du Club</h2>
+                <h2 class="text-3xl font-black text-slate-900 tracking-tight uppercase">Membres du Club</h2>
                 <p class="text-slate-400 font-medium">Gérez les comptes, les niveaux et les Plaza Coins.</p>
             </div>
             <div class="flex gap-4">
@@ -33,7 +33,7 @@
            class="pl-12 pr-6 py-3.5 bg-white border border-slate-100 rounded-2xl text-sm font-semibold outline-none focus:ring-2 focus:ring-emerald-500 transition-all w-64 shadow-sm">
 </form>
 
-                <button class="bg-slate-900 text-white px-6 py-3.5 rounded-2xl font-black text-xs uppercase italic tracking-widest hover:bg-emerald-600 transition-all">
+                <button class="bg-slate-900 text-white px-6 py-3.5 rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-emerald-600 transition-all">
                     Exporter CSV
                 </button>
             </div>
@@ -64,7 +64,7 @@
                                     @endif
                                 </div>
                                 <div>
-                                    <p class="font-bold text-slate-900 italic">{{ $player->name }}</p>
+                                    <p class="font-bold text-slate-900">{{ $player->name }}</p>
                                     @if($player->is_blocked)
                                         <span class="text-[8px] font-black text-red-500 uppercase tracking-widest bg-red-50 px-2 py-0.5 rounded-full border border-red-100">
                                             <i class="fas fa-ban mr-1"></i> Bloqué
@@ -75,17 +75,17 @@
                         </td>
                         <td class="px-8 py-6">
                             <div class="flex flex-col gap-1.5">
-                                <span class="px-3 py-1 lvl-badge text-white text-[9px] font-black rounded-full uppercase w-fit shadow-md shadow-emerald-100 italic">
+                                <span class="px-3 py-1 lvl-badge text-white text-[9px] font-black rounded-full uppercase w-fit shadow-md shadow-emerald-100">
                                     {{ $player->level ? $player->level->level_name : 'Débutant' }}
                                 </span>
-                                <p class="text-[10px] font-bold text-slate-400 tracking-tighter uppercase italic">{{ $player->xp_points }} XP</p>
+                                <p class="text-[10px] font-bold text-slate-400 tracking-tight uppercase">{{ $player->xp_points }} XP</p>
                             </div>
                         </td>
                         <td class="px-8 py-6 text-center">
-                            <span class="font-black text-emerald-500 text-lg tracking-tighter italic">{{ $player->coins_balance }} <span class="text-[10px] text-slate-300">PC</span></span>
+                            <span class="font-black text-emerald-500 text-lg tracking-tight">{{ $player->coins_balance }} <span class="text-[10px] text-slate-300">PC</span></span>
                         </td>
                         <td class="px-8 py-6">
-                            <span class="text-xs font-bold text-slate-500 italic">Il y a {{ $player->updated_at->diffForHumans(null, true) }}</span>
+                            <span class="text-xs font-bold text-slate-500">Il y a {{ $player->updated_at->diffForHumans(null, true) }}</span>
                         </td>
                         <td class="px-8 py-6 text-right">
                             <div class="flex justify-end gap-2">
@@ -120,7 +120,7 @@
         </div>
 
 <div class="mt-8 flex flex-col md:flex-row justify-between items-center px-4 gap-4">
-    <p class="text-xs font-bold text-slate-400 italic uppercase">
+    <p class="text-xs font-bold text-slate-400 uppercase">
         Page {{ $players->currentPage() }} • {{ $players->total() }} Joueurs au total dans le club
     </p>
 

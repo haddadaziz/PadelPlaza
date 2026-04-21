@@ -5,11 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Padel Plaza | Admin Control</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <style>
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #F8FAFC; overflow-x: hidden; }
+        body { font-family: 'Inter', sans-serif; background-color: #F8FAFC; overflow-x: hidden; }
         .arena-gradient { background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); }
         .custom-scrollbar::-webkit-scrollbar { width: 4px; }
         .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
@@ -22,10 +22,9 @@
             border: 1px solid rgba(16,185,129,0.2);
             border-radius: 1.5rem;
             padding: 1rem 2.5rem 1rem 3rem;
-            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-family: 'Inter', sans-serif;
             font-size: 11px;
             font-weight: 900;
-            font-style: italic;
             text-transform: uppercase;
             letter-spacing: 0.05em;
             outline: none;
@@ -45,7 +44,6 @@
             background: #1e293b;
             color: white;
             font-weight: 700;
-            font-style: italic;
             text-transform: uppercase;
             padding: 8px;
         }
@@ -77,7 +75,7 @@
             border: 1px solid rgba(16,185,129,0.15) !important;
             border-radius: 1.75rem !important;
             box-shadow: 0 30px 60px rgba(0,0,0,0.6), 0 0 0 1px rgba(16,185,129,0.1) !important;
-            font-family: 'Plus Jakarta Sans', sans-serif !important;
+            font-family: 'Inter', sans-serif !important;
             padding: 1.25rem !important;
             width: 320px !important;
         }
@@ -103,10 +101,9 @@
             border: 1px solid rgba(16,185,129,0.3) !important;
             border-radius: 0.75rem !important;
             padding: 0.4rem 0.75rem !important;
-            font-family: 'Plus Jakarta Sans', sans-serif !important;
+            font-family: 'Inter', sans-serif !important;
             font-size: 13px !important;
             font-weight: 900 !important;
-            font-style: italic !important;
             text-transform: uppercase !important;
             outline: none !important;
             cursor: pointer !important;
@@ -123,10 +120,9 @@
             border: 1px solid rgba(16,185,129,0.3) !important;
             border-radius: 0.75rem !important;
             padding: 0.4rem 0.75rem !important;
-            font-family: 'Plus Jakarta Sans', sans-serif !important;
+            font-family: 'Inter', sans-serif !important;
             font-size: 13px !important;
             font-weight: 900 !important;
-            font-style: italic !important;
             width: 80px !important;
             outline: none !important;
         }
@@ -181,11 +177,11 @@
         
         <div class="flex justify-between items-end mb-8 shrink-0">
             <div>
-                <h2 class="text-4xl font-[900] text-slate-900 tracking-tighter italic uppercase">Planning <span class="text-emerald-500">Global</span></h2>
-                <p class="text-slate-400 font-bold italic text-sm mt-1">Supervision et gestion des créneaux de l'Arena.</p>
+                <h2 class="text-4xl font-[900] text-slate-900 tracking-tight uppercase">Planning <span class="text-emerald-500">Global</span></h2>
+                <p class="text-slate-400 font-bold text-sm mt-1">Supervision et gestion des créneaux de l'Arena.</p>
             </div>
             
-            <a href="{{ route('admin.reservations.create') }}" class="arena-gradient text-white px-8 py-4 rounded-[2rem] font-black shadow-2xl shadow-slate-300 transition-all hover:scale-105 active:scale-95 flex items-center gap-3 uppercase text-xs tracking-widest italic">
+            <a href="{{ route('admin.reservations.create') }}" class="arena-gradient text-white px-8 py-4 rounded-[2rem] font-black shadow-2xl shadow-slate-300 transition-all hover:scale-105 active:scale-95 flex items-center gap-3 uppercase text-xs tracking-widest">
                 <i class="fas fa-plus-circle"></i> Ajouter un Match
             </a>
         </div>
@@ -193,7 +189,7 @@
         <form action="{{ route('admin.reservations') }}" method="GET" class="bg-white p-6 rounded-[2.5rem] border border-slate-100 shadow-sm mb-8 flex items-end gap-4 shrink-0">
             
             <div class="flex-1 flex flex-col gap-2">
-                <label class="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] ml-2 italic">Jour de Match</label>
+                <label class="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] ml-2">Jour de Match</label>
                 <div class="dark-select-wrap">
                     <i class="fas fa-calendar-day icon-left"></i>
                     <input type="hidden" name="date" id="date-hidden" value="{{ request('date', date('Y-m-d')) }}">
@@ -205,7 +201,7 @@
             </div>
 
             <div class="flex-1 flex flex-col gap-2">
-                <label class="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] ml-2 italic">Sélection Terrain</label>
+                <label class="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] ml-2">Sélection Terrain</label>
                 <div class="dark-select-wrap">
                     <i class="fas fa-table-tennis-paddle-ball icon-left"></i>
                     <select name="court_id" class="dark-select">
@@ -219,7 +215,7 @@
             </div>
 
             <div class="flex-1 flex flex-col gap-2">
-                <label class="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] ml-2 italic">Tranche Horaire</label>
+                <label class="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] ml-2">Tranche Horaire</label>
                 <div class="dark-select-wrap">
                     <i class="fas fa-clock icon-left"></i>
                     <select name="time_slot" class="dark-select">
@@ -236,7 +232,7 @@
                 <i class="fas fa-undo-alt text-sm"></i>
             </a>
 
-            <button type="submit" class="bg-slate-900 text-white px-10 h-14 rounded-[1.5rem] font-black text-[11px] uppercase tracking-widest italic hover:bg-emerald-500 hover:shadow-xl hover:shadow-emerald-500/20 transition-all active:scale-95 flex items-center gap-3">
+            <button type="submit" class="bg-slate-900 text-white px-10 h-14 rounded-[1.5rem] font-black text-[11px] uppercase tracking-widest hover:bg-emerald-500 hover:shadow-xl hover:shadow-emerald-500/20 transition-all active:scale-95 flex items-center gap-3">
                 <span>Filtrer</span>
                 <i class="fas fa-filter text-[10px]"></i>
             </button>
@@ -247,13 +243,13 @@
             <div class="group bg-white rounded-[3rem] p-6 border border-slate-100 hover:border-emerald-200 transition-all duration-500 flex items-center gap-8 shadow-sm hover:shadow-xl">
                 
                 <div class="w-36 flex flex-col items-center justify-center border-r border-slate-50 px-4 gap-1">
-                    <span class="text-2xl font-[900] text-slate-900 italic leading-none">{{ \Carbon\Carbon::parse($reservation->start_time)->format('H:i') }}</span>
+                    <span class="text-2xl font-[900] text-slate-900 leading-none">{{ \Carbon\Carbon::parse($reservation->start_time)->format('H:i') }}</span>
                     <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest">{{ \Carbon\Carbon::parse($reservation->start_time)->translatedFormat('d M Y') }}</span>
                     <span class="text-[9px] font-black text-emerald-500 uppercase tracking-widest">{{ $reservation->court->name }}</span>
                 </div>
 
                 <div class="flex-1 flex items-center gap-5">
-                    <div class="w-16 h-16 rounded-[1.8rem] bg-slate-900 border-4 border-white shadow-xl flex items-center justify-center text-white font-[900] italic text-xl overflow-hidden">
+                    <div class="w-16 h-16 rounded-[1.8rem] bg-slate-900 border-4 border-white shadow-xl flex items-center justify-center text-white font-[900] text-xl overflow-hidden">
                         @if($reservation->user->profile_image)
                             <img src="{{ asset('storage/' . $reservation->user->profile_image) }}" class="w-full h-full object-cover">
                         @else
@@ -261,8 +257,8 @@
                         @endif
                     </div>
                     <div>
-                        <h4 class="text-xl font-[900] text-slate-900 italic uppercase tracking-tighter leading-none">{{ $reservation->user->name }}</h4>
-                        <p class="text-[10px] font-black text-slate-400 uppercase italic mt-1">SOLDE : {{ $reservation->user->coins_balance }} PPC</p>
+                        <h4 class="text-xl font-[900] text-slate-900 uppercase tracking-tight leading-none">{{ $reservation->user->name }}</h4>
+                        <p class="text-[10px] font-black text-slate-400 uppercase mt-1">SOLDE : {{ $reservation->user->coins_balance }} PPC</p>
                     </div>
                 </div>
 
@@ -273,10 +269,10 @@
                                 {{ $item['qty'] }}x {{ $item['name'] }}
                             </span>
                         @empty
-                            <span class="text-[10px] font-bold text-slate-200 italic uppercase">Sans équipement</span>
+                            <span class="text-[10px] font-bold text-slate-200 uppercase">Sans équipement</span>
                         @endforelse
                     </div>
-                    <p class="text-sm font-[900] text-slate-900 italic">{{ $reservation->total_price }} <span class="text-[10px] text-slate-400">PC</span></p>
+                    <p class="text-sm font-[900] text-slate-900">{{ $reservation->total_price }} <span class="text-[10px] text-slate-400">PC</span></p>
                 </div>
 
                 <div class="flex items-center gap-6">
@@ -293,7 +289,7 @@
                 <div class="w-24 h-24 bg-slate-100 rounded-[2.5rem] flex items-center justify-center mb-4 border border-dashed border-slate-300">
                     <i class="fas fa-calendar-times text-3xl text-slate-300"></i>
                 </div>
-                <p class="text-[10px] font-black uppercase italic tracking-[0.3em] text-slate-400">Aucun match trouvé</p>
+                <p class="text-[10px] font-black uppercase tracking-[0.3em] text-slate-400">Aucun match trouvé</p>
             </div>
             @endforelse
         </div>

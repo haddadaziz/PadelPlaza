@@ -6,14 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Padel Plaza | Dashboard Admin</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
-        body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: #F8FAFC;
-        }
+        body { font-family: 'Inter', sans-serif; background-color: #F8FAFC; }
 
         .sidebar-item-active {
             background-color: #F0FDF4;
@@ -47,7 +43,7 @@
                     </div>
                 </div>
                 <p class="text-slate-400 text-[10px] font-black uppercase tracking-widest">Revenus (Plaza Coins)</p>
-                <h3 class="text-2xl font-black text-slate-900 mt-1 italic">128,450 <span class="text-xs font-medium text-slate-400 italic">PC</span></h3>
+                <h3 class="text-2xl font-black text-slate-900 mt-1">128,450 <span class="text-xs font-medium text-slate-400">PC</span></h3>
             </div>
 
             <div class="bg-white p-6 rounded-[2rem] border border-slate-100 shadow-sm hover:shadow-md transition-all group">
@@ -57,7 +53,7 @@
                     </div>
                 </div>
                 <p class="text-slate-400 text-[10px] font-black uppercase tracking-widest">Taux d'occupation</p>
-                <h3 class="text-2xl font-black text-slate-900 mt-1 italic">74.2%</h3>
+                <h3 class="text-2xl font-black text-slate-900 mt-1">74.2%</h3>
             </div>
 
             <div class="bg-white p-6 rounded-[2rem] border border-slate-100 shadow-sm hover:shadow-md transition-all group">
@@ -67,7 +63,7 @@
                     </div>
                 </div>
                 <p class="text-slate-400 text-[10px] font-black uppercase tracking-widest">Nouveaux Joueurs</p>
-                <h3 class="text-2xl font-black text-slate-900 mt-1 italic">+42</h3>
+                <h3 class="text-2xl font-black text-slate-900 mt-1">+42</h3>
             </div>
 
             <div class="bg-white p-6 rounded-[2rem] border border-slate-100 shadow-sm hover:shadow-md transition-all group">
@@ -77,13 +73,13 @@
                     </div>
                 </div>
                 <p class="text-slate-400 text-[10px] font-black uppercase tracking-widest">Taux d'annulation</p>
-                <h3 class="text-2xl font-black text-slate-900 mt-1 italic">3.1%</h3>
+                <h3 class="text-2xl font-black text-slate-900 mt-1">3.1%</h3>
             </div>
         </div>
 
         <div class="bg-white rounded-[2rem] border border-slate-100 shadow-sm overflow-hidden">
             <div class="p-6 border-b border-slate-50 flex justify-between items-center bg-white">
-                <h4 class="text-lg font-black text-slate-900 italic uppercase tracking-tighter">Gestion des Terrains</h4>
+                <h4 class="text-lg font-black text-slate-900 uppercase tracking-tight">Gestion des Terrains</h4>
             </div>
             <div class="overflow-x-auto">
                 <table class="w-full text-left">
@@ -100,18 +96,18 @@
                         @foreach($courts as $court)
                         <tr class="group hover:bg-slate-50/50 transition-all">
                             <td class="px-8 py-5">
-                                <span class="font-bold text-slate-900 italic text-base">{{ $court->name }}</span>
+                                <span class="font-bold text-slate-900 text-base">{{ $court->name }}</span>
                             </td>
                             <td class="px-8 py-5">
-                                <span class="px-3 py-1 bg-slate-100 rounded-lg text-[10px] font-black text-slate-500 uppercase tracking-tighter italic">
+                                <span class="px-3 py-1 bg-slate-100 rounded-lg text-[10px] font-black text-slate-500 uppercase tracking-tight">
                                     {{ $court->type ?? 'Indoor' }}
                                 </span>
                             </td>
                             <td class="px-8 py-5 text-center">
-                                <span class="font-black text-emerald-500 tracking-tighter">{{ $court->price_coins }} PC</span>
+                                <span class="font-black text-emerald-500 tracking-tight">{{ $court->price_coins }} PC</span>
                             </td>
                             <td class="px-8 py-5">
-                                <div class="flex items-center gap-2 {{ $court->is_active ? 'text-emerald-500' : 'text-red-400' }} font-bold text-[11px] uppercase tracking-tighter">
+                                <div class="flex items-center gap-2 {{ $court->is_active ? 'text-emerald-500' : 'text-red-400' }} font-bold text-[11px] uppercase tracking-tight">
                                     <span class="w-2 h-2 {{ $court->is_active ? 'bg-emerald-500 animate-pulse' : 'bg-red-400' }} rounded-full"></span>
                                     {{ $court->is_active ? 'Opérationnel' : 'Hors Service' }}
                                 </div>

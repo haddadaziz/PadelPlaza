@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Padel Plaza | Mon Arena</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #F8FAFC; }
+        body { font-family: 'Inter', sans-serif; background-color: #F8FAFC; }
         .custom-scrollbar::-webkit-scrollbar { width: 4px; }
         .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: #E2E8F0; border-radius: 10px; }
@@ -29,23 +29,23 @@
     
     <div class="flex justify-between items-center mb-8 shrink-0">
         <div>
-            <h2 class="text-3xl font-[900] text-slate-900 tracking-tighter italic uppercase leading-none">Mon Arena</h2>
-            <p class="text-[10px] text-slate-400 font-black uppercase tracking-[0.3em] mt-2 italic">
+            <h2 class="text-3xl font-[900] text-slate-900 tracking-tight uppercase leading-none">Mon Arena</h2>
+            <p class="text-[10px] text-slate-400 font-black uppercase tracking-[0.3em] mt-2">
                 Performance Dashboard • Season 01
             </p>
         </div>
 
         <div class="flex items-center gap-4 bg-white p-3 pr-8 rounded-[2rem] border border-slate-100 shadow-sm">
-            <div class="w-12 h-12 bg-slate-900 rounded-2xl flex items-center justify-center text-emerald-400 font-black italic text-lg shadow-lg overflow-hidden border border-emerald-500/30">
+            <div class="w-12 h-12 bg-slate-900 rounded-2xl flex items-center justify-center text-emerald-400 font-black text-lg shadow-lg overflow-hidden border border-emerald-500/30">
                 @if(Auth::user()->level && Auth::user()->level->badge_image)
                     <img src="{{ asset('storage/' . Auth::user()->level->badge_image) }}" alt="Badge" class="w-full h-full object-cover">
                 @else
-                    {{ substr(Auth::user()->level->level_name ?? 'B', 0, 1) }}
+                    {{ (Auth::user()->level->level_name ?? 'MEMBRE') }}
                 @endif
             </div>
             <div>
-                <p class="text-[8px] font-black text-slate-400 uppercase tracking-widest">{{ Auth::user()->level->level_name}}</p>
-                <p class="text-sm font-black text-slate-900 uppercase italic">{{ Auth::user()->name }}</p>
+                <p class="text-[8px] font-black text-slate-400 uppercase tracking-widest">{{ Auth::user()->level->level_name ?? 'MEMBRE'}}</p>
+                <p class="text-sm font-black text-slate-900 uppercase">{{ Auth::user()->name }}</p>
             </div>
         </div>
     </div>
@@ -60,17 +60,17 @@
                 
                 <div class="relative z-10 flex justify-between items-center">
                     <div>
-                        <p class="text-emerald-500 text-[10px] font-black uppercase tracking-[0.4em] mb-4 italic">Plaza Coins Available</p>
-                        <h3 class="text-7xl font-[900] text-white italic tracking-tighter leading-none">
+                        <p class="text-emerald-500 text-[10px] font-black uppercase tracking-[0.4em] mb-4">Plaza Coins Available</p>
+                        <h3 class="text-7xl font-[900] text-white tracking-tight leading-none">
                             {{ Auth::user()->coins_balance }}<span class="text-2xl text-slate-600 ml-3 font-black uppercase">PC</span>
                         </h3>
                     </div>
 
                     <div class="flex flex-col gap-3">
-                        <a href="{{ route('player.reservations.create') }}" class="bg-emerald-500 text-white px-10 py-4 rounded-2xl font-black text-[11px] uppercase italic tracking-widest hover:bg-white hover:text-emerald-600 transition-all shadow-xl shadow-emerald-500/20 text-center active:scale-95">
+                        <a href="{{ route('player.reservations.create') }}" class="bg-emerald-500 text-white px-10 py-4 rounded-2xl font-black text-[11px] uppercase tracking-widest hover:bg-white hover:text-emerald-600 transition-all shadow-xl shadow-emerald-500/20 text-center active:scale-95">
                             Réserver
                         </a>
-                        <a href="{{ route('player.recharge') }}" class="bg-white/5 border border-white/10 text-white px-10 py-4 rounded-2xl font-black text-[11px] uppercase italic tracking-widest hover:bg-white/10 transition-all text-center">
+                        <a href="{{ route('player.recharge') }}" class="bg-white/5 border border-white/10 text-white px-10 py-4 rounded-2xl font-black text-[11px] uppercase tracking-widest hover:bg-white/10 transition-all text-center">
                             Recharger
                         </a>
                     </div>
@@ -80,9 +80,9 @@
 <div class="bg-white rounded-[3.5rem] border border-slate-100 p-10 shadow-sm flex-1 min-h-0 flex flex-col">
     <!-- LE TITRE -->
     <div class="flex justify-between items-center mb-8 shrink-0">
-        <h4 class="text-lg font-black text-slate-900 italic uppercase tracking-tighter">Calendrier Personnel</h4>
+        <h4 class="text-lg font-black text-slate-900 uppercase tracking-tight">Calendrier Personnel</h4>
         <div class="h-px flex-1 bg-slate-50 mx-8"></div>
-        <span class="text-[9px] font-black text-slate-300 uppercase tracking-widest italic">Prochain match</span>
+        <span class="text-[9px] font-black text-slate-300 uppercase tracking-widest">Prochain match</span>
     </div>
     
     <!-- LE MATCH LE PLUS PROCHE -->
@@ -95,16 +95,16 @@
                     <!-- Date Dynamique -->
                     <div class="w-20 h-20 bg-white rounded-3xl flex flex-col items-center justify-center border border-slate-100 shadow-sm group-hover:shadow-emerald-100 transition-all">
                         <span class="text-[10px] font-black text-slate-300 uppercase">{{ \Carbon\Carbon::parse($nextMatch->start_time)->translatedFormat('M') }}</span>
-                        <span class="text-3xl font-[900] text-slate-900 italic leading-none">{{ \Carbon\Carbon::parse($nextMatch->start_time)->format('d') }}</span>
+                        <span class="text-3xl font-[900] text-slate-900 leading-none">{{ \Carbon\Carbon::parse($nextMatch->start_time)->format('d') }}</span>
                     </div>
                     <div>
                         <!-- Nom du terrain -->
-                        <h5 class="font-[900] text-slate-900 uppercase italic text-xl tracking-tighter mb-2">{{ $nextMatch->court->name }}</h5>
+                        <h5 class="font-[900] text-slate-900 uppercase text-xl tracking-tight mb-2">{{ $nextMatch->court->name }}</h5>
                         <div class="flex items-center gap-4">
                             <!-- Heure Dynamique -->
-                            <p class="text-xs text-slate-400 font-bold uppercase italic"><i class="far fa-clock text-emerald-500 mr-2"></i> {{ \Carbon\Carbon::parse($nextMatch->start_time)->format('H:i') }} — {{ \Carbon\Carbon::parse($nextMatch->start_time)->addMinutes(60)->format('H:i') }}</p>
+                            <p class="text-xs text-slate-400 font-bold uppercase"><i class="far fa-clock text-emerald-500 mr-2"></i> {{ \Carbon\Carbon::parse($nextMatch->start_time)->format('H:i') }} — {{ \Carbon\Carbon::parse($nextMatch->start_time)->addMinutes(60)->format('H:i') }}</p>
                             <span class="w-1 h-1 bg-slate-200 rounded-full"></span>
-                            <span class="text-[9px] font-black text-emerald-500 uppercase italic">Confirmé</span>
+                            <span class="text-[9px] font-black text-emerald-500 uppercase">Confirmé</span>
                         </div>
                     </div>
                 </div>
@@ -113,14 +113,14 @@
             <!-- MESAAGE SI AUCUN MATCH -->
             <div class="flex flex-col items-center justify-center h-full text-center py-6 text-slate-400">
                 <i class="fas fa-calendar-times text-3xl mb-3 opacity-20"></i>
-                <p class="text-[10px] font-black uppercase tracking-widest italic">Tu n'as aucun match prévu</p>
-                <a href="{{ route('player.reservations.create') }}" class="mt-4 text-[10px] font-black text-emerald-500 uppercase tracking-widest hover:text-emerald-600 italic">Réserver maintenant <i class="fas fa-arrow-right ml-1"></i></a>
+                <p class="text-[10px] font-black uppercase tracking-widest">Tu n'as aucun match prévu</p>
+                <a href="{{ route('player.reservations.create') }}" class="mt-4 text-[10px] font-black text-emerald-500 uppercase tracking-widest hover:text-emerald-600">Réserver maintenant <i class="fas fa-arrow-right ml-1"></i></a>
             </div>
         @endif
     </div>
 
     <!-- LE BOUTON VOIR TOUT (fixé en bas de la carte) -->
-    <a href="{{ route('player.matchs') }}" class="mt-4 pt-4 text-center text-[10px] font-black text-slate-400 uppercase tracking-widest hover:text-emerald-500 transition-colors italic border-t border-slate-50 block w-full">
+    <a href="{{ route('player.matchs') }}" class="mt-4 pt-4 text-center text-[10px] font-black text-slate-400 uppercase tracking-widest hover:text-emerald-500 transition-colors border-t border-slate-50 block w-full">
         Consulter mon calendrier complet <i class="fas fa-chevron-right ml-1 text-[8px]"></i>
     </a>
 </div>
@@ -130,7 +130,7 @@
         <div class="col-span-4 flex flex-col gap-8 min-h-0">
             
             <div class="bg-white rounded-[3.5rem] border border-slate-100 p-10 shadow-sm flex flex-col items-center text-center">
-                <p class="text-[9px] font-black text-black-300 uppercase tracking-[0.3em] mb-8 italic">Rang de Prestige</p>
+                <p class="text-[9px] font-black text-black-300 uppercase tracking-[0.3em] mb-8">Rang de Prestige</p>
                 
                 <div class="relative mb-8">
                     <svg class="w-48 h-48 rotate-[-90deg]">
@@ -144,22 +144,22 @@
                             @if(Auth::user()->level && Auth::user()->level->badge_image)
                                 <img src="{{ asset('storage/' . Auth::user()->level->badge_image) }}" alt="Rank" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-125 scale-110">
                             @else
-                                <span class="text-white text-4xl font-black italic">{{ substr(Auth::user()->level->level_name ?? 'B', 0, 1) }}</span>
+                                <span class="text-white text-4xl font-black">{{ substr(Auth::user()->level->level_name ?? 'B', 0, 1) }}</span>
                             @endif
                         </div>
                     </div>
                 </div>
 
-                <h4 class="text-2xl font-[900] text-slate-900 uppercase italic tracking-tighter">{{ Auth::user()->level->level_name ?? 'Bois' }}</h4>
+                <h4 class="text-2xl font-[900] text-slate-900 uppercase tracking-tight">{{ Auth::user()->level->level_name ?? 'Bois' }}</h4>
                 <div class="mt-6 w-full space-y-2">
-                    <div class="flex justify-between text-[10px] font-black uppercase italic">
+                    <div class="flex justify-between text-[10px] font-black uppercase">
                         <span class="text-slate-400">Progression</span>
                         <span class="text-emerald-500">{{ $progress }}%</span>
                     </div>
                     <div class="h-1.5 w-full bg-slate-50 rounded-full overflow-hidden">
                         <div class="h-full bg-emerald-500 rounded-full" style="width: {{ $progress }}%"></div>
                     </div>
-<p class="text-[10px] font-black text-slate-400 uppercase italic">
+<p class="text-[10px] font-black text-slate-400 uppercase">
     @if($nextLevel)
         Encore <span class="text-emerald-500">{{ $xpRemaining }} XP</span> pour atteindre le niveau {{ $nextLevel->level_name }}
     @else

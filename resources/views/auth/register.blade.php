@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Padel Plaza | Rejoindre le Club</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        body { font-family: 'Inter', sans-serif; }
         .fade-in-up { animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards; opacity: 0; }
         @keyframes fadeInUp { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
     </style>
@@ -25,7 +25,7 @@
                         <circle cx="16" cy="16" r="1.5" fill="white"/>
                     </svg>
                 </div>
-                <h1 class="text-2xl font-[900] text-slate-900 tracking-tighter italic leading-none uppercase text-center">Créer un <span class="text-emerald-500">compte</span></h1>
+                <h1 class="text-2xl font-[900] text-slate-900 tracking-tight leading-none uppercase text-center">Créer un <span class="text-emerald-500">compte</span></h1>
             </div>
 
         <!-- Affichage d'erreur (ex: Si l'email est déjà pris) -->
@@ -82,7 +82,7 @@
                 </label>
             </div>
 
-            <button type="submit" class="w-full bg-slate-900 hover:bg-emerald-500 text-white font-black py-4 rounded-2xl transition-all duration-300 shadow-xl shadow-slate-200 active:scale-95 flex items-center justify-center gap-2 text-lg uppercase italic tracking-tighter">
+            <button type="submit" class="w-full bg-slate-900 hover:bg-emerald-500 text-white font-black py-4 rounded-2xl transition-all duration-300 shadow-xl shadow-slate-200 active:scale-95 flex items-center justify-center gap-2 text-lg uppercase tracking-tight">
                 Rejoindre le Club
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
             </button>

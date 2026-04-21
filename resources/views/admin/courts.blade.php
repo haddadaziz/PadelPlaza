@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Padel Plaza | Gestion des Terrains</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #F8FAFC; }
+        body { font-family: 'Inter', sans-serif; background-color: #F8FAFC; }
         .sidebar-item-active { background-color: #F0FDF4; color: #10B981; border-right: 4px solid #10B981; }
     </style>
 </head>
@@ -21,10 +21,10 @@
         
         <div class="flex justify-between items-end mb-10">
             <div>
-                <h2 class="text-3xl font-black text-slate-900 tracking-tight italic uppercase">Configuration des Courts</h2>
+                <h2 class="text-3xl font-black text-slate-900 tracking-tight uppercase">Configuration des Courts</h2>
                 <p class="text-slate-400 font-medium">Gérez la disponibilité et les tarifs de vos terrains.</p>
             </div>
-            <a href="{{ route('admin.courts.create') }}" class="bg-emerald-500 hover:bg-emerald-600 text-white px-8 py-4 rounded-[1.5rem] font-black shadow-xl shadow-emerald-100 transition-all active:scale-95 flex items-center gap-3 uppercase text-sm tracking-tighter italic">
+            <a href="{{ route('admin.courts.create') }}" class="bg-emerald-500 hover:bg-emerald-600 text-white px-8 py-4 rounded-[1.5rem] font-black shadow-xl shadow-emerald-100 transition-all active:scale-95 flex items-center gap-3 uppercase text-sm tracking-tight">
                 <i class="fas fa-plus"></i> Ajouter un terrain
             </a>
         </div>
@@ -55,11 +55,11 @@
                 <div class="p-8">
                     <div class="flex justify-between items-start mb-4">
                         <div>
-                            <h3 class="text-xl font-black text-slate-900 italic uppercase tracking-tighter">{{ $court->name }}</h3>
+                            <h3 class="text-xl font-black text-slate-900 uppercase tracking-tight">{{ $court->name }}</h3>
                             <p class="text-[11px] font-bold text-slate-400 uppercase tracking-widest mt-1">Court {{ $court->type ?? 'Indoor' }}</p>
                         </div>
                         <div class="text-right">
-                            <p class="text-2xl font-black text-emerald-500 italic leading-none">{{ $court->price_coins }}</p>
+                            <p class="text-2xl font-black text-emerald-500 leading-none">{{ $court->price_coins }}</p>
                             <p class="text-[9px] font-black text-slate-300 uppercase tracking-widest">Coins / Heure</p>
                         </div>
                     </div>
@@ -99,17 +99,17 @@
                 <i class="fas fa-exclamation-triangle"></i>
             </div>
             
-            <h3 class="text-2xl font-black text-slate-900 uppercase italic tracking-tighter text-center mb-2">Attention !</h3>
+            <h3 class="text-2xl font-black text-slate-900 uppercase tracking-tight text-center mb-2">Attention !</h3>
             <p class="text-slate-400 text-xs font-bold text-center mb-8 px-4">Êtes-vous sûr de vouloir supprimer ce terrain ? L'action est irréversible.</p>
             
             <div class="flex gap-4">
-                <button onclick="closeDeleteModal()" class="flex-1 py-4 bg-slate-50 hover:bg-slate-100 text-slate-400 font-black rounded-2xl uppercase text-[10px] tracking-widest transition-all italic">
+                <button onclick="closeDeleteModal()" class="flex-1 py-4 bg-slate-50 hover:bg-slate-100 text-slate-400 font-black rounded-2xl uppercase text-[10px] tracking-widest transition-all">
                     Annuler
                 </button>
                 <form id="confirmDeleteForm" method="POST" class="flex-1">
                     @csrf
                     @method('DELETE')
-                    <button type="submit" class="w-full py-4 bg-red-500 hover:bg-red-600 text-white font-black rounded-2xl uppercase text-[10px] tracking-widest transition-all shadow-xl shadow-red-500/20 italic">
+                    <button type="submit" class="w-full py-4 bg-red-500 hover:bg-red-600 text-white font-black rounded-2xl uppercase text-[10px] tracking-widest transition-all shadow-xl shadow-red-500/20">
                         Supprimer
                     </button>
                 </form>

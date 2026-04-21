@@ -6,13 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Padel Plaza | Le Club Nouvelle Génération</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
-        body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-        }
+        body { font-family: 'Inter', sans-serif; }
 
         .fade-in-up {
             animation: fadeInUp 0.8s ease-out forwards;
@@ -36,18 +33,14 @@
 
     <nav class="fixed top-0 w-full z-50 bg-white/90 backdrop-blur-xl border-b border-slate-100 px-6 py-4">
         <div class="max-w-7xl mx-auto flex justify-between items-center">
-            <a href="/" class="flex items-center gap-3 group">
-                <div class="w-10 h-10 bg-emerald-500 rounded-xl flex items-center justify-center shadow-lg shadow-emerald-200 shrink-0 group-hover:scale-110 transition-transform duration-300">
+            <div class="flex items-center gap-3 group">
+                <div class="w-10 h-10 bg-emerald-500 rounded-xl flex items-center justify-center shadow-lg shadow-emerald-200 group-hover:rotate-6 transition-transform">
                     <i class="fas fa-table-tennis text-white text-lg"></i>
                 </div>
-                <div class="flex flex-col leading-none">
-                    <span class="text-[22px] font-[900] text-slate-900 tracking-tighter italic uppercase leading-none">PADEL<span class="text-emerald-500">PLAZA</span></span>
-                    <span class="text-[8px] font-black text-slate-400 uppercase tracking-[0.3em] mt-0.5">Club · Arena</span>
-                </div>
-            </a>
+                <span class="text-2xl font-[900] text-slate-900 tracking-tight uppercase leading-none">PADEL<span class="text-emerald-500">PLAZA</span></span>
+            </div>
 
-            <div
-                class="hidden md:flex items-center gap-10 text-[11px] font-black uppercase tracking-[0.2em] text-slate-500">
+            <div class="hidden md:flex items-center gap-10 text-[11px] font-black uppercase tracking-[0.2em] text-slate-500">
                 <a href="#concept" class="hover:text-emerald-500 transition-colors">Concept</a>
                 <a href="#terrains" class="hover:text-emerald-500 transition-colors">Terrains</a>
                 <a href="#avantages" class="hover:text-emerald-500 transition-colors">Avantages</a>
@@ -55,9 +48,9 @@
 
             <div class="flex items-center gap-6">
                 <a href="{{ route('login') }}"
-                    class="text-xs font-black uppercase italic tracking-tighter hover:text-emerald-500 transition-colors">Connexion</a>
+                    class="text-xs font-black uppercase tracking-tight hover:text-emerald-500 transition-colors">Connexion</a>
                 <a href="{{ route('register') }}"
-                    class="bg-slate-900 text-white px-7 py-3.5 rounded-2xl font-black text-[11px] uppercase italic tracking-[0.15em] hover:bg-emerald-500 transition-all shadow-xl shadow-slate-200 active:scale-95">
+                    class="bg-slate-900 text-white px-7 py-3.5 rounded-2xl font-black text-[11px] uppercase tracking-[0.15em] hover:bg-emerald-500 transition-all shadow-xl shadow-slate-200 active:scale-95">
                     S'inscrire
                 </a>
             </div>
@@ -77,18 +70,17 @@
                     class="bg-emerald-500 text-white px-5 py-1.5 rounded-full text-[10px] font-black uppercase tracking-[0.3em] mb-8 inline-block shadow-xl shadow-emerald-100">
                     Luxury Sports Experience
                 </span>
-                <h1
-                    class="text-6xl md:text-8xl font-black text-slate-900 tracking-tighter italic leading-[0.85] mb-10 uppercase">
-                    Le Padel<br><span class="text-emerald-500">Réinventé</span>.
-                </h1>
-                <p class="text-slate-500 text-lg md:text-xl font-bold mb-12 max-w-md italic leading-relaxed">
-                    Réservez vos terrains en un clic, gagnez des <span
-                        class="text-emerald-600 underline decoration-4 decoration-emerald-100">Plaza Coins</span> et
-                    progressez dans le classement Elite.
+                <h2 class="text-5xl md:text-7xl font-[900] text-slate-900 tracking-tight leading-none mb-6">
+                    LE PADEL <br>
+                    <span class="text-emerald-500">NOUVELLE</span> <br>
+                    GÉNÉRATION
+                </h2>
+                <p class="text-slate-400 text-lg md:text-xl font-medium max-w-lg mb-10 leading-relaxed capitalize">
+                    Vivez l'expérience Padel ultime dans un complexe ultra-moderne conçu pour la performance et le plaisir.
                 </p>
                 <div class="flex flex-col sm:flex-row gap-5">
                     <a href="{{ route('register') }}"
-                        class="bg-emerald-500 text-white px-12 py-5 rounded-[1.5rem] font-black text-sm uppercase italic tracking-widest hover:bg-emerald-600 transition-all shadow-2xl shadow-emerald-200 text-center flex items-center justify-center gap-3 active:scale-95">
+                        class="bg-emerald-500 text-white px-12 py-5 rounded-[1.5rem] font-black text-sm uppercase tracking-widest hover:bg-emerald-600 transition-all shadow-2xl shadow-emerald-200 text-center flex items-center justify-center gap-3 active:scale-95">
                         Créer mon profil <i class="fas fa-chevron-right"></i>
                     </a>
                     <a href="#concept"
@@ -162,7 +154,7 @@
                             </div>
                             <div>
                                 <p class="text-[10px] font-black text-white/70 uppercase tracking-widest">Monnaie Virtuelle</p>
-                                <p class="text-2xl font-black text-white italic uppercase tracking-tighter">Plaza Coins</p>
+                                <p class="text-2xl font-black text-white uppercase tracking-tight">Plaza Coins</p>
                             </div>
                         </div>
                     </div>
@@ -175,8 +167,8 @@
                             <i class="fas fa-bolt text-2xl"></i>
                         </div>
                         <div>
-                            <h3 class="text-2xl font-black text-white italic uppercase tracking-tighter mb-2 group-hover:text-emerald-400 transition-colors">Réservation Connectée</h3>
-                            <p class="text-slate-400 font-bold italic leading-relaxed text-sm">Vérifiez les disponibilités et réservez votre terrain préféré en quelques secondes, où que vous soyez.</p>
+                            <h3 class="text-2xl font-black text-white uppercase tracking-tight mb-2 group-hover:text-emerald-400 transition-colors">Réservation Connectée</h3>
+                            <p class="text-slate-400 font-bold leading-relaxed text-sm">Vérifiez les disponibilités et réservez votre terrain préféré en quelques secondes, où que vous soyez.</p>
                         </div>
                     </div>
 
@@ -185,8 +177,8 @@
                             <i class="fas fa-wallet text-2xl"></i>
                         </div>
                         <div>
-                            <h3 class="text-2xl font-black text-white italic uppercase tracking-tighter mb-2 group-hover:text-blue-400 transition-colors">Portefeuille Virtuel</h3>
-                            <p class="text-slate-400 font-bold italic leading-relaxed text-sm">Simplifiez vos transactions. Rechargez vos Plaza Coins et gérez vos dépenses sportives sans friction.</p>
+                            <h3 class="text-2xl font-black text-white uppercase tracking-tight mb-2 group-hover:text-blue-400 transition-colors">Portefeuille Virtuel</h3>
+                            <p class="text-slate-400 font-bold leading-relaxed text-sm">Simplifiez vos transactions. Rechargez vos Plaza Coins et gérez vos dépenses sportives sans friction.</p>
                         </div>
                     </div>
 
@@ -195,8 +187,8 @@
                             <i class="fas fa-star text-2xl"></i>
                         </div>
                         <div>
-                            <h3 class="text-2xl font-black text-white italic uppercase tracking-tighter mb-2 group-hover:text-orange-400 transition-colors">Gamification Elite</h3>
-                            <p class="text-slate-400 font-bold italic leading-relaxed text-sm">Chaque match compte. Gagnez de l'XP, débloquez des badges et obtenez des avantages réservés aux meilleurs joueurs.</p>
+                            <h3 class="text-2xl font-black text-white uppercase tracking-tight mb-2 group-hover:text-orange-400 transition-colors">Gamification Elite</h3>
+                            <p class="text-slate-400 font-bold leading-relaxed text-sm">Chaque match compte. Gagnez de l'XP, débloquez des badges et obtenez des avantages réservés aux meilleurs joueurs.</p>
                         </div>
                     </div>
 
@@ -207,8 +199,8 @@
 <section class="py-24 bg-white" id="terrains">
     <div class="max-w-7xl mx-auto px-6">
         <div class="text-center mb-16">
-            <h2 class="text-[10px] font-black text-emerald-500 uppercase tracking-[0.3em] mb-4 italic">Nos infrastructures</h2>
-            <p class="text-4xl font-black text-slate-900 tracking-tighter italic uppercase">Des courts de classe <span class="text-emerald-500">mondiale</span></p>
+            <h2 class="text-[10px] font-black text-emerald-500 uppercase tracking-[0.3em] mb-4">Nos infrastructures</h2>
+            <p class="text-4xl font-black text-slate-900 tracking-tight uppercase">Des courts de classe <span class="text-emerald-500">mondiale</span></p>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
@@ -224,22 +216,22 @@
                 </div>
 
                 <div class="p-8">
-                    <h3 class="text-2xl font-black text-slate-900 italic uppercase tracking-tighter mb-2">{{ $court->name }}</h3>
+                    <h3 class="text-2xl font-black text-slate-900 uppercase tracking-tight mb-2">{{ $court->name }}</h3>
                     <div class="flex items-center gap-4 mb-8">
-                        <span class="text-emerald-500 font-black text-xl italic">{{ $court->price_coins }} <span class="text-[10px] uppercase tracking-normal">PC /h</span></span>
+                        <span class="text-emerald-500 font-black text-xl">{{ $court->price_coins }} <span class="text-[10px] uppercase tracking-normal">PC /h</span></span>
                         <div class="h-4 w-px bg-slate-200"></div>
-                        <span class="text-slate-400 text-xs font-bold uppercase tracking-widest italic">Éclairage LED</span>
+                        <span class="text-slate-400 text-xs font-bold uppercase tracking-widest">Éclairage LED</span>
                     </div>
 
                     {{-- LOGIQUE D'ACCÈS --}}
                     @auth
-                        <a href="/booking/{{ $court->id }}" class="block w-full bg-emerald-500 hover:bg-emerald-600 text-white text-center font-black py-4 rounded-2xl transition-all shadow-lg shadow-emerald-100 uppercase italic tracking-tighter">
+                        <a href="/booking/{{ $court->id }}" class="block w-full bg-emerald-500 hover:bg-emerald-600 text-white text-center font-black py-4 rounded-2xl transition-all shadow-lg shadow-emerald-100 uppercase tracking-tight">
                             Réserver maintenant
                         </a>
                     @endauth
 
                     @guest
-                        <a href="/login" class="block w-full bg-slate-900 hover:bg-emerald-500 text-white text-center font-black py-4 rounded-2xl transition-all shadow-xl shadow-slate-200 uppercase italic tracking-tighter">
+                        <a href="/login" class="block w-full bg-slate-900 hover:bg-emerald-500 text-white text-center font-black py-4 rounded-2xl transition-all shadow-xl shadow-slate-200 uppercase tracking-tight">
                             Se connecter pour réserver
                         </a>
                     @endguest
@@ -254,8 +246,8 @@
         <div class="max-w-7xl mx-auto">
             
             <div class="flex flex-col items-center text-center mb-20">
-                <span class="text-emerald-500 text-[11px] font-black uppercase tracking-[0.3em] mb-4 italic">Privilèges Membres</span>
-                <h2 class="text-4xl md:text-6xl font-black text-slate-900 tracking-tighter italic uppercase">
+                <span class="text-emerald-500 text-[11px] font-black uppercase tracking-[0.3em] mb-4">Privilèges Membres</span>
+                <h2 class="text-4xl md:text-6xl font-black text-slate-900 tracking-tight uppercase">
                     L'expérience <span class="text-emerald-500">Premium</span>
                 </h2>
                 <div class="h-1.5 w-20 bg-emerald-500 mt-6 rounded-full"></div>
@@ -267,32 +259,32 @@
                     <div class="w-12 h-12 bg-white rounded-2xl flex items-center justify-center mb-6 shadow-sm group-hover:scale-110 transition-transform">
                         <i class="fas fa-map-marker-alt text-emerald-500"></i>
                     </div>
-                    <h4 class="text-lg font-black text-slate-900 italic uppercase mb-3 leading-tight">Terrains<br>Panoramiques</h4>
-                    <p class="text-slate-400 text-xs font-bold italic leading-relaxed">Jouez sur les meilleurs terrains du Maroc avec une visibilité totale et un revêtement WPT.</p>
+                    <h4 class="text-lg font-black text-slate-900 uppercase mb-3 leading-tight">Terrains<br>Panoramiques</h4>
+                    <p class="text-slate-400 text-xs font-bold leading-relaxed">Jouez sur les meilleurs terrains du Maroc avec une visibilité totale et un revêtement WPT.</p>
                 </div>
 
                 <div class="group p-8 bg-slate-50 rounded-[2.5rem] border border-slate-100 hover:bg-white hover:shadow-2xl hover:shadow-emerald-900/5 transition-all duration-500">
                     <div class="w-12 h-12 bg-white rounded-2xl flex items-center justify-center mb-6 shadow-sm group-hover:scale-110 transition-transform">
                         <i class="fas fa-graduation-cap text-blue-500"></i>
                     </div>
-                    <h4 class="text-lg font-black text-slate-900 italic uppercase mb-3 leading-tight">Coaching<br>Elite</h4>
-                    <p class="text-slate-400 text-xs font-bold italic leading-relaxed">Améliorez votre technique avec nos coachs certifiés pour passer du rang Bronze à Elite.</p>
+                    <h4 class="text-lg font-black text-slate-900 uppercase mb-3 leading-tight">Coaching<br>Elite</h4>
+                    <p class="text-slate-400 text-xs font-bold leading-relaxed">Améliorez votre technique avec nos coachs certifiés pour passer du rang Bronze à Elite.</p>
                 </div>
 
                 <div class="group p-8 bg-slate-50 rounded-[2.5rem] border border-slate-100 hover:bg-white hover:shadow-2xl hover:shadow-emerald-900/5 transition-all duration-500">
                     <div class="w-12 h-12 bg-white rounded-2xl flex items-center justify-center mb-6 shadow-sm group-hover:scale-110 transition-transform">
                         <i class="fas fa-users text-orange-500"></i>
                     </div>
-                    <h4 class="text-lg font-black text-slate-900 italic uppercase mb-3 leading-tight">Matchmaking<br>Intelligent</h4>
-                    <p class="text-slate-400 text-xs font-bold italic leading-relaxed">Trouvez des partenaires de votre niveau grâce à notre algorithme de classement XP.</p>
+                    <h4 class="text-lg font-black text-slate-900 uppercase mb-3 leading-tight">Matchmaking<br>Intelligent</h4>
+                    <p class="text-slate-400 text-xs font-bold leading-relaxed">Trouvez des partenaires de votre niveau grâce à notre algorithme de classement XP.</p>
                 </div>
 
                 <div class="group p-8 bg-slate-50 rounded-[2.5rem] border border-slate-100 hover:bg-white hover:shadow-2xl hover:shadow-emerald-900/5 transition-all duration-500">
                     <div class="w-12 h-12 bg-white rounded-2xl flex items-center justify-center mb-6 shadow-sm group-hover:scale-110 transition-transform">
                         <i class="fas fa-shopping-bag text-purple-500"></i>
                     </div>
-                    <h4 class="text-lg font-black text-slate-900 italic uppercase mb-3 leading-tight">Plaza<br>Store</h4>
-                    <p class="text-slate-400 text-xs font-bold italic leading-relaxed">Utilisez vos Plaza Coins accumulés pour louer du matériel pro ou acheter des boissons.</p>
+                    <h4 class="text-lg font-black text-slate-900 uppercase mb-3 leading-tight">Plaza<br>Store</h4>
+                    <p class="text-slate-400 text-xs font-bold leading-relaxed">Utilisez vos Plaza Coins accumulés pour louer du matériel pro ou acheter des boissons.</p>
                 </div>
 
             </div>
@@ -301,10 +293,10 @@
                 <div class="absolute top-0 right-0 w-64 h-64 bg-emerald-500/20 rounded-full blur-[80px] -mr-32 -mt-32"></div>
                 <div class="relative z-10 flex flex-col md:flex-row items-center justify-between gap-8">
                     <div>
-                        <h3 class="text-3xl md:text-4xl font-black text-white italic uppercase tracking-tighter">Prêt à entrer sur le terrain ?</h3>
-                        <p class="text-slate-400 font-bold italic mt-2">Rejoignez plus de 1,200 joueurs passionnés dès aujourd'hui.</p>
+                        <h3 class="text-3xl md:text-4xl font-black text-white uppercase tracking-tight">Prêt à entrer sur le terrain ?</h3>
+                        <p class="text-slate-400 font-bold mt-2">Rejoignez plus de 1,200 joueurs passionnés dès aujourd'hui.</p>
                     </div>
-                    <a href="{{ route('register') }}" class="bg-emerald-500 text-white px-10 py-5 rounded-2xl font-black text-sm uppercase italic tracking-widest hover:bg-white hover:text-emerald-600 transition-all shadow-xl shadow-emerald-500/20 whitespace-nowrap">
+                    <a href="{{ route('register') }}" class="bg-emerald-500 text-white px-10 py-5 rounded-2xl font-black text-sm uppercase tracking-widest hover:bg-white hover:text-emerald-600 transition-all shadow-xl shadow-emerald-500/20 whitespace-nowrap">
                         Créer mon compte gratuitement
                     </a>
                 </div>
@@ -314,7 +306,7 @@
 
     <footer class="bg-white py-12 px-6 border-t border-slate-100">
         <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
-            <p class="text-xs font-black text-slate-400 uppercase tracking-widest italic">© 2026 Padel Plaza Club</p>
+            <p class="text-xs font-black text-slate-400 uppercase tracking-widest">© 2026 Padel Plaza Club</p>
             <div class="flex gap-8 text-[10px] font-black text-slate-400 uppercase tracking-widest">
                 <a href="#" class="hover:text-emerald-500 transition-colors">Confidentialité</a>
                 <a href="#" class="hover:text-emerald-500 transition-colors">Mentions Légales</a>

@@ -5,7 +5,7 @@
                 <i class="fas fa-table-tennis text-white text-lg"></i>
             </div>
             <div class="flex flex-col leading-none">
-                <span class="text-[22px] font-[900] text-slate-900 tracking-tighter italic uppercase leading-none">PADEL<span class="text-emerald-500">PLAZA</span></span>
+                <span class="text-[22px] font-[900] text-slate-900 tracking-tight uppercase leading-none">PADEL<span class="text-emerald-500">PLAZA</span></span>
                 <span class="text-[8px] font-black text-slate-400 uppercase tracking-[0.3em] mt-0.5">Club · Arena</span>
             </div>
         </a>
@@ -20,7 +20,7 @@
             <div class="w-8 h-8 rounded-xl flex items-center justify-center transition-colors {{ request()->routeIs('home') ? 'bg-white/20' : 'bg-slate-50 group-hover:bg-white' }}">
                 <i class="fas fa-chart-pie text-sm"></i>
             </div>
-            <span class="font-bold text-[11px] uppercase tracking-widest italic">Vue d'ensemble</span>
+            <span class="font-bold text-[11px] uppercase tracking-widest">Vue d'ensemble</span>
         </a>
 
         <a href="{{ route('admin.reservations') }}" 
@@ -28,7 +28,7 @@
             <div class="w-8 h-8 rounded-xl flex items-center justify-center transition-colors {{ request()->routeIs('admin.reservations*') ? 'bg-white/20' : 'bg-slate-50 group-hover:bg-white' }}">
                 <i class="fas fa-calendar-check text-sm"></i>
             </div>
-            <span class="font-bold text-[11px] uppercase tracking-widest italic">Réservations</span>
+            <span class="font-bold text-[11px] uppercase tracking-widest">Réservations</span>
         </a>
 
         <a href="{{ route('admin.courts') }}" 
@@ -36,7 +36,7 @@
             <div class="w-8 h-8 rounded-xl flex items-center justify-center transition-colors {{ request()->routeIs('admin.courts*') ? 'bg-white/20' : 'bg-slate-50 group-hover:bg-white' }}">
                 <i class="fas fa-table-tennis-paddle-ball text-sm"></i>
             </div>
-            <span class="font-bold text-[11px] uppercase tracking-widest italic">Gestion Courts</span>
+            <span class="font-bold text-[11px] uppercase tracking-widest">Gestion Courts</span>
         </a>
 
         <a href="{{ route('admin.equipments') }}" 
@@ -44,7 +44,7 @@
             <div class="w-8 h-8 rounded-xl flex items-center justify-center transition-colors {{ request()->routeIs('admin.equipments*') ? 'bg-white/20' : 'bg-slate-50 group-hover:bg-white' }}">
                 <i class="fas fa-boxes text-sm"></i>
             </div>
-            <span class="font-bold text-[11px] uppercase tracking-widest italic">Équipements</span>
+            <span class="font-bold text-[11px] uppercase tracking-widest">Équipements</span>
         </a>
 
         <a href="{{ route('admin.players') }}" 
@@ -52,7 +52,7 @@
             <div class="w-8 h-8 rounded-xl flex items-center justify-center transition-colors {{ request()->routeIs('admin.players*') ? 'bg-white/20' : 'bg-slate-50 group-hover:bg-white' }}">
                 <i class="fas fa-users text-sm"></i>
             </div>
-            <span class="font-bold text-[11px] uppercase tracking-widest italic">Joueurs</span>
+            <span class="font-bold text-[11px] uppercase tracking-widest">Joueurs</span>
         </a>
     </nav>
 
@@ -62,15 +62,15 @@
                 {{ strtoupper(substr(Auth::user()->name, 0, 2)) }} 
             </div>
             <div class="overflow-hidden">
-                <p class="text-[11px] font-bold text-white truncate italic uppercase tracking-tight">Mon Compte</p>
-                <p class="text-[8px] text-emerald-400 group-hover:text-white uppercase font-black tracking-[0.2em] transition-colors italic">Modifier</p>
+                <p class="text-[11px] font-bold text-white truncate uppercase tracking-tight">Mon Compte</p>
+                <p class="text-[8px] text-emerald-400 group-hover:text-white uppercase font-black tracking-[0.2em] transition-colors">Modifier</p>
             </div>
             <i class="fas fa-chevron-right ml-auto text-slate-600 group-hover:text-white text-[10px] transition-colors"></i>
         </a>
 
         <form action="{{ route('logout') }}" method="POST">
             @csrf
-            <button type="submit" class="group w-full flex items-center justify-center gap-3 py-3.5 rounded-xl bg-slate-50 text-slate-400 hover:bg-red-500 hover:text-white transition-all duration-300 font-black text-[10px] uppercase tracking-[0.2em] italic">
+            <button type="submit" class="group w-full flex items-center justify-center gap-3 py-3.5 rounded-xl bg-slate-50 text-slate-400 hover:bg-red-500 hover:text-white transition-all duration-300 font-black text-[10px] uppercase tracking-[0.2em]">
                 <i class="fas fa-power-off group-hover:rotate-12 transition-transform"></i> 
                 Déconnexion
             </button>
