@@ -22,7 +22,7 @@ class CourtController extends Controller
         // 3. On envoie vers la nouvelle vue
         return view('admin.courts', compact('courts'));
     }
-        // Affiche la page d'édition
+    // Affiche la page d'édition
     public function edit($id)
     {
         $court = \App\Models\Court::findOrFail($id);
@@ -55,7 +55,7 @@ class CourtController extends Controller
         // 4. Redirection avec ton super système de notification !
         return redirect()->route('admin.courts')->with('success', 'Terrain mis à jour avec succès !');
     }
-        // Affiche la page de création vide
+    // Affiche la page de création vide
     public function create()
     {
         return view('admin.courts.create');
@@ -86,7 +86,7 @@ class CourtController extends Controller
 
         return redirect()->route('admin.courts')->with('success', 'Nouveau terrain créé avec succès ! 🚀');
     }
-        // Supprime un terrain de la BDD
+    // Supprime un terrain de la BDD
     public function destroy($id)
     {
         $court = \App\Models\Court::findOrFail($id);
@@ -101,6 +101,16 @@ class CourtController extends Controller
 
         // On redirige avec un message de succès (Notification Rouge/Verte)
         return redirect()->route('admin.courts')->with('success', 'Terrain supprimé définitivement ! 🗑️');
+    }
+    // Alterne le statut du terrain (Actif <-> Maintenance)
+    public function toggleStatus($id)
+    {
+        $court = \App\Models\Court::findOrFail($id);
+        $court->is_active = !$court->is_active;
+        $court->save();
+
+        $status = $court->is_active ? 'ouvert et prêt pour les matchs ! 🎾' : 'mis en maintenance. 🛠️';
+        return redirect()->back()->with('success', "Le terrain {$court->name} a été {$status}");
     }
 
 }

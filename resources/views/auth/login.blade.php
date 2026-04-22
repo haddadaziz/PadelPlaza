@@ -89,7 +89,7 @@
 
         </div>
         
-        <p class="text-center text-slate-400 text-[9px] mt-8 font-black uppercase tracking-[0.3em]">ADMIN PANEL • 2026</p>
+        <p class="text-center text-slate-400 text-[9px] mt-8 font-black uppercase tracking-[0.3em]">Padel Plaza</p>
     </div>
         @include('components.notif')
 

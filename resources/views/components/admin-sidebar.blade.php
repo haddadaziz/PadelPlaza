@@ -36,7 +36,7 @@
             <div class="w-8 h-8 rounded-xl flex items-center justify-center transition-colors {{ request()->routeIs('admin.courts*') ? 'bg-white/20' : 'bg-slate-50 group-hover:bg-white' }}">
                 <i class="fas fa-table-tennis-paddle-ball text-sm"></i>
             </div>
-            <span class="font-bold text-[11px] uppercase tracking-widest">Gestion Courts</span>
+            <span class="font-bold text-[11px] uppercase tracking-widest">Gestion Terrains</span>
         </a>
 
         <a href="{{ route('admin.equipments') }}" 

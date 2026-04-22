@@ -45,11 +45,16 @@
                     @endif
 
                     
-                    <div class="absolute top-5 right-5">
-                        <span class="px-4 py-2 rounded-full text-[10px] font-black uppercase tracking-widest {{ $court->is_active ? 'bg-white text-emerald-600' : 'bg-red-500 text-white' }} shadow-lg">
-                            {{ $court->is_active ? '● Actif' : '● Maintenance' }}
-                        </span>
-                    </div>
+<div class="absolute top-5 right-5">
+    <form action="{{ route('admin.courts.toggle-status', $court->id) }}" method="POST">
+        @csrf
+        @method('PATCH')
+        <button type="submit" class="px-4 py-2 rounded-full text-[10px] font-black uppercase tracking-widest {{ $court->is_active ? 'bg-white text-emerald-600' : 'bg-red-500 text-white' }} shadow-lg transition-transform active:scale-95">
+            {{ $court->is_active ? '● Actif' : '● Maintenance' }}
+        </button>
+    </form>
+</div>
+
                 </div>
 
                 <div class="p-8">

@@ -60,7 +60,7 @@
                 
                 <div class="relative z-10 flex justify-between items-center">
                     <div>
-                        <p class="text-emerald-500 text-[10px] font-black uppercase tracking-[0.4em] mb-4">Plaza Coins Available</p>
+                        <p class="text-emerald-500 text-[10px] font-black uppercase tracking-[0.4em] mb-4">PPC Disponible</p>
                         <h3 class="text-7xl font-[900] text-white tracking-tight leading-none">
                             {{ Auth::user()->coins_balance }}<span class="text-2xl text-slate-600 ml-3 font-black uppercase">PC</span>
                         </h3>

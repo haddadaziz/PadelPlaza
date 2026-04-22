@@ -48,7 +48,7 @@ class ReservationController extends Controller
     public function create()
     {
         // On va chercher uniquement les terrains qui sont ouverts
-        $courts = \App\Models\Court::where('is_active', true)->get();
+        $courts = \App\Models\Court::all();
         return view('player.reservations.create', compact('courts'));
     }
 

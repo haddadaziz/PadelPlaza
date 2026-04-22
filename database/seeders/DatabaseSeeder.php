@@ -3,36 +3,54 @@
 namespace Database\Seeders;
 
 use App\Models\User;
+use App\Models\Level;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
-        // On crée les niveaux en premier
-        $this->call([LevelSeeder::class , CourtSeeder::class]);
+        // 1. On crée les niveaux en premier (Indispensable !)
+        $this->call([LevelSeeder::class]);
 
-        $boisLevel = \App\Models\Level::where('level_name', 'Bois')->first();
+        $boisLevel = Level::where('level_name', 'Bois')->first();
 
-        // Admin : level_id reste NULL par défaut
-        \App\Models\User::create([
-            'name' => 'Admin PadelPlaza',
+        // 2. Création du compte ADMIN
+        User::create([
+            'name' => 'Admin Padel Plaza',
             'email' => 'admin@padelplaza.com',
-            'password' => \Illuminate\Support\Facades\Hash::make('password'),
+            'password' => Hash::make('password'),
             'role' => 'admin',
         ]);
 
-        // Joueur : on lui donne son niveau Bois
-        \App\Models\User::create([
-            'name' => 'Joueur Test',
-            'email' => 'player@padelplaza.com',
-            'password' => \Illuminate\Support\Facades\Hash::make('password'),
-            'role' => 'player',
-            'coins_balance' => 500,
-            'xp_points' => 0,
-            'level_id' => $boisLevel->id,
-        ]);
-    }
+        // 3. Liste des 30 légendes du tennis
+        $tennisStars = [
+            'Roger Federer', 'Rafael Nadal', 'Novak Djokovic', 'Serena Williams', 
+            'Steffi Graf', 'Andre Agassi', 'Pete Sampras', 'Bjorn Borg', 
+            'Carlos Alcaraz', 'Jannik Sinner', 'Daniil Medvedev', 'Iga Swiatek',
+            'Venus Williams', 'Maria Sharapova', 'Andy Murray', 'Stan Wawrinka',
+            'Coco Gauff', 'Aryna Sabalenka', 'Ons Jabeur', 'Gael Monfils',
+            'Richard Gasquet', 'Nick Kyrgios', 'Caroline Garcia', 'Holger Rune',
+            'Casper Ruud', 'Alexander Zverev', 'Stefanos Tsitsipas', 'Ben Shelton',
+            'Frances Tiafoe', 'Arthur Fils'
+        ];
 
+        foreach ($tennisStars as $name) {
+            $email = Str::slug($name) . '@example.com';
+            
+            User::create([
+                'name' => $name,
+                'email' => $email,
+                'password' => Hash::make('password'),
+                'role' => 'player',
+                'coins_balance' => rand(100, 2000), // Un peu d'argent aléatoire
+                'xp_points' => rand(0, 500),         // Un peu d'XP
+                'level_id' => $boisLevel->id,
+                // On utilise un avatar aléatoire basé sur le nom
+                'profile_image' => 'https://i.pravatar.cc/150?u=' . $email,
+            ]);
+        }
+    }
 }

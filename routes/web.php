@@ -29,12 +29,28 @@ Route::middleware('auth')->group(function () {
             $user = Auth::user();
 
             // Si c'est un Administrateur, l'aiguilleur l'envoie sur son portail
+            // Si c'est un Administrateur, l'aiguilleur l'envoie sur son portail
             if ($user->role === 'admin') {
-                // Puisque tu n'as pas de route admin.dashboard nommée, on va lui servir la vue comme avant, 
-                // mais l'idéal pour plus tard sera de créer une vraie route "/admin/dashboard" !
                 $courts = \App\Models\Court::all();
-                return view('admin.dashboard', compact('courts'));
+
+                // --- CALCUL DES STATS ---
+                // 1. Chiffre d'affaire (Somme de tous les total_price des réservations confirmées)
+                $chiffreAffaire = \App\Models\Reservation::where('status', 'confirmed')->sum('total_price');
+
+                // 2. Réservations à venir (Celles dont la date est dans le futur)
+                $reservationsAVenir = \App\Models\Reservation::where('status', 'confirmed')
+                    ->where('start_time', '>=', now())
+                    ->count();
+
+                // 3. PPC en circulation (Somme des soldes de tous les utilisateurs)
+                $ppcCirculation = \App\Models\User::sum('coins_balance');
+                // 4. Matchs disputés (Celles dont la date est dans le passé)
+                $matchsDisputes = \App\Models\Reservation::where('status', 'confirmed')
+                    ->where('start_time', '<', now())
+                    ->count();
+                return view('admin.dashboard', compact('courts', 'chiffreAffaire', 'reservationsAVenir', 'ppcCirculation','matchsDisputes'));
             }
+
 
             // Magie Laravel : Si c'est un Joueur, on le redirige ! 
             // L'URL dans le navigateur va donc changer en "/player/dashboard" !
@@ -74,6 +90,7 @@ Route::middleware('auth')->group(function () {
         Route::post('/admin/courts', [\App\Http\Controllers\CourtController::class , 'store'])->name('admin.courts.store');
         Route::get('/admin/courts/{id}/edit', [\App\Http\Controllers\CourtController::class , 'edit'])->name('admin.courts.edit');
         Route::put('/admin/courts/{id}', [\App\Http\Controllers\CourtController::class , 'update'])->name('admin.courts.update');
+        Route::patch('/admin/courts/{id}/toggle', [\App\Http\Controllers\CourtController::class , 'toggleStatus'])->name('admin.courts.toggle-status');
         Route::delete('/admin/courts/{id}', [\App\Http\Controllers\CourtController::class , 'destroy'])->name('admin.courts.destroy');
 
         // Equipements
@@ -94,12 +111,12 @@ Route::middleware('auth')->group(function () {
         // Recharge manuelle par l'Admin
         Route::get('/admin/players/{id}/recharge', [\App\Http\Controllers\UserController::class , 'adminRechargeForm'])->name('admin.players.recharge');
         Route::post('/admin/players/{id}/recharge', [\App\Http\Controllers\UserController::class , 'adminRechargeProcess'])->name('admin.players.recharge.process');
-        Route::patch('/admin/players/{id}/block', [\App\Http\Controllers\UserController::class, 'toggleBlock'])->name('admin.players.block');
+        Route::patch('/admin/players/{id}/block', [\App\Http\Controllers\UserController::class , 'toggleBlock'])->name('admin.players.block');
 
 
         // --- API / AJAX ---
         Route::get('/api/available-slots', [\App\Http\Controllers\ReservationController::class , 'getAvailableSlots'])->name('api.available-slots');
 
-        Route::patch('/player/matchs/{id}/result', [\App\Http\Controllers\PlayerController::class, 'updateMatchResult'])->name('player.matchs.result');
+        Route::patch('/player/matchs/{id}/result', [\App\Http\Controllers\PlayerController::class , 'updateMatchResult'])->name('player.matchs.result');
 
     }); // <-- C'est ici que les portes du vigile se ferment !

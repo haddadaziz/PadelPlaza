@@ -29,9 +29,9 @@
                 <h2 class="text-3xl font-black text-slate-900 tracking-tight">Tableau de bord</h2>
                 <p class="text-slate-400 font-medium">Suivez l'activité de votre club en temps réel.</p>
             </div>
-            <button class="bg-emerald-500 hover:bg-emerald-600 text-white px-6 py-3 rounded-2xl font-bold shadow-lg shadow-emerald-100 transition-all flex items-center gap-2 active:scale-95">
-                <i class="fas fa-plus-circle"></i> Nouveau Terrain
-            </button>
+<a href="{{ route('admin.courts.create') }}" class="bg-emerald-500 hover:bg-emerald-600 text-white px-6 py-3 rounded-2xl font-bold shadow-lg shadow-emerald-100 transition-all flex items-center gap-2 active:scale-95">
+    <i class="fas fa-plus-circle"></i> Nouveau Terrain
+</a>
         </div>
 
         <div class="grid grid-cols-4 gap-6 mb-10">
@@ -42,39 +42,43 @@
                         <i class="fas fa-wallet text-xl"></i>
                     </div>
                 </div>
-                <p class="text-slate-400 text-[10px] font-black uppercase tracking-widest">Revenus (Plaza Coins)</p>
-                <h3 class="text-2xl font-black text-slate-900 mt-1">128,450 <span class="text-xs font-medium text-slate-400">PC</span></h3>
+                <p class="text-slate-400 text-[10px] font-black uppercase tracking-widest">Chiffre d'affaire</p>
+<h3 class="text-2xl font-black text-slate-900 mt-1">{{ number_format($chiffreAffaire, 0, ',', ' ') }} <span class="text-xs font-medium text-slate-400">PPC</span></h3>
             </div>
 
-            <div class="bg-white p-6 rounded-[2rem] border border-slate-100 shadow-sm hover:shadow-md transition-all group">
-                <div class="flex justify-between items-start mb-4">
-                    <div class="w-12 h-12 bg-blue-50 text-blue-600 rounded-xl flex items-center justify-center group-hover:bg-blue-500 group-hover:text-white transition-colors">
-                        <i class="fas fa-clock text-xl"></i>
-                    </div>
-                </div>
-                <p class="text-slate-400 text-[10px] font-black uppercase tracking-widest">Taux d'occupation</p>
-                <h3 class="text-2xl font-black text-slate-900 mt-1">74.2%</h3>
-            </div>
+<div class="bg-white p-6 rounded-[2rem] border border-slate-100 shadow-sm hover:shadow-md transition-all group">
+    <div class="flex justify-between items-start mb-4">
+        <div class="w-12 h-12 bg-emerald-50 text-emerald-600 rounded-xl flex items-center justify-center group-hover:bg-emerald-500 group-hover:text-white transition-colors">
+            <i class="fas fa-trophy text-xl"></i>
+        </div>
+    </div>
+    <p class="text-slate-400 text-[10px] font-black uppercase tracking-widest">Matchs disputés</p>
+    <h3 class="text-2xl font-black text-slate-900 mt-1">{{ $matchsDisputes }} <span class="text-xs font-medium text-slate-400">Matchs</span></h3>
+</div>
 
-            <div class="bg-white p-6 rounded-[2rem] border border-slate-100 shadow-sm hover:shadow-md transition-all group">
-                <div class="flex justify-between items-start mb-4">
-                    <div class="w-12 h-12 bg-orange-50 text-orange-600 rounded-xl flex items-center justify-center group-hover:bg-orange-500 group-hover:text-white transition-colors">
-                        <i class="fas fa-user-plus text-xl"></i>
-                    </div>
-                </div>
-                <p class="text-slate-400 text-[10px] font-black uppercase tracking-widest">Nouveaux Joueurs</p>
-                <h3 class="text-2xl font-black text-slate-900 mt-1">+42</h3>
-            </div>
 
-            <div class="bg-white p-6 rounded-[2rem] border border-slate-100 shadow-sm hover:shadow-md transition-all group">
-                <div class="flex justify-between items-start mb-4">
-                    <div class="w-12 h-12 bg-red-50 text-red-600 rounded-xl flex items-center justify-center group-hover:bg-red-500 group-hover:text-white transition-colors">
-                        <i class="fas fa-calendar-times text-xl"></i>
-                    </div>
-                </div>
-                <p class="text-slate-400 text-[10px] font-black uppercase tracking-widest">Taux d'annulation</p>
-                <h3 class="text-2xl font-black text-slate-900 mt-1">3.1%</h3>
-            </div>
+<!-- Carte 3 : Réservations à venir -->
+<div class="bg-white p-6 rounded-[2rem] border border-slate-100 shadow-sm hover:shadow-md transition-all group">
+    <div class="flex justify-between items-start mb-4">
+        <div class="w-12 h-12 bg-indigo-50 text-indigo-600 rounded-xl flex items-center justify-center group-hover:bg-indigo-500 group-hover:text-white transition-colors">
+            <i class="fas fa-calendar-day text-xl"></i>
+        </div>
+    </div>
+    <p class="text-slate-400 text-[10px] font-black uppercase tracking-widest">Réservations à venir</p>
+<h3 class="text-2xl font-black text-slate-900 mt-1">{{ $reservationsAVenir }} <span class="text-xs font-medium text-slate-400">Réservation</span></h3>
+</div>
+
+<!-- Carte 4 : PPC en circulation -->
+<div class="bg-white p-6 rounded-[2rem] border border-slate-100 shadow-sm hover:shadow-md transition-all group">
+    <div class="flex justify-between items-start mb-4">
+        <div class="w-12 h-12 bg-amber-50 text-amber-600 rounded-xl flex items-center justify-center group-hover:bg-amber-500 group-hover:text-white transition-colors">
+            <i class="fas fa-coins text-xl"></i>
+        </div>
+    </div>
+    <p class="text-slate-400 text-[10px] font-black uppercase tracking-widest">PPC en circulation</p>
+<h3 class="text-2xl font-black text-slate-900 mt-1">{{ number_format($ppcCirculation, 0, ',', ' ') }} <span class="text-xs font-medium text-slate-400">PPC</span></h3>
+</div>
+
         </div>
 
         <div class="bg-white rounded-[2rem] border border-slate-100 shadow-sm overflow-hidden">
@@ -106,16 +110,29 @@
                             <td class="px-8 py-5 text-center">
                                 <span class="font-black text-emerald-500 tracking-tight">{{ $court->price_coins }} PC</span>
                             </td>
-                            <td class="px-8 py-5">
-                                <div class="flex items-center gap-2 {{ $court->is_active ? 'text-emerald-500' : 'text-red-400' }} font-bold text-[11px] uppercase tracking-tight">
-                                    <span class="w-2 h-2 {{ $court->is_active ? 'bg-emerald-500 animate-pulse' : 'bg-red-400' }} rounded-full"></span>
-                                    {{ $court->is_active ? 'Opérationnel' : 'Hors Service' }}
-                                </div>
-                            </td>
-                            <td class="px-8 py-5 text-right space-x-2">
-                                <button class="p-2 text-slate-400 hover:text-emerald-500 transition-colors"><i class="fas fa-edit"></i></button>
-                                <button class="p-2 text-slate-400 hover:text-red-500 transition-colors"><i class="fas fa-trash-alt"></i></button>
-                            </td>
+<td class="px-8 py-5">
+    <div class="flex items-center gap-2 {{ $court->is_active ? 'text-emerald-500' : 'text-red-400' }} font-bold text-[11px] uppercase tracking-tight">
+        <span class="w-2 h-2 {{ $court->is_active ? 'bg-emerald-500 animate-pulse' : 'bg-red-400' }} rounded-full"></span>
+        {{ $court->is_active ? 'Opérationnel' : 'En Maintenance' }}
+    </div>
+</td>
+
+<td class="px-8 py-5 text-right flex justify-end gap-2">
+    <!-- Bouton Modifier -->
+    <a href="{{ route('admin.courts.edit', $court->id) }}" class="p-2 text-slate-400 hover:text-emerald-500 transition-colors">
+        <i class="fas fa-edit"></i>
+    </a>
+
+    <!-- Bouton Supprimer -->
+    <form action="{{ route('admin.courts.destroy', $court->id) }}" method="POST" onsubmit="return confirm('Es-tu sûr de vouloir supprimer ce terrain ?');">
+        @csrf
+        @method('DELETE')
+        <button type="submit" class="p-2 text-slate-400 hover:text-red-500 transition-colors">
+            <i class="fas fa-trash-alt"></i>
+        </button>
+    </form>
+</td>
+
                         </tr>
                         @endforeach
                     </tbody>

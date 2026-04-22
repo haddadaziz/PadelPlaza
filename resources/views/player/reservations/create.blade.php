@@ -49,32 +49,45 @@
                 <h3 class="text-xl font-black text-slate-900 uppercase tracking-tight mb-6 shrink-0">Choisissez votre Court</h3>
                 
                 <div class="flex-1 overflow-y-auto pr-4 space-y-4 pb-6 custom-scrollbar">
-                    @foreach($courts as $court)
-                    <label class="relative block cursor-pointer group">
-                        <input type="radio" name="court_id" value="{{ $court->id }}" class="peer sr-only court-radio" required>
-                        <div class="bg-white p-6 rounded-[2.5rem] border-2 border-transparent peer-checked:border-emerald-500 peer-checked:bg-emerald-50/30 transition-all flex items-center gap-6 shadow-sm hover:shadow-md">
-                            <div class="w-28 h-28 rounded-3xl bg-slate-100 overflow-hidden shrink-0">
-                                <img src="{{ asset('storage/'.$court->image) }}" class="w-full h-full object-cover transition-all">
-                            </div>
-                            <div class="flex-1">
-                                <div class="flex justify-between items-start">
-                                    <div>
-                                        <h4 class="text-lg font-black text-slate-900 uppercase tracking-tight leading-tight">{{ $court->name }}</h4>
-                                        <span class="text-[9px] font-black text-slate-400 uppercase tracking-[0.2em]">Indoor Court</span>
-                                    </div>
-                                    <div class="text-right">
-                                        <p class="text-xl font-[900] text-emerald-500 leading-none">{{ $court->price_coins }} <span class="text-[10px]">PC</span></p>
-                                        <p class="text-[8px] font-bold text-slate-300 uppercase tracking-widest mt-1">/ Heure</p>
-                                    </div>
-                                </div>
-                            </div>
-<div class="w-6 h-6 rounded-full border-2 border-slate-100 flex items-center justify-center transition-colors duration-300 check-box">
-    <i class="fas fa-check text-white text-[10px] opacity-0 scale-50 transition-all duration-300 check-icon"></i>
-</div>
+@foreach($courts as $court)
+<label class="relative block {{ $court->is_active ? 'cursor-pointer' : 'cursor-not-allowed opacity-60' }} group">
+    <input type="radio" name="court_id" value="{{ $court->id }}" class="peer sr-only court-radio" required {{ !$court->is_active ? 'disabled' : '' }}>
+    
+    <div class="bg-white p-6 rounded-[2.5rem] border-2 border-transparent {{ $court->is_active ? 'peer-checked:border-emerald-500 peer-checked:bg-emerald-50/30' : 'bg-slate-50' }} transition-all flex items-center gap-6 shadow-sm hover:shadow-md">
+        <div class="w-28 h-28 rounded-3xl bg-slate-100 overflow-hidden shrink-0">
+            <img src="{{ asset('storage/'.$court->image) }}" class="w-full h-full object-cover transition-all {{ !$court->is_active ? 'grayscale' : '' }}">
+        </div>
+        
+        <div class="flex-1">
+            <div class="flex justify-between items-start">
+                <div>
+                    <h4 class="text-lg font-black text-slate-900 uppercase tracking-tight leading-tight">{{ $court->name }}</h4>
+                    <div class="flex items-center gap-2 mt-1">
+                        <span class="text-[9px] font-black {{ $court->is_active ? 'text-emerald-500' : 'text-red-500' }} uppercase tracking-widest">
+                            {{ $court->is_active ? '● Disponible' : '● En Maintenance' }}
+                        </span>
+                    </div>
+                </div>
+                <div class="text-right">
+                    <p class="text-xl font-[900] text-emerald-500 leading-none">{{ $court->price_coins }} <span class="text-[10px]">PC</span></p>
+                    <p class="text-[8px] font-bold text-slate-300 uppercase tracking-widest mt-1">/ Heure</p>
+                </div>
+            </div>
+        </div>
 
-                        </div>
-                    </label>
-                    @endforeach
+        @if($court->is_active)
+        <div class="w-6 h-6 rounded-full border-2 border-slate-100 flex items-center justify-center transition-colors duration-300 check-box">
+            <i class="fas fa-check text-white text-[10px] opacity-0 scale-50 transition-all duration-300 check-icon"></i>
+        </div>
+        @else
+        <div class="w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center">
+            <i class="fas fa-lock text-slate-300 text-[10px]"></i>
+        </div>
+        @endif
+    </div>
+</label>
+@endforeach
+
                 </div>
             </div>
 

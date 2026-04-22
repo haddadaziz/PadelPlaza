@@ -74,16 +74,14 @@
                             </div>
                         </div>
 
-                        <div class="bg-emerald-50/50 p-5 rounded-2xl border border-emerald-100 flex items-center justify-between">
-                            <div>
-                                <h4 class="text-sm font-black text-emerald-900 uppercase">Activer immédiatement</h4>
-                                <p class="text-[10px] font-bold text-emerald-600">Le terrain sera visible pour les réservations dès l'enregistrement.</p>
-                            </div>
-                            <label class="relative inline-flex items-center cursor-pointer">
-                                <input type="checkbox" name="is_active" value="1" class="sr-only peer" checked>
-                                <div class="w-11 h-6 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-emerald-500"></div>
-                            </label>
-                        </div>
+<div class="group">
+    <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 ml-1">Statut Initial</label>
+    <select name="is_active" class="w-full px-6 py-4 bg-slate-50 border-2 border-transparent rounded-2xl text-slate-900 font-bold focus:bg-white focus:border-emerald-500 transition-all outline-none shadow-sm appearance-none cursor-pointer">
+        <option value="1" selected>● Actif / Ouvert immédiatement</option>
+        <option value="0">● En Maintenance / Caché</option>
+    </select>
+</div>
+
 
                         <div class="pt-6 flex gap-4">
                             <button type="submit" class="flex-1 bg-slate-900 hover:bg-emerald-500 text-white font-black py-4 rounded-2xl transition-all shadow-xl shadow-slate-200 uppercase tracking-widest text-sm flex items-center justify-center gap-3">
