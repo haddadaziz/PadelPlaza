@@ -5,7 +5,7 @@
                 <i class="fas fa-table-tennis text-white text-lg"></i>
             </div>
             <div class="flex flex-col leading-none">
-                <span class="text-[22px] font-[900] text-slate-900 tracking-tight uppercase leading-none">PADEL<span class="text-emerald-500">PLAZA</span></span>
+                <span class="text-[22px] font-[900] text-white tracking-tight uppercase leading-none">PADEL<span class="text-emerald-500">PLAZA</span></span>
                 <span class="text-[8px] font-black text-slate-400 uppercase tracking-[0.3em] mt-0.5">Club · Arena</span>
             </div>
         </a>

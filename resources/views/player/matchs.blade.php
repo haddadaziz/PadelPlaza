@@ -182,8 +182,8 @@
     {{-- Date --}}
     <div class="text-center min-w-[50px]">
         <p class="text-[10px] font-black text-slate-300 uppercase leading-none mb-1">{{ \Carbon\Carbon::parse($match->start_time)->format('d') }}</p>
-        <p class="text-[8px] font-bold text-slate-400 uppercase tracking-tighter">{{ \Carbon\Carbon::parse($match->start_time)->translatedFormat('M') }}</p>
-        <p class="text-[8px] font-bold text-emerald-500 uppercase tracking-tighter mt-1">{{ \Carbon\Carbon::parse($match->start_time)->format('H:i') }}</p>
+        <p class="text-[8px] font-bold text-slate-400 uppercase tracking-tight">{{ \Carbon\Carbon::parse($match->start_time)->translatedFormat('M') }}</p>
+        <p class="text-[8px] font-bold text-emerald-500 uppercase tracking-tight mt-1">{{ \Carbon\Carbon::parse($match->start_time)->format('H:i') }}</p>
     </div>
 
     {{-- Infos --}}

@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Padel Plaza | Finaliser le paiement</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #F8FAFC; overflow: hidden; }
+        body { font-family: 'Inter', sans-serif; background-color: #F8FAFC; overflow: hidden; }
         
         .payment-card { border: 2px solid transparent; transition: all 0.3s ease; }
         input[type="radio"]:checked + .payment-card { 
@@ -38,18 +38,18 @@
         
         <div class="flex items-center gap-4 mb-8 shrink-0">
             <div class="flex items-center gap-2">
-                <span class="w-8 h-8 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center text-[10px] font-black italic border border-emerald-200"><i class="fas fa-check"></i></span>
-                <span class="text-[10px] font-black uppercase tracking-widest text-slate-400 italic">Terrain</span>
+                <span class="w-8 h-8 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center text-[10px] font-black border border-emerald-200"><i class="fas fa-check"></i></span>
+                <span class="text-[10px] font-black uppercase tracking-widest text-slate-400">Terrain</span>
             </div>
             <div class="h-px w-12 bg-emerald-200"></div>
             <div class="flex items-center gap-2">
-                <span class="w-8 h-8 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center text-[10px] font-black italic border border-emerald-200"><i class="fas fa-check"></i></span>
-                <span class="text-[10px] font-black uppercase tracking-widest text-slate-400 italic">Options</span>
+                <span class="w-8 h-8 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center text-[10px] font-black border border-emerald-200"><i class="fas fa-check"></i></span>
+                <span class="text-[10px] font-black uppercase tracking-widest text-slate-400">Options</span>
             </div>
             <div class="h-px w-12 bg-emerald-200"></div>
             <div class="flex items-center gap-2">
-                <span class="w-8 h-8 rounded-full bg-emerald-500 text-white flex items-center justify-center text-[10px] font-black italic shadow-lg shadow-emerald-200">03</span>
-                <span class="text-[10px] font-black uppercase tracking-widest text-slate-900 italic">Paiement</span>
+                <span class="w-8 h-8 rounded-full bg-emerald-500 text-white flex items-center justify-center text-[10px] font-black shadow-lg shadow-emerald-200">03</span>
+                <span class="text-[10px] font-black uppercase tracking-widest text-slate-900">Paiement</span>
             </div>
         </div>
 
@@ -63,7 +63,7 @@
             @endforeach
 
             <div class="col-span-5 flex flex-col min-h-0">
-                <h3 class="text-xl font-black text-slate-900 uppercase italic tracking-tighter mb-6 shrink-0">Récapitulatif</h3>
+                <h3 class="text-xl font-black text-slate-900 uppercase tracking-tight mb-6 shrink-0">Récapitulatif</h3>
                 <div class="bg-white rounded-[2.5rem] border border-slate-100 shadow-sm p-8 flex-1 overflow-y-auto space-y-8 custom-scrollbar">
                     <div class="space-y-4">
                         <div class="flex items-center gap-4 p-4 bg-slate-50 rounded-2xl border border-slate-100">
@@ -72,7 +72,7 @@
                             </div>
                             <div>
                                 <p class="text-[10px] font-black text-slate-400 uppercase leading-none mb-1">Terrain</p>
-                                <p class="text-sm font-black italic text-slate-900 uppercase tracking-tight">{{ $court->name }}</p>
+                                <p class="text-sm font-black text-slate-900 uppercase tracking-tight">{{ $court->name }}</p>
                             </div>
                         </div>
                         <div class="flex items-center gap-4 p-4 bg-slate-50 rounded-2xl border border-slate-100">
@@ -81,19 +81,19 @@
                             </div>
                             <div>
                                 <p class="text-[10px] font-black text-slate-400 uppercase leading-none mb-1">Date & Heure</p>
-                                <p class="text-sm font-black italic text-slate-900 uppercase tracking-tight">{{ \Carbon\Carbon::parse($date)->format('d/m/Y') }} • {{ $time_slot }}</p>
+                                <p class="text-sm font-black text-slate-900 uppercase tracking-tight">{{ \Carbon\Carbon::parse($date)->format('d/m/Y') }} • {{ $time_slot }}</p>
                             </div>
                         </div>
                     </div>
 
                     @if(count($selectedEquipments) > 0)
                     <div>
-                        <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-4 italic">Options & Matériel</p>
+                        <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-4">Options & Matériel</p>
                         <div class="space-y-3">
                             @foreach($selectedEquipments as $data)
                             <div class="flex justify-between items-center px-2">
-                                <span class="text-xs font-bold text-slate-600 italic">{{ $data['qty'] }}x {{ $data['item']->name }}</span>
-                                <span class="text-xs font-black text-slate-900 italic">
+                                <span class="text-xs font-bold text-slate-600">{{ $data['qty'] }}x {{ $data['item']->name }}</span>
+                                <span class="text-xs font-black text-slate-900">
                                     <span class="item-price" data-base="{{ $data['item']->price_coins * $data['qty'] }}">{{ $data['item']->price_coins * $data['qty'] }}</span> 
                                     <span class="currency-label">PC</span>
                                 </span>
@@ -106,13 +106,13 @@
                     <div class="h-px bg-slate-100 w-full"></div>
 
                     <div class="flex justify-between items-end">
-                        <p class="text-sm font-black text-slate-900 uppercase italic">Total à payer</p>
+                        <p class="text-sm font-black text-slate-900 uppercase">Total à payer</p>
                         <div class="text-right">
-                            <p class="text-4xl font-[900] text-emerald-500 italic leading-none tracking-tighter">
+                            <p class="text-4xl font-[900] text-emerald-500 leading-none tracking-tight">
                                 <span id="display-total" data-base="{{ $totalPrice }}">{{ $totalPrice }}</span> 
                                 <span class="currency-label text-xs uppercase">PC</span>
                             </p>
-                            <p id="promo-text" class="text-[9px] font-bold text-slate-400 uppercase tracking-widest mt-2 italic transition-all">
+                            <p id="promo-text" class="text-[9px] font-bold text-slate-400 uppercase tracking-widest mt-2 transition-all">
                                 5% de CashBack si vous réservez avec vos PPC !
                             </p>
                         </div>
@@ -121,7 +121,7 @@
             </div>
 
             <div class="col-span-7 flex flex-col min-h-0">
-                <h3 class="text-xl font-black text-slate-900 uppercase italic tracking-tighter mb-6 shrink-0">Méthode de paiement</h3>
+                <h3 class="text-xl font-black text-slate-900 uppercase tracking-tight mb-6 shrink-0">Méthode de paiement</h3>
                 
                 <div class="flex-1 overflow-y-auto pr-4 space-y-4 custom-scrollbar pb-6">
                     <label class="relative block cursor-pointer group">
@@ -131,7 +131,7 @@
                                 <i class="fas fa-wallet"></i>
                             </div>
                             <div class="flex-1">
-                                <h4 class="text-base font-black text-slate-900 italic uppercase leading-none mb-1">Plaza Coins</h4>
+                                <h4 class="text-base font-black text-slate-900 uppercase leading-none mb-1">Plaza Coins</h4>
                                 <p class="text-[9px] font-bold text-slate-400 uppercase">Solde : <span class="text-emerald-500">{{ Auth::user()->_balance }} PC</span></p>
                             </div>
                             <div class="check-icon w-6 h-6 rounded-full border-2 border-slate-100 flex items-center justify-center shrink-0">
@@ -147,8 +147,8 @@
                                 <i class="fab fa-stripe"></i>
                             </div>
                             <div class="flex-1">
-                                <h4 class="text-base font-black text-slate-900 italic uppercase leading-none mb-1">Carte Bancaire</h4>
-                                <p class="text-[9px] font-bold text-slate-400 uppercase tracking-tight italic">Paiement via Stripe Sécurisé</p>
+                                <h4 class="text-base font-black text-slate-900 uppercase leading-none mb-1">Carte Bancaire</h4>
+                                <p class="text-[9px] font-bold text-slate-400 uppercase tracking-tight">Paiement via Stripe Sécurisé</p>
                             </div>
                             <div class="check-icon w-6 h-6 rounded-full border-2 border-slate-100 flex items-center justify-center shrink-0">
                                 <i class="fas fa-check text-[10px] hidden"></i>
@@ -158,11 +158,11 @@
 
                     <div id="stripe-element-container" class="hidden animate-in fade-in zoom-in duration-300 p-6 bg-slate-900 rounded-[2.5rem] border border-slate-800 shadow-2xl shrink-0">
                          <div id="card-element" class="p-2"></div>
-                         <div id="card-errors" role="alert" class="text-red-400 text-[10px] font-bold mt-2 italic px-2"></div>
+                         <div id="card-errors" role="alert" class="text-red-400 text-[10px] font-bold mt-2 px-2"></div>
                     </div>
                 </div>
 
-                <button type="submit" id="submit-button" class="mt-4 bg-emerald-500 text-white w-full py-5 rounded-[1.8rem] font-[900] uppercase italic tracking-widest hover:bg-slate-900 transition-all shadow-2xl shadow-emerald-200 flex items-center justify-center gap-3 shrink-0 active:scale-95">
+                <button type="submit" id="submit-button" class="mt-4 bg-emerald-500 text-white w-full py-5 rounded-[1.8rem] font-[900] uppercase tracking-widest hover:bg-slate-900 transition-all shadow-2xl shadow-emerald-200 flex items-center justify-center gap-3 shrink-0 active:scale-95">
                     Confirmer la réservation
                 </button>
             </div>
@@ -192,7 +192,7 @@
             clientSecret: '{{ $clientSecret }}',
             appearance: {
                 theme: 'night',
-                variables: { colorPrimary: '#10B981', fontFamily: 'Plus Jakarta Sans' }
+                variables: { colorPrimary: '#10B981', fontFamily: 'Inter' }
             }
         });
 

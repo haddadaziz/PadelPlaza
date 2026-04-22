@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Padel Plaza | Options de jeu</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #F8FAFC; overflow: hidden; }
+        body { font-family: 'Inter', sans-serif; background-color: #F8FAFC; overflow: hidden; }
         .qty-btn { transition: all 0.2s ease; }
         .qty-btn:active { transform: scale(0.9); }
         .equipment-card:has(input:checked) { border-color: #10B981; background-color: #F0FDF4; }
@@ -22,18 +22,18 @@
         
         <div class="flex items-center gap-4 mb-8">
             <div class="flex items-center gap-2">
-                <span class="w-8 h-8 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center text-[10px] font-black italic border border-emerald-200"><i class="fas fa-check"></i></span>
-                <span class="text-[10px] font-black uppercase tracking-widest text-slate-400 italic">Terrain & Heure</span>
+                <span class="w-8 h-8 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center text-[10px] font-black border border-emerald-200"><i class="fas fa-check"></i></span>
+                <span class="text-[10px] font-black uppercase tracking-widest text-slate-400">Terrain & Heure</span>
             </div>
             <div class="h-px w-12 bg-emerald-200"></div>
             <div class="flex items-center gap-2">
-                <span class="w-8 h-8 rounded-full bg-emerald-500 text-white flex items-center justify-center text-[10px] font-black italic shadow-lg shadow-emerald-200">02</span>
-                <span class="text-[10px] font-black uppercase tracking-widest text-slate-900 italic">Options & Matos</span>
+                <span class="w-8 h-8 rounded-full bg-emerald-500 text-white flex items-center justify-center text-[10px] font-black shadow-lg shadow-emerald-200">02</span>
+                <span class="text-[10px] font-black uppercase tracking-widest text-slate-900">Options & Matos</span>
             </div>
             <div class="h-px w-12 bg-slate-200"></div>
             <div class="flex items-center gap-2 opacity-30">
-                <span class="w-8 h-8 rounded-full bg-slate-200 text-slate-500 flex items-center justify-center text-[10px] font-black italic">03</span>
-                <span class="text-[10px] font-black uppercase tracking-widest text-slate-500 italic">Paiement</span>
+                <span class="w-8 h-8 rounded-full bg-slate-200 text-slate-500 flex items-center justify-center text-[10px] font-black">03</span>
+                <span class="text-[10px] font-black uppercase tracking-widest text-slate-500">Paiement</span>
             </div>
         </div>
 
@@ -45,8 +45,8 @@
             <div class="col-span-8 space-y-6 overflow-y-auto pr-4 pb-10">
                 <div class="flex justify-between items-end mb-6">
                     <div>
-                        <h3 class="text-2xl font-black text-slate-900 uppercase italic tracking-tighter">Besoin de matériel ?</h3>
-                        <p class="text-slate-400 font-bold italic text-sm">Louez vos accessoires.</p>
+                        <h3 class="text-2xl font-black text-slate-900 uppercase tracking-tight">Besoin de matériel ?</h3>
+                        <p class="text-slate-400 font-bold text-sm">Louez vos accessoires.</p>
                     </div>
                 </div>
                 
@@ -58,8 +58,8 @@
                                 <img src="{{ asset('storage/'.$item->image) }}" class="max-h-full object-contain group-hover:scale-110 transition-transform">
                             </div>
                             <div class="flex-1">
-                                <h4 class="text-base font-black text-slate-900 italic uppercase tracking-tighter leading-none mb-1">{{ $item->name }}</h4>
-                                <p class="text-emerald-500 font-black italic text-sm mb-4">{{ $item->price_coins }} <span class="text-[9px]">PC</span></p>
+                                <h4 class="text-base font-black text-slate-900 uppercase tracking-tight leading-none mb-1">{{ $item->name }}</h4>
+                                <p class="text-emerald-500 font-black text-sm mb-4">{{ $item->price_coins }} <span class="text-[9px]">PC</span></p>
                                 
                                 <div class="flex items-center gap-4 bg-slate-50 w-fit px-3 py-2 rounded-xl border border-slate-100">
                                     <button type="button" onclick="changeQty('{{ $item->id }}', -1)" class="qty-btn w-6 h-6 flex items-center justify-center text-slate-400 hover:text-slate-900"><i class="fas fa-minus text-[10px]"></i></button>
@@ -77,7 +77,7 @@
                 <div class="bg-slate-900 rounded-[3rem] p-8 text-white h-full flex flex-col relative overflow-hidden shadow-2xl">
                     <div class="absolute top-0 right-0 w-40 h-40 bg-emerald-500/20 rounded-full -mr-20 -mt-20 blur-3xl"></div>
                     
-                    <h4 class="text-[10px] font-black uppercase tracking-[0.3em] text-emerald-400 mb-8 italic">Récapitulatif de ta session</h4>
+                    <h4 class="text-[10px] font-black uppercase tracking-[0.3em] text-emerald-400 mb-8">Récapitulatif de ta session</h4>
                     
                     <div class="space-y-6 flex-1">
                         <div class="flex items-start gap-4">
@@ -86,7 +86,7 @@
                             </div>
                             <div>
                                 <p class="text-[10px] font-black text-slate-500 uppercase">Match prévu le</p>
-                                <p class="text-sm font-black italic uppercase">{{ $date }} • {{ $time_slot }}</p>
+                                <p class="text-sm font-black uppercase">{{ $date }} • {{ $time_slot }}</p>
                             </div>
                         </div>
 
@@ -96,7 +96,7 @@
                             </div>
                             <div>
                                 <p class="text-[10px] font-black text-slate-500 uppercase">Court sélectionné</p>
-                                <p class="text-sm font-black italic uppercase">{{ $court->name }}</p>
+                                <p class="text-sm font-black uppercase">{{ $court->name }}</p>
                             </div>
                         </div>
 
@@ -105,17 +105,17 @@
                         <div class="flex justify-between items-center py-4">
                             <span class="text-[10px] font-black uppercase text-slate-400 tracking-widest">Total Actuel</span>
                             <div class="text-right">
-                                <span class="text-3xl font-[900] text-white italic tracking-tighter" id="total-display">{{ $court->price_coins }}</span>
-                                <span class="text-xs font-black text-emerald-500 ml-1 italic uppercase">PC</span>
+                                <span class="text-3xl font-[900] text-white tracking-tight" id="total-display">{{ $court->price_coins }}</span>
+                                <span class="text-xs font-black text-emerald-500 ml-1 uppercase">PC</span>
                             </div>
                         </div>
                     </div>
 
                     <div class="space-y-4">
-                        <button type="submit" class="w-full bg-emerald-500 hover:bg-emerald-400 text-white py-5 rounded-2xl font-black uppercase italic tracking-widest transition-all shadow-xl shadow-emerald-500/20 flex items-center justify-center gap-3">
+                        <button type="submit" class="w-full bg-emerald-500 hover:bg-emerald-400 text-white py-5 rounded-2xl font-black uppercase tracking-widest transition-all shadow-xl shadow-emerald-500/20 flex items-center justify-center gap-3">
                             Réserver
                         </button>
-                        <a href="{{ route('player.reservations.create') }}" class="w-full flex items-center justify-center text-[10px] font-black text-slate-500 uppercase hover:text-white transition-colors tracking-widest italic">
+                        <a href="{{ route('player.reservations.create') }}" class="w-full flex items-center justify-center text-[10px] font-black text-slate-500 uppercase hover:text-white transition-colors tracking-widest">
                             <i class="fas fa-chevron-left mr-2"></i> Modifier le terrain
                         </a>
                     </div>

@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Padel Plaza | Nouveau Terrain</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #F8FAFC; }
+        body { font-family: 'Inter', sans-serif; background-color: #F8FAFC; }
     </style>
 </head>
 <body class="flex min-h-screen">
@@ -22,7 +22,7 @@
                 <span>/</span>
                 <span class="text-slate-900">Ajouter un nouveau court</span>
             </nav>
-            <h2 class="text-3xl font-black text-slate-900 tracking-tight italic uppercase">Nouveau Terrain</h2>
+            <h2 class="text-3xl font-black text-slate-900 tracking-tight uppercase">Nouveau Terrain</h2>
         </div>
 
         <div class="max-w-4xl bg-white rounded-[2.5rem] border border-slate-100 shadow-sm overflow-hidden">
@@ -52,13 +52,13 @@
                         <div class="group">
                             <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 ml-1">Nom du Court</label>
                             <input type="text" name="name" placeholder="Ex: Court Central Rabat" 
-                                class="w-full px-6 py-4 bg-slate-50 border-2 border-transparent rounded-2xl text-slate-900 font-bold focus:bg-white focus:border-emerald-500 transition-all outline-none shadow-sm italic">
+                                class="w-full px-6 py-4 bg-slate-50 border-2 border-transparent rounded-2xl text-slate-900 font-bold focus:bg-white focus:border-emerald-500 transition-all outline-none shadow-sm">
                         </div>
 
                         <div class="grid grid-cols-2 gap-6">
                             <div class="group">
                                 <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 ml-1">Type d'installation</label>
-                                <select name="type" class="w-full px-6 py-4 bg-slate-50 border-2 border-transparent rounded-2xl text-slate-900 font-bold focus:bg-white focus:border-emerald-500 transition-all outline-none shadow-sm italic appearance-none cursor-pointer">
+                                <select name="type" class="w-full px-6 py-4 bg-slate-50 border-2 border-transparent rounded-2xl text-slate-900 font-bold focus:bg-white focus:border-emerald-500 transition-all outline-none shadow-sm appearance-none cursor-pointer">
                                     <option value="indoor">Indoor (Couvert)</option>
                                     <option value="outdoor">Outdoor (Plein air)</option>
                                 </select>
@@ -68,15 +68,15 @@
                                 <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 ml-1">Tarif Horaire</label>
                                 <div class="relative">
                                     <input type="number" name="price_coins" placeholder="250" 
-                                        class="w-full pl-6 pr-14 py-4 bg-slate-50 border-2 border-transparent rounded-2xl text-emerald-600 font-black focus:bg-white focus:border-emerald-500 transition-all outline-none shadow-sm italic text-xl tracking-tighter">
-                                    <span class="absolute right-6 top-1/2 -translate-y-1/2 text-slate-300 font-black italic text-xs uppercase">PC</span>
+                                        class="w-full pl-6 pr-14 py-4 bg-slate-50 border-2 border-transparent rounded-2xl text-emerald-600 font-black focus:bg-white focus:border-emerald-500 transition-all outline-none shadow-sm text-xl tracking-tight">
+                                    <span class="absolute right-6 top-1/2 -translate-y-1/2 text-slate-300 font-black text-xs uppercase">PC</span>
                                 </div>
                             </div>
                         </div>
 
                         <div class="bg-emerald-50/50 p-5 rounded-2xl border border-emerald-100 flex items-center justify-between">
                             <div>
-                                <h4 class="text-sm font-black text-emerald-900 italic uppercase">Activer immédiatement</h4>
+                                <h4 class="text-sm font-black text-emerald-900 uppercase">Activer immédiatement</h4>
                                 <p class="text-[10px] font-bold text-emerald-600">Le terrain sera visible pour les réservations dès l'enregistrement.</p>
                             </div>
                             <label class="relative inline-flex items-center cursor-pointer">
@@ -86,10 +86,10 @@
                         </div>
 
                         <div class="pt-6 flex gap-4">
-                            <button type="submit" class="flex-1 bg-slate-900 hover:bg-emerald-500 text-white font-black py-4 rounded-2xl transition-all shadow-xl shadow-slate-200 uppercase italic tracking-widest text-sm flex items-center justify-center gap-3">
+                            <button type="submit" class="flex-1 bg-slate-900 hover:bg-emerald-500 text-white font-black py-4 rounded-2xl transition-all shadow-xl shadow-slate-200 uppercase tracking-widest text-sm flex items-center justify-center gap-3">
                                 <i class="fas fa-plus-circle"></i> Créer le terrain
                             </button>
-                            <a href="/admin/courts" class="px-8 py-4 text-slate-400 font-black rounded-2xl hover:text-slate-900 transition-all uppercase text-[10px] flex items-center justify-center italic">
+                            <a href="/admin/courts" class="px-8 py-4 text-slate-400 font-black rounded-2xl hover:text-slate-900 transition-all uppercase text-[10px] flex items-center justify-center">
                                 Retour
                             </a>
                         </div>

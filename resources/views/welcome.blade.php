@@ -84,7 +84,7 @@
                         Créer mon profil <i class="fas fa-chevron-right"></i>
                     </a>
                     <a href="#concept"
-                        class="bg-white/80 backdrop-blur-md border-2 border-slate-100 text-slate-900 px-12 py-5 rounded-[1.5rem] font-black text-sm uppercase italic tracking-widest hover:bg-white transition-all text-center active:scale-95">
+                        class="bg-white/80 backdrop-blur-md border-2 border-slate-100 text-slate-900 px-12 py-5 rounded-[1.5rem] font-black text-sm uppercase tracking-widest hover:bg-white transition-all text-center active:scale-95">
                         Le Concept
                     </a>
                 </div>
@@ -100,7 +100,7 @@
                         </div>
                         <div>
                             <p class="text-[10px] font-black text-white/70 uppercase tracking-widest">Membre Elite</p>
-                            <p class="text-2xl font-black text-white italic uppercase tracking-tighter">Haddad Aziz</p>
+                            <p class="text-2xl font-black text-white uppercase tracking-tight">Haddad Aziz</p>
                         </div>
                     </div>
                     <div class="space-y-5">
@@ -111,7 +111,7 @@
                         <div class="h-2.5 w-full bg-white/20 rounded-full overflow-hidden">
                             <div class="h-full bg-emerald-400 w-[85%] shadow-[0_0_20px_rgba(52,211,153,0.8)]"></div>
                         </div>
-                        <p class="text-white/50 text-[10px] font-bold italic tracking-widest uppercase text-right">
+                        <p class="text-white/50 text-[10px] font-bold tracking-widest uppercase text-right">
                             Prochaine récompense : 500 PC</p>
                     </div>
                 </div>
@@ -128,12 +128,12 @@
             
             <div class="grid md:grid-cols-5 gap-12 items-center mb-24">
                 <div class="md:col-span-3">
-                    <span class="text-emerald-400 text-[11px] font-black uppercase tracking-[0.3em] mb-4 inline-block italic">L'Écosystème Digital Padel Plaza</span>
-                    <h2 class="text-5xl md:text-7xl font-black text-white tracking-tighter italic leading-[0.95] uppercase">
+                    <span class="text-emerald-400 text-[11px] font-black uppercase tracking-[0.3em] mb-4 inline-block">L'Écosystème Digital Padel Plaza</span>
+                    <h2 class="text-5xl md:text-7xl font-black text-white tracking-tight leading-[0.95] uppercase">
                         Plus qu'un <span class="text-emerald-400">match</span>,<br>une progression.
                     </h2>
                 </div>
-                <div class="md:col-span-2 text-slate-400 font-bold italic leading-relaxed text-lg self-end">
+                <div class="md:col-span-2 text-slate-400 font-bold leading-relaxed text-lg self-end">
                     Nous avons fusionné la passion du Padel avec une technologie de pointe pour créer une expérience de jeu unique et récompensée.
                 </div>
             </div>

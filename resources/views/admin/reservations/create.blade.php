@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Padel Plaza | Réservation Manuelle</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #F8FAFC; overflow: hidden; }
+        body { font-family: 'Inter', sans-serif; background-color: #F8FAFC; overflow: hidden; }
         .slot-checkbox:checked + label { background-color: #10B981; color: white; border-color: #10B981; transform: scale(1.05); }
         .custom-scrollbar::-webkit-scrollbar { width: 4px; }
         .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
@@ -28,7 +28,7 @@
                 <span>/</span>
                 <span class="text-slate-900">Ajout Manuel</span>
             </nav>
-            <h2 class="text-3xl font-black text-slate-900 tracking-tighter italic uppercase">Nouvelle Réservation</h2>
+            <h2 class="text-3xl font-black text-slate-900 tracking-tight uppercase">Nouvelle Réservation</h2>
         </div>
 
         <form action="{{ route('admin.reservations.store') }}" method="POST" class="grid grid-cols-12 gap-8 flex-1 min-h-0">
@@ -37,19 +37,19 @@
             <div class="col-span-7 flex flex-col min-h-0 space-y-6 overflow-y-auto pr-4 custom-scrollbar pb-10">
                 
                 <div class="bg-white p-8 rounded-[2.5rem] border border-slate-100 shadow-sm">
-                    <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-4 block italic">Rechercher le Joueur</label>
+                    <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-4 block">Rechercher le Joueur</label>
                     <div class="relative group">
                         <div class="absolute left-6 top-1/2 -translate-y-1/2 text-slate-300 group-focus-within:text-emerald-500 transition-colors">
                             <i class="fas fa-search"></i>
                         </div>
                         <input type="text" name="player_identifier" required
                             placeholder="Email ou PP ID (ex: 42)"
-                            class="w-full pl-14 pr-6 py-4 bg-slate-50 border-2 border-transparent rounded-2xl font-bold text-slate-900 focus:bg-white focus:border-emerald-500 transition-all outline-none italic">
+                            class="w-full pl-14 pr-6 py-4 bg-slate-50 border-2 border-transparent rounded-2xl font-bold text-slate-900 focus:bg-white focus:border-emerald-500 transition-all outline-none">
                     </div>
                 </div>
 
                 <div class="bg-white p-8 rounded-[2.5rem] border border-slate-100 shadow-sm">
-                    <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-6 block italic">Sélectionner le Court</label>
+                    <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-6 block">Sélectionner le Court</label>
                     <div class="grid grid-cols-1 gap-3">
                         @foreach($courts as $court)
                         <label class="relative block cursor-pointer group">
@@ -59,9 +59,9 @@
                                     <div class="w-10 h-10 rounded-xl bg-white flex items-center justify-center text-emerald-500 shadow-sm">
                                         <i class="fas fa-table-tennis text-sm"></i>
                                     </div>
-                                    <span class="font-black text-slate-900 uppercase italic text-sm">{{ $court->name }}</span>
+                                    <span class="font-black text-slate-900 uppercase text-sm">{{ $court->name }}</span>
                                 </div>
-                                <span class="text-[10px] font-black text-slate-400 italic">{{ $court->price_coins }} PC / H</span>
+                                <span class="text-[10px] font-black text-slate-400">{{ $court->price_coins }} PC / H</span>
                             </div>
                         </label>
                         @endforeach
@@ -69,12 +69,12 @@
                 </div>
 
                 <div class="bg-white p-8 rounded-[2.5rem] border border-slate-100 shadow-sm">
-                    <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-6 block italic">Équipements & Matériel</label>
+                    <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-6 block">Équipements & Matériel</label>
                     <div class="grid grid-cols-2 gap-4">
                         @foreach($equipments as $item)
                         <div class="p-4 rounded-2xl bg-slate-50 border border-slate-100 flex items-center justify-between group hover:border-emerald-200 transition-all">
                             <div class="flex flex-col">
-                                <span class="font-black text-slate-900 uppercase italic text-[11px] leading-none">{{ $item->name }}</span>
+                                <span class="font-black text-slate-900 uppercase text-[11px] leading-none">{{ $item->name }}</span>
                                 <span class="text-[9px] text-emerald-500 font-bold mt-1">{{ $item->price_coins }} PC</span>
                             </div>
                             <div class="flex items-center gap-3 bg-white px-3 py-2 rounded-xl shadow-sm border border-slate-100">
@@ -92,24 +92,24 @@
 
             <div class="col-span-5 flex flex-col min-h-0 gap-6">
                 <div class="bg-white p-6 rounded-[2.5rem] border border-slate-100 shadow-sm shrink-0">
-                    <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-3 block italic">Date du match</label>
-                    <input type="date" name="date" id="date-input" class="w-full bg-slate-50 border-none rounded-2xl px-6 py-4 font-black italic text-slate-900 focus:ring-2 focus:ring-emerald-500 transition-all outline-none" onchange="fetchSlots()">
+                    <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-3 block">Date du match</label>
+                    <input type="date" name="date" id="date-input" class="w-full bg-slate-50 border-none rounded-2xl px-6 py-4 font-black text-slate-900 focus:ring-2 focus:ring-emerald-500 transition-all outline-none" onchange="fetchSlots()">
                 </div>
 
                 <div class="bg-white p-6 rounded-[2.5rem] border border-slate-100 shadow-sm flex-1 flex flex-col min-h-0">
-                    <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-4 block italic shrink-0">Période & Horaire</label>
+                    <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-4 block shrink-0">Période & Horaire</label>
                     
                     <div class="grid grid-cols-3 gap-2 mb-6 shrink-0">
-                        <button type="button" onclick="filterByPeriod('night')" id="btn-night" class="period-btn py-3 rounded-xl bg-slate-50 text-[8px] font-black uppercase italic text-slate-500 transition-all">00h-08h</button>
-                        <button type="button" onclick="filterByPeriod('day')" id="btn-day" class="period-btn py-3 rounded-xl bg-slate-50 text-[8px] font-black uppercase italic text-slate-500 transition-all">08h-16h</button>
-                        <button type="button" onclick="filterByPeriod('evening')" id="btn-evening" class="period-btn py-3 rounded-xl bg-slate-50 text-[8px] font-black uppercase italic text-slate-500 transition-all">16h-00h</button>
+                        <button type="button" onclick="filterByPeriod('night')" id="btn-night" class="period-btn py-3 rounded-xl bg-slate-50 text-[8px] font-black uppercase text-slate-500 transition-all">00h-08h</button>
+                        <button type="button" onclick="filterByPeriod('day')" id="btn-day" class="period-btn py-3 rounded-xl bg-slate-50 text-[8px] font-black uppercase text-slate-500 transition-all">08h-16h</button>
+                        <button type="button" onclick="filterByPeriod('evening')" id="btn-evening" class="period-btn py-3 rounded-xl bg-slate-50 text-[8px] font-black uppercase text-slate-500 transition-all">16h-00h</button>
                     </div>
 
                     <div id="time-slots-container" class="flex-1 overflow-y-auto pr-2 pb-4 grid grid-cols-2 gap-3 custom-scrollbar">
-                        <div class="col-span-2 text-center py-10 text-[10px] font-bold text-slate-400 italic uppercase">Prêt à réserver</div>
+                        <div class="col-span-2 text-center py-10 text-[10px] font-bold text-slate-400 uppercase">Prêt à réserver</div>
                     </div>
 
-                    <button type="submit" id="submit-btn" disabled class="mt-4 bg-slate-900 text-white w-full py-5 rounded-[1.5rem] font-[900] uppercase italic tracking-widest hover:bg-emerald-500 transition-all shadow-xl shadow-slate-200 flex items-center justify-center gap-3 shrink-0 opacity-50 cursor-not-allowed">
+                    <button type="submit" id="submit-btn" disabled class="mt-4 bg-slate-900 text-white w-full py-5 rounded-[1.5rem] font-[900] uppercase tracking-widest hover:bg-emerald-500 transition-all shadow-xl shadow-slate-200 flex items-center justify-center gap-3 shrink-0 opacity-50 cursor-not-allowed">
                         Valider la réservation <i class="fas fa-check-circle text-[10px]"></i>
                     </button>
                 </div>
@@ -137,7 +137,7 @@
                     .then(res => res.json())
                     .then(data => {
                         allAvailableSlots = data.available_slots;
-                        container.innerHTML = '<div class="col-span-2 text-center py-10 text-[10px] font-bold text-emerald-500 italic uppercase animate-pulse">Filtrer par période ↑</div>';
+                        container.innerHTML = '<div class="col-span-2 text-center py-10 text-[10px] font-bold text-emerald-500 uppercase animate-pulse">Filtrer par période ↑</div>';
                         document.querySelectorAll('.period-btn').forEach(btn => {
                             btn.classList.remove('bg-emerald-500', 'text-white');
                             btn.classList.add('bg-slate-50', 'text-slate-500');
@@ -168,13 +168,13 @@
 
             container.innerHTML = '';
             if (filtered.length === 0) {
-                container.innerHTML = '<div class="col-span-2 text-center py-10 text-[10px] font-bold text-red-400 italic uppercase">Complet</div>';
+                container.innerHTML = '<div class="col-span-2 text-center py-10 text-[10px] font-bold text-red-400 uppercase">Complet</div>';
             } else {
                 filtered.forEach((time, index) => {
                     container.insertAdjacentHTML('beforeend', `
                         <div class="relative">
                             <input type="radio" name="time_slot" id="slot-${index}" value="${time}" class="sr-only slot-checkbox" required>
-                            <label for="slot-${index}" class="flex items-center justify-center py-4 bg-slate-50 border border-slate-100 rounded-2xl text-[11px] font-black text-slate-500 italic cursor-pointer transition-all hover:bg-emerald-50 uppercase tracking-tighter">
+                            <label for="slot-${index}" class="flex items-center justify-center py-4 bg-slate-50 border border-slate-100 rounded-2xl text-[11px] font-black text-slate-500 cursor-pointer transition-all hover:bg-emerald-50 uppercase tracking-tight">
                                 ${time}
                             </label>
                         </div>
