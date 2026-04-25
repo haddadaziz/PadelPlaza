@@ -16,41 +16,18 @@
 
     <div class="w-full max-w-[440px] fade-in-up">
 
-        <!-- Affichage des erreurs de connexion -->
-        @if ($errors->any())
-            <div class="bg-red-100 text-red-600 p-4 rounded-2xl text-sm font-bold mb-4 border border-red-200">
-                {{ $errors->first('email') }}
-            </div>
-        @endif
-
-        <div class="bg-white rounded-[2.5rem] shadow-2xl shadow-emerald-900/5 border border-emerald-100 p-8 md:p-10">
-            
-            <div class="flex flex-col items-center mb-8">
-                <div class="w-16 h-16 bg-emerald-500 rounded-2xl flex items-center justify-center shadow-xl shadow-emerald-200 mb-4 transition-transform hover:rotate-3">
-                    <svg class="w-10 h-10 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                        <path d="M7 15V5c0-1.1.9-2 2-2h4a4 4 0 1 1 0 8H9" stroke-linecap="round"/>
-                        <circle cx="16" cy="16" r="4" fill="currentColor" fill-opacity="0.2"/>
-                        <circle cx="16" cy="16" r="1.5" fill="white"/>
-                    </svg>
-                </div>
-                <h1 class="text-3xl font-[900] text-slate-900 tracking-tight uppercase leading-none">PADEL<span class="text-emerald-500">PLAZA</span></h1>
-            </div>
-
-            <!-- Ajout de l'Action et du paramètre Method -->
-            <form action="{{ route('login') }}" method="POST" class="space-y-5">
-                <!-- LE TOKEN CSRF EST OBLIGATOIRE -->
-                @csrf 
-
                 <div class="group">
-                    <label class="block text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-2 ml-1">Email Admin</label>
+                    <label class="block text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-2 ml-1">Email Joueur</label>
                     <div class="relative">
                         <div class="absolute inset-y-0 left-0 pl-5 flex items-center pointer-events-none text-slate-300 group-focus-within:text-emerald-500 transition-colors">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
                         </div>
-                        <!-- Ajout du "name" -->
                         <input type="email" name="email" value="{{ old('email') }}" placeholder="aziz@padelplaza.ma" 
-                            class="w-full pl-14 pr-5 py-3.5 bg-slate-50 border-2 border-transparent rounded-2xl text-slate-900 font-semibold focus:bg-white focus:border-emerald-500 transition-all outline-none placeholder:text-slate-300 shadow-sm">
+                            class="w-full pl-14 pr-5 py-3.5 bg-slate-50 border-2 @error('email') border-red-500 @else border-transparent @enderror rounded-2xl text-slate-900 font-semibold focus:bg-white focus:border-emerald-500 transition-all outline-none placeholder:text-slate-300 shadow-sm">
                     </div>
+                    @error('email')
+                        <p class="text-red-500 text-[10px] font-bold mt-2 ml-1">{{ $message }}</p>
+                    @enderror
                 </div>
                 
                 <div class="group">
@@ -59,10 +36,12 @@
                         <div class="absolute inset-y-0 left-0 pl-5 flex items-center pointer-events-none text-slate-300 group-focus-within:text-emerald-500 transition-colors">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
                         </div>
-                        <!-- Ajout du "name" -->
                         <input type="password" name="password" placeholder="••••••••••••" 
-                            class="w-full pl-14 pr-5 py-3.5 bg-slate-50 border-2 border-transparent rounded-2xl text-slate-900 font-semibold focus:bg-white focus:border-emerald-500 transition-all outline-none shadow-sm">
+                            class="w-full pl-14 pr-5 py-3.5 bg-slate-50 border-2 @error('password') border-red-500 @else border-transparent @enderror rounded-2xl text-slate-900 font-semibold focus:bg-white focus:border-emerald-500 transition-all outline-none shadow-sm">
                     </div>
+                    @error('password')
+                        <p class="text-red-500 text-[10px] font-bold mt-2 ml-1">{{ $message }}</p>
+                    @enderror
                 </div>
 
                 <div class="flex items-center justify-between px-1">

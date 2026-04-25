@@ -26,12 +26,11 @@
                 <p class="text-slate-400 font-medium">Gérez les comptes, les niveaux et les Plaza Coins.</p>
             </div>
             <div class="flex gap-4">
-<form action="{{ route('admin.players') }}" method="GET" class="relative">
-    <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
-    <!-- On a ajouté name="q", et on conserve la valeur cherchée avec value="" -->
-    <input type="text" name="q" value="{{ request('q') }}" placeholder="Taper puis Entrer..." 
-           class="pl-12 pr-6 py-3.5 bg-white border border-slate-100 rounded-2xl text-sm font-semibold outline-none focus:ring-2 focus:ring-emerald-500 transition-all w-64 shadow-sm">
-</form>
+                <div class="relative">
+                    <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                    <input type="text" id="player-search" placeholder="Recherche rapide..." 
+                           class="pl-12 pr-6 py-3.5 bg-white border border-slate-100 rounded-2xl text-sm font-semibold outline-none focus:ring-2 focus:ring-emerald-500 transition-all w-64 shadow-sm">
+                </div>
 
                 <button class="bg-slate-900 text-white px-6 py-3.5 rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-emerald-600 transition-all">
                     Exporter CSV
@@ -50,21 +49,21 @@
                         <th class="px-8 py-5 text-right">Actions</th>
                     </tr>
                 </thead>
-                                <tbody class="divide-y divide-slate-50">
+                <tbody id="player-table-body" class="divide-y divide-slate-50">
                     @forelse($players as $player)
-                    <tr class="group hover:bg-slate-50/50 transition-all {{ $player->is_blocked ? 'opacity-60' : '' }}">
+                    <tr class="player-row group hover:bg-slate-50/50 transition-all {{ $player->is_blocked ? 'opacity-60' : '' }}" data-name="{{ strtolower($player->name) }}">
                         <td class="px-8 py-6">
                             <div class="flex items-center gap-4">
                                 <!-- Photo ou Initiales -->
                                 <div class="w-12 h-12 rounded-full bg-emerald-100 border-2 border-white shadow-sm flex items-center justify-center font-black text-emerald-600 uppercase overflow-hidden">
                                     @if($player->profile_image)
-                                        <img src="{{ asset('storage/' . $player->profile_image) }}" alt="Photo de {{ $player->name }}" class="w-full h-full object-cover">
+<img src="{{ Str::startsWith($player->profile_image, 'http') ? $player->profile_image : asset('storage/' . $player->profile_image) }}" class="w-full h-full object-cover">
                                     @else
                                         {{ substr($player->name, 0, 2) }}
                                     @endif
                                 </div>
                                 <div>
-                                    <p class="font-bold text-slate-900">{{ $player->name }}</p>
+                                    <p class="player-name font-bold text-slate-900">{{ $player->name }}</p>
                                     @if($player->is_blocked)
                                         <span class="text-[8px] font-black text-red-500 uppercase tracking-widest bg-red-50 px-2 py-0.5 rounded-full border border-red-100">
                                             <i class="fas fa-ban mr-1"></i> Bloqué
@@ -119,21 +118,35 @@
             </table>
         </div>
 
-<div class="mt-8 flex flex-col md:flex-row justify-between items-center px-4 gap-4">
-    <p class="text-xs font-bold text-slate-400 uppercase">
-        Page {{ $players->currentPage() }} • {{ $players->total() }} Joueurs au total dans le club
-    </p>
+        <div class="mt-8 flex flex-col md:flex-row justify-between items-center px-4 gap-4">
+            <p class="text-xs font-bold text-slate-400 uppercase">
+                Page {{ $players->currentPage() }} • {{ $players->total() }} Joueurs au total dans le club
+            </p>
 
-
-    <!-- La magie Laravel génère les flèches et les numéros toute seule ! -->
-    <div class="mt-4 md:mt-0">
-        {{ $players->links() }}
-    </div>
-</div>
+            <div class="mt-4 md:mt-0">
+                {{ $players->links() }}
+            </div>
+        </div>
 
 
     </main>
     @include('components.notif')
+
+    <script>
+        document.getElementById('player-search').addEventListener('keyup', function() {
+            let filter = this.value.toLowerCase();
+            let rows = document.querySelectorAll('.player-row');
+            
+            rows.forEach(row => {
+                let name = row.getAttribute('data-name');
+                if (name.includes(filter)) {
+                    row.style.display = "";
+                } else {
+                    row.style.display = "none";
+                }
+            });
+        });
+    </script>
 
 </body>
 </html>

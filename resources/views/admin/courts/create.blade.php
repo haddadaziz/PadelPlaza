@@ -18,6 +18,8 @@
     <main class="flex-1 ml-64 p-10">
         <div class="mb-10">
             <nav class="flex text-slate-400 text-[10px] font-black uppercase tracking-widest mb-4 gap-2">
+                <a href="{{ route('home') }}" class="hover:text-emerald-500 transition-colors">Accueil</a>
+                <span>/</span>
                 <a href="/admin/courts" class="hover:text-emerald-500 transition-colors">Terrains</a>
                 <span>/</span>
                 <span class="text-slate-900">Ajouter un nouveau court</span>
@@ -51,36 +53,45 @@
                         
                         <div class="group">
                             <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 ml-1">Nom du Court</label>
-                            <input type="text" name="name" placeholder="Ex: Court Central Rabat" 
-                                class="w-full px-6 py-4 bg-slate-50 border-2 border-transparent rounded-2xl text-slate-900 font-bold focus:bg-white focus:border-emerald-500 transition-all outline-none shadow-sm">
+                            <input type="text" name="name" value="{{ old('name') }}" placeholder="Ex: Court Central Rabat" 
+                                class="w-full px-6 py-4 bg-slate-50 border-2 @error('name') border-red-500 @else border-transparent @enderror rounded-2xl text-slate-900 font-bold focus:bg-white focus:border-emerald-500 transition-all outline-none shadow-sm">
+                            @error('name')
+                                <p class="text-red-500 text-[10px] font-bold mt-2 ml-1">{{ $message }}</p>
+                            @enderror
                         </div>
 
                         <div class="grid grid-cols-2 gap-6">
                             <div class="group">
                                 <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 ml-1">Type d'installation</label>
-                                <select name="type" class="w-full px-6 py-4 bg-slate-50 border-2 border-transparent rounded-2xl text-slate-900 font-bold focus:bg-white focus:border-emerald-500 transition-all outline-none shadow-sm appearance-none cursor-pointer">
-                                    <option value="indoor">Indoor (Couvert)</option>
-                                    <option value="outdoor">Outdoor (Plein air)</option>
+                                <select name="type" class="w-full px-6 py-4 bg-slate-50 border-2 @error('type') border-red-500 @else border-transparent @enderror rounded-2xl text-slate-900 font-bold focus:bg-white focus:border-emerald-500 transition-all outline-none shadow-sm appearance-none cursor-pointer">
+                                    <option value="indoor" {{ old('type') == 'indoor' ? 'selected' : '' }}>Indoor (Couvert)</option>
+                                    <option value="outdoor" {{ old('type') == 'outdoor' ? 'selected' : '' }}>Outdoor (Plein air)</option>
                                 </select>
+                                @error('type')
+                                    <p class="text-red-500 text-[10px] font-bold mt-2 ml-1">{{ $message }}</p>
+                                @enderror
                             </div>
 
                             <div class="group">
                                 <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 ml-1">Tarif Horaire</label>
                                 <div class="relative">
-                                    <input type="number" name="price_coins" placeholder="250" 
-                                        class="w-full pl-6 pr-14 py-4 bg-slate-50 border-2 border-transparent rounded-2xl text-emerald-600 font-black focus:bg-white focus:border-emerald-500 transition-all outline-none shadow-sm text-xl tracking-tight">
+                                    <input type="number" name="price_coins" value="{{ old('price_coins') }}" placeholder="250" 
+                                        class="w-full pl-6 pr-14 py-4 bg-slate-50 border-2 @error('price_coins') border-red-500 @else border-transparent @enderror rounded-2xl text-emerald-600 font-black focus:bg-white focus:border-emerald-500 transition-all outline-none shadow-sm text-xl tracking-tight">
                                     <span class="absolute right-6 top-1/2 -translate-y-1/2 text-slate-300 font-black text-xs uppercase">PC</span>
                                 </div>
+                                @error('price_coins')
+                                    <p class="text-red-500 text-[10px] font-bold mt-2 ml-1">{{ $message }}</p>
+                                @enderror
                             </div>
                         </div>
 
-<div class="group">
-    <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 ml-1">Statut Initial</label>
-    <select name="is_active" class="w-full px-6 py-4 bg-slate-50 border-2 border-transparent rounded-2xl text-slate-900 font-bold focus:bg-white focus:border-emerald-500 transition-all outline-none shadow-sm appearance-none cursor-pointer">
-        <option value="1" selected>● Actif / Ouvert immédiatement</option>
-        <option value="0">● En Maintenance / Caché</option>
-    </select>
-</div>
+                        <div class="group">
+                            <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 ml-1">Statut Initial</label>
+                            <select name="is_active" class="w-full px-6 py-4 bg-slate-50 border-2 border-transparent rounded-2xl text-slate-900 font-bold focus:bg-white focus:border-emerald-500 transition-all outline-none shadow-sm appearance-none cursor-pointer">
+                                <option value="1" {{ old('is_active', '1') == '1' ? 'selected' : '' }}>● Actif / Ouvert immédiatement</option>
+                                <option value="0" {{ old('is_active') == '0' ? 'selected' : '' }}>● En Maintenance / Caché</option>
+                            </select>
+                        </div>
 
 
                         <div class="pt-6 flex gap-4">
@@ -109,6 +120,13 @@
             }
             reader.readAsDataURL(event.target.files[0]);
         }
+
+        document.querySelector('form').addEventListener('submit', function() {
+            const btn = document.querySelector('button[type="submit"]');
+            btn.disabled = true;
+            btn.classList.add('opacity-70', 'cursor-not-allowed');
+            btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Création...';
+        });
     </script>
 
 </body>

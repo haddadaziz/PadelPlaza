@@ -24,6 +24,8 @@
         
         <div class="mb-8 shrink-0">
             <nav class="flex text-slate-400 text-[10px] font-black uppercase tracking-widest mb-2 gap-2">
+                <a href="{{ route('home') }}" class="hover:text-emerald-500 transition-colors">Accueil</a>
+                <span>/</span>
                 <a href="/admin/reservations" class="hover:text-emerald-500 transition-colors">Réservations</a>
                 <span>/</span>
                 <span class="text-slate-900">Ajout Manuel</span>
@@ -189,6 +191,15 @@
                 });
             }
         }
+
+        document.querySelector('form').addEventListener('submit', function() {
+            const btn = document.getElementById('submit-btn');
+            if(!btn.disabled) {
+                btn.disabled = true;
+                btn.classList.add('opacity-70', 'cursor-not-allowed');
+                btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Création...';
+            }
+        });
     </script>:
 
     @include('components.notif')

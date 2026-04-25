@@ -22,6 +22,11 @@
 
     <main class="flex-1 ml-64 p-10">
         <div class="mb-10">
+            <nav class="flex text-slate-400 text-[10px] font-black uppercase tracking-widest mb-4 gap-2">
+                <a href="{{ route('home') }}" class="hover:text-emerald-500 transition-colors">Accueil</a>
+                <span>/</span>
+                <span class="text-slate-900">Paramètres Profil</span>
+            </nav>
             <h2 class="text-3xl font-black text-slate-900 tracking-tight uppercase">Configuration Compte</h2>
             <p class="text-slate-400 font-bold text-sm">Gérez vos accès et votre sécurité Plaza.</p>
         </div>
@@ -129,5 +134,15 @@
         </div>
     </main>
 
+    @include('components.notif')
+
+    <script>
+        document.querySelector('form[action="{{ route("profile.password") }}"]').addEventListener('submit', function() {
+            const btn = this.querySelector('button[type="submit"]');
+            btn.disabled = true;
+            btn.classList.add('opacity-70', 'cursor-not-allowed');
+            btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Mise à jour...';
+        });
+    </script>
 </body>
 </html>

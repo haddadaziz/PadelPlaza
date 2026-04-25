@@ -50,6 +50,8 @@
         <div class="mb-8 shrink-0 flex items-center justify-between">
             <div>
                 <nav class="flex text-slate-400 text-[10px] font-black uppercase tracking-widest mb-2 gap-2">
+                    <a href="{{ route('home') }}" class="hover:text-emerald-500 transition-colors">Accueil</a>
+                    <span>/</span>
                     <a href="{{ route('admin.players') }}" class="hover:text-emerald-500 transition-colors">Joueurs</a>
                     <span>/</span>
                     <span class="text-slate-900">Encaissement</span>
@@ -68,7 +70,7 @@
             </div>
         </div>
 
-        <form action="{{ route('admin.players.recharge.process', ['id' => $player->id]) }}" method="POST" class="grid grid-cols-12 gap-10 flex-1 min-h-0">
+        <form id="recharge-form" action="{{ route('admin.players.recharge.process', ['id' => $player->id]) }}" method="POST" class="grid grid-cols-12 gap-10 flex-1 min-h-0">
             @csrf
             
             <div class="col-span-7 flex flex-col min-h-0">
@@ -103,7 +105,7 @@
 
                     <div class="bg-white p-8 rounded-[2.5rem] flex flex-col items-center justify-center border-2 border-dashed border-slate-200 group hover:border-emerald-500 transition-all">
                         <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-3">Saisie Manuelle</p>
-                        <input type="number" id="custom-amount" name="custom_amount" placeholder="Coins..." class="w-full bg-slate-50 border-none rounded-xl px-4 py-3 text-center font-black text-slate-900 focus:ring-2 focus:ring-emerald-500 transition-all outline-none">
+                        <input type="number" id="custom-amount" name="custom_amount" placeholder="Coins..." class="w-full bg-slate-50 border-none rounded-xl px-4 py-3 text-center font-black text-slate-900 focus:ring-2 focus:ring-emerald-500 transition-all outline-none" oninput="selectCustom()">
                     </div>
                 </div>
             </div>
@@ -131,7 +133,7 @@
                         </div>
                     </div>
 
-                    <button type="submit" class="mt-8 bg-emerald-500 text-white w-full py-6 rounded-[2rem] font-[900] uppercase tracking-widest hover:bg-slate-900 transition-all shadow-2xl shadow-emerald-500/20 flex items-center justify-center gap-3 active:scale-95">
+                    <button type="submit" id="submit-btn" class="mt-8 bg-emerald-500 text-white w-full py-6 rounded-[2rem] font-[900] uppercase tracking-widest hover:bg-slate-900 transition-all shadow-2xl shadow-emerald-500/20 flex items-center justify-center gap-3 active:scale-95">
                         Confirmer l'ajout <i class="fas fa-bolt text-[10px]"></i>
                     </button>
                 </div>
@@ -140,7 +142,7 @@
     </main>
 
     <script>
-        // Logique JS de mise à jour du Recap (inchangée)
+        // Logique JS de mise à jour du Recap
         function updateTotal(val) {
             document.getElementById('display-amount').innerText = val;
             document.getElementById('custom-amount').value = '';
@@ -151,6 +153,13 @@
             document.querySelectorAll('input[name="amount"]').forEach(r => r.checked = false);
             document.getElementById('display-amount').innerText = val || 0;
         }
+
+        document.getElementById('recharge-form').addEventListener('submit', function() {
+            const btn = document.getElementById('submit-btn');
+            btn.disabled = true;
+            btn.classList.add('opacity-70', 'cursor-not-allowed');
+            btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Traitement en cours...';
+        });
     </script>
 </body>
 </html>

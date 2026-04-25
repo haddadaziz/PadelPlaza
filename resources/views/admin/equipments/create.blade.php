@@ -18,6 +18,8 @@
     <main class="flex-1 ml-64 p-10">
         <div class="mb-10">
             <nav class="flex text-slate-400 text-[10px] font-black uppercase tracking-widest mb-4 gap-2">
+                <a href="{{ route('home') }}" class="hover:text-emerald-500 transition-colors">Accueil</a>
+                <span>/</span>
                 <a href="/admin/equipments" class="hover:text-emerald-500 transition-colors">Équipements</a>
                 <span>/</span>
                 <span class="text-slate-900">Ajouter au catalogue</span>
@@ -53,27 +55,36 @@
                         
                         <div class="group">
                             <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 ml-1">Désignation</label>
-                            <input type="text" name="name" placeholder="Ex: Raquette Head Gravity Pro" 
-                                class="w-full px-6 py-4 bg-slate-50 border-2 border-transparent rounded-2xl text-slate-900 font-bold focus:bg-white focus:border-emerald-500 transition-all outline-none shadow-sm placeholder:text-slate-300">
+                            <input type="text" name="name" value="{{ old('name') }}" placeholder="Ex: Raquette Head Gravity Pro" 
+                                class="w-full px-6 py-4 bg-slate-50 border-2 @error('name') border-red-500 @else border-transparent @enderror rounded-2xl text-slate-900 font-bold focus:bg-white focus:border-emerald-500 transition-all outline-none shadow-sm placeholder:text-slate-300">
+                            @error('name')
+                                <p class="text-red-500 text-[10px] font-bold mt-2 ml-1">{{ $message }}</p>
+                            @enderror
                         </div>
 
                         <div class="grid grid-cols-2 gap-6">
                             <div class="group">
                                 <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 ml-1">Prix de location</label>
                                 <div class="relative">
-                                    <input type="number" name="price_coins" placeholder="0" 
-                                        class="w-full pl-6 pr-14 py-4 bg-slate-50 border-2 border-transparent rounded-2xl text-emerald-600 font-black focus:bg-white focus:border-emerald-500 transition-all outline-none shadow-sm text-xl tracking-tight">
+                                    <input type="number" name="price_coins" value="{{ old('price_coins') }}" placeholder="0" 
+                                        class="w-full pl-6 pr-14 py-4 bg-slate-50 border-2 @error('price_coins') border-red-500 @else border-transparent @enderror rounded-2xl text-emerald-600 font-black focus:bg-white focus:border-emerald-500 transition-all outline-none shadow-sm text-xl tracking-tight">
                                     <span class="absolute right-6 top-1/2 -translate-y-1/2 text-slate-300 font-black text-xs uppercase">PC</span>
                                 </div>
+                                @error('price_coins')
+                                    <p class="text-red-500 text-[10px] font-bold mt-2 ml-1">{{ $message }}</p>
+                                @enderror
                             </div>
 
                             <div class="group">
                                 <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 ml-1">Stock Initial</label>
                                 <div class="relative">
-                                    <input type="number" name="stock" placeholder="10" 
-                                        class="w-full pl-6 pr-14 py-4 bg-slate-50 border-2 border-transparent rounded-2xl text-slate-900 font-black focus:bg-white focus:border-emerald-500 transition-all outline-none shadow-sm text-xl tracking-tight">
+                                    <input type="number" name="stock" value="{{ old('stock') }}" placeholder="10" 
+                                        class="w-full pl-6 pr-14 py-4 bg-slate-50 border-2 @error('stock') border-red-500 @else border-transparent @enderror rounded-2xl text-slate-900 font-black focus:bg-white focus:border-emerald-500 transition-all outline-none shadow-sm text-xl tracking-tight">
                                     <span class="absolute right-6 top-1/2 -translate-y-1/2 text-slate-300 font-black text-xs"><i class="fas fa-boxes"></i></span>
                                 </div>
+                                @error('stock')
+                                    <p class="text-red-500 text-[10px] font-bold mt-2 ml-1">{{ $message }}</p>
+                                @enderror
                             </div>
                         </div>
 
@@ -81,18 +92,21 @@
                             <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 ml-1">Catégorie d'article</label>
                             <div class="grid grid-cols-3 gap-3">
                                 <label class="cursor-pointer">
-                                    <input type="radio" name="type" value="raquette" class="sr-only peer" checked>
+                                    <input type="radio" name="type" value="raquette" class="sr-only peer" {{ old('type', 'raquette') == 'raquette' ? 'checked' : '' }}>
                                     <div class="py-3 text-center rounded-xl bg-slate-50 border-2 border-transparent text-slate-400 font-black text-[10px] uppercase tracking-widest peer-checked:bg-emerald-500 peer-checked:text-white transition-all">Raquettes</div>
                                 </label>
                                 <label class="cursor-pointer">
-                                    <input type="radio" name="type" value="balles" class="sr-only peer">
+                                    <input type="radio" name="type" value="balles" class="sr-only peer" {{ old('type') == 'balles' ? 'checked' : '' }}>
                                     <div class="py-3 text-center rounded-xl bg-slate-50 border-2 border-transparent text-slate-400 font-black text-[10px] uppercase tracking-widest peer-checked:bg-emerald-500 peer-checked:text-white transition-all">Balles</div>
                                 </label>
                                 <label class="cursor-pointer">
-                                    <input type="radio" name="type" value="accessoires" class="sr-only peer">
+                                    <input type="radio" name="type" value="accessoires" class="sr-only peer" {{ old('type') == 'accessoires' ? 'checked' : '' }}>
                                     <div class="py-3 text-center rounded-xl bg-slate-50 border-2 border-transparent text-slate-400 font-black text-[10px] uppercase tracking-widest peer-checked:bg-emerald-500 peer-checked:text-white transition-all">Autres</div>
                                 </label>
                             </div>
+                            @error('type')
+                                <p class="text-red-500 text-[10px] font-bold mt-2 ml-1">{{ $message }}</p>
+                            @enderror
                         </div>
 
                         <div class="pt-6 flex gap-4">
@@ -121,6 +135,13 @@
             }
             reader.readAsDataURL(event.target.files[0]);
         }
+
+        document.querySelector('form').addEventListener('submit', function() {
+            const btn = document.querySelector('button[type="submit"]');
+            btn.disabled = true;
+            btn.classList.add('opacity-70', 'cursor-not-allowed');
+            btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Ajout...';
+        });
     </script>
 
 </body>

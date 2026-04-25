@@ -28,14 +28,6 @@
                 <h1 class="text-2xl font-[900] text-slate-900 tracking-tight leading-none uppercase text-center">Créer un <span class="text-emerald-500">compte</span></h1>
             </div>
 
-        <!-- Affichage d'erreur (ex: Si l'email est déjà pris) -->
-        @if ($errors->any())
-            <div class="bg-red-100 text-red-600 p-4 rounded-2xl text-sm font-bold mb-4 border border-red-200">
-                {{ $errors->first() }}
-            </div>
-        @endif
-
-        <!-- L'action pointe vers la route 'register' -->
         <form action="{{ route('register') }}" method="POST" class="space-y-4">
             @csrf
             
@@ -43,7 +35,10 @@
             <div class="group">
                 <label class="block text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-1.5 ml-1">Nom Complet</label>
                 <input type="text" name="name" value="{{ old('name') }}" placeholder="Aziz Haddad" 
-                    class="w-full px-5 py-3 bg-slate-50 border-2 border-transparent rounded-2xl text-slate-900 font-semibold focus:bg-white focus:border-emerald-500 transition-all outline-none shadow-sm" required>
+                    class="w-full px-5 py-3 bg-slate-50 border-2 @error('name') border-red-500 @else border-transparent @enderror rounded-2xl text-slate-900 font-semibold focus:bg-white focus:border-emerald-500 transition-all outline-none shadow-sm" required>
+                @error('name')
+                    <p class="text-red-500 text-[10px] font-bold mt-2 ml-1">{{ $message }}</p>
+                @enderror
             </div>
 
             <!-- EMAIL -->
@@ -54,8 +49,11 @@
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
                     </div>
                     <input type="email" name="email" value="{{ old('email') }}" placeholder="aziz@example.com" 
-                        class="w-full pl-14 pr-5 py-3 bg-slate-50 border-2 border-transparent rounded-2xl text-slate-900 font-semibold focus:bg-white focus:border-emerald-500 transition-all outline-none shadow-sm" required>
+                        class="w-full pl-14 pr-5 py-3 bg-slate-50 border-2 @error('email') border-red-500 @else border-transparent @enderror rounded-2xl text-slate-900 font-semibold focus:bg-white focus:border-emerald-500 transition-all outline-none shadow-sm" required>
                 </div>
+                @error('email')
+                    <p class="text-red-500 text-[10px] font-bold mt-2 ml-1">{{ $message }}</p>
+                @enderror
             </div>
             
             <!-- MOT DE PASSE -->
@@ -63,7 +61,10 @@
                 <div class="group">
                     <label class="block text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-1.5 ml-1">Mot de passe</label>
                     <input type="password" name="password" placeholder="••••••••" 
-                        class="w-full px-5 py-3 bg-slate-50 border-2 border-transparent rounded-2xl text-slate-900 font-semibold focus:bg-white focus:border-emerald-500 transition-all outline-none shadow-sm" required>
+                        class="w-full px-5 py-3 bg-slate-50 border-2 @error('password') border-red-500 @else border-transparent @enderror rounded-2xl text-slate-900 font-semibold focus:bg-white focus:border-emerald-500 transition-all outline-none shadow-sm" required>
+                    @error('password')
+                        <p class="text-red-500 text-[10px] font-bold mt-2 ml-1">{{ $message }}</p>
+                    @enderror
                 </div>
                 <div class="group">
                     <label class="block text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-1.5 ml-1">Confirmation</label>

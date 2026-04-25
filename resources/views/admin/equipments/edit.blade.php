@@ -18,6 +18,8 @@
     <main class="flex-1 ml-64 p-10">
         <div class="mb-10">
             <nav class="flex text-slate-400 text-[10px] font-black uppercase tracking-widest mb-4 gap-2">
+                <a href="{{ route('home') }}" class="hover:text-emerald-500 transition-colors">Accueil</a>
+                <span>/</span>
                 <a href="/admin/equipments" class="hover:text-emerald-500 transition-colors">Équipements</a>
                 <span>/</span>
                 <span class="text-slate-900">Éditer l'article</span>
@@ -53,27 +55,36 @@
                         
                         <div class="group">
                             <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 ml-1">Nom de l'article</label>
-                            <input type="text" name="name" value="{{ $equipment->name }}" 
-                                class="w-full px-6 py-4 bg-slate-50 border-2 border-transparent rounded-2xl text-slate-900 font-bold focus:bg-white focus:border-emerald-500 transition-all outline-none shadow-sm text-lg uppercase tracking-tight">
+                            <input type="text" name="name" value="{{ old('name', $equipment->name) }}" 
+                                class="w-full px-6 py-4 bg-slate-50 border-2 @error('name') border-red-500 @else border-transparent @enderror rounded-2xl text-slate-900 font-bold focus:bg-white focus:border-emerald-500 transition-all outline-none shadow-sm text-lg uppercase tracking-tight">
+                            @error('name')
+                                <p class="text-red-500 text-[10px] font-bold mt-2 ml-1">{{ $message }}</p>
+                            @enderror
                         </div>
 
                         <div class="grid grid-cols-2 gap-6">
                             <div class="group">
                                 <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 ml-1">Prix de location</label>
                                 <div class="relative">
-                                    <input type="number" name="price_coins" value="{{ $equipment->price_coins}}" 
-                                        class="w-full pl-6 pr-14 py-4 bg-slate-50 border-2 border-transparent rounded-2xl text-emerald-600 font-black focus:bg-white focus:border-emerald-500 transition-all outline-none shadow-sm text-xl tracking-tight">
+                                    <input type="number" name="price_coins" value="{{ old('price_coins', $equipment->price_coins) }}" 
+                                        class="w-full pl-6 pr-14 py-4 bg-slate-50 border-2 @error('price_coins') border-red-500 @else border-transparent @enderror rounded-2xl text-emerald-600 font-black focus:bg-white focus:border-emerald-500 transition-all outline-none shadow-sm text-xl tracking-tight">
                                     <span class="absolute right-6 top-1/2 -translate-y-1/2 text-slate-300 font-black text-xs uppercase">PC</span>
                                 </div>
+                                @error('price_coins')
+                                    <p class="text-red-500 text-[10px] font-bold mt-2 ml-1">{{ $message }}</p>
+                                @enderror
                             </div>
 
                             <div class="group">
                                 <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 ml-1">Stock Total</label>
                                 <div class="relative">
-                                    <input type="number" name="stock" value="{{ $equipment->stock}}" 
-                                        class="w-full pl-6 pr-14 py-4 bg-slate-50 border-2 border-transparent rounded-2xl text-slate-900 font-black focus:bg-white focus:border-emerald-500 transition-all outline-none shadow-sm text-xl tracking-tight">
+                                    <input type="number" name="stock" value="{{ old('stock', $equipment->stock) }}" 
+                                        class="w-full pl-6 pr-14 py-4 bg-slate-50 border-2 @error('stock') border-red-500 @else border-transparent @enderror rounded-2xl text-slate-900 font-black focus:bg-white focus:border-emerald-500 transition-all outline-none shadow-sm text-xl tracking-tight">
                                     <span class="absolute right-6 top-1/2 -translate-y-1/2 text-slate-300 font-black text-xs uppercase text-center"><i class="fas fa-boxes"></i></span>
                                 </div>
+                                @error('stock')
+                                    <p class="text-red-500 text-[10px] font-bold mt-2 ml-1">{{ $message }}</p>
+                                @enderror
                             </div>
                         </div>
 
@@ -111,6 +122,13 @@
             }
             reader.readAsDataURL(event.target.files[0]);
         }
+
+        document.querySelector('form').addEventListener('submit', function() {
+            const btn = document.querySelector('button[type="submit"]');
+            btn.disabled = true;
+            btn.classList.add('opacity-70', 'cursor-not-allowed');
+            btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Mise à jour...';
+        });
     </script>
 
 </body>
