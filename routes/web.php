@@ -80,6 +80,7 @@ Route::middleware('auth')->group(function () {
         // Valiadation finale du paiement
         Route::post('/player/recharge/process', [\App\Http\Controllers\PlayerController::class , 'rechargeProcess'])->name('player.recharge.process');
         Route::get('/player/transactions', [\App\Http\Controllers\PlayerController::class , 'transactions'])->name('player.transactions');
+        Route::get('/player/transactions/export', [\App\Http\Controllers\PlayerController::class , 'exportTransactions'])->name('player.transactions.export');
 
 
         // --- ESPACE ADMINISTRATEUR ---
@@ -112,6 +113,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/admin/players/{id}/recharge', [\App\Http\Controllers\UserController::class , 'adminRechargeForm'])->name('admin.players.recharge');
         Route::post('/admin/players/{id}/recharge', [\App\Http\Controllers\UserController::class , 'adminRechargeProcess'])->name('admin.players.recharge.process');
         Route::patch('/admin/players/{id}/block', [\App\Http\Controllers\UserController::class , 'toggleBlock'])->name('admin.players.block');
+        Route::get('/admin/players/export', [\App\Http\Controllers\UserController::class , 'exportPlayers'])->name('admin.players.export');
 
 
         // --- API / AJAX ---

@@ -92,6 +92,10 @@
                     <a href="{{ route('player.transactions') }}" class="w-10 h-10 bg-slate-900 border border-slate-800 text-emerald-500 rounded-xl flex items-center justify-center hover:bg-emerald-500 hover:text-white transition-all shadow-lg active:scale-90" title="Réinitialiser">
                         <i class="fas fa-undo-alt text-xs"></i>
                     </a>
+
+                    <a href="{{ route('player.transactions.export', request()->all()) }}" class="w-10 h-10 bg-emerald-500 text-white rounded-xl flex items-center justify-center hover:bg-emerald-600 transition-all shadow-lg active:scale-90" title="Exporter en CSV">
+                        <i class="fas fa-file-export text-xs"></i>
+                    </a>
                 </form>
             </div>
             

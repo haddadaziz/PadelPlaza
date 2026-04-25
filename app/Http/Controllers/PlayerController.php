@@ -235,4 +235,67 @@ class PlayerController extends Controller
     }
 
 
+    public function exportTransactions(Request $request)
+    {
+        $user = \Illuminate\Support\Facades\Auth::user();
+
+        // On réutilise la même logique que pour la vue mais sans la pagination si elle existait
+        $query = $user->transactions()->with('reservation.court');
+
+        if ($request->filled('type')) {
+            if ($request->type === 'recharge') {
+                $query->whereIn('type', ['recharge_admin', 'recharge_stripe']);
+            } else {
+                $query->where('type', $request->type);
+            }
+        }
+        if ($request->filled('month')) {
+            $query->whereMonth('created_at', $request->month);
+        }
+        if ($request->filled('year')) {
+            $query->whereYear('created_at', $request->year);
+        }
+
+        $transactions = $query->latest()->get();
+        $filename = "mes_transactions_padel_" . date('Ymd_His') . ".csv";
+        
+        $headers = [
+            "Content-type"        => "text/csv; charset=UTF-8",
+            "Content-Disposition" => "attachment; filename=$filename",
+            "Pragma"              => "no-cache",
+            "Cache-Control"       => "must-revalidate, post-check=0, pre-check=0",
+            "Expires"             => "0"
+        ];
+
+        $columns = ['Date', 'Description', 'Type', 'Montant (PC)'];
+
+        $callback = function() use($transactions, $columns) {
+            $file = fopen('php://output', 'w');
+            fprintf($file, chr(0xEF).chr(0xBB).chr(0xBF));
+            fputcsv($file, $columns, ';');
+
+            foreach ($transactions as $t) {
+                $description = "";
+                if ($t->type === 'reservation') {
+                    $description = "Réservation Court : " . ($t->reservation->court->name ?? 'N/A');
+                } elseif ($t->type === 'recharge_stripe') {
+                    $description = "Recharge Carte Bancaire";
+                } elseif ($t->type === 'recharge_admin') {
+                    $description = "Recharge Admin (Caisse)";
+                } else {
+                    $description = "Bonus / Autre";
+                }
+
+                fputcsv($file, [
+                    $t->created_at->format('d/m/Y H:i'),
+                    $description,
+                    strtoupper($t->type),
+                    $t->amount
+                ], ';');
+            }
+            fclose($file);
+        };
+
+        return response()->stream($callback, 200, $headers);
+    }
 }

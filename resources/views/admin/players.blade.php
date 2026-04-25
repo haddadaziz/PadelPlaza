@@ -32,9 +32,9 @@
                            class="pl-12 pr-6 py-3.5 bg-white border border-slate-100 rounded-2xl text-sm font-semibold outline-none focus:ring-2 focus:ring-emerald-500 transition-all w-full md:w-64 shadow-sm">
                 </div>
 
-                <button class="bg-slate-900 text-white px-6 py-3.5 rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-emerald-600 transition-all w-full sm:w-auto">
-                    Export
-                </button>
+                <a href="{{ route('admin.players.export') }}" class="bg-slate-900 text-white px-6 py-3.5 rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-emerald-600 transition-all w-full sm:w-auto flex items-center justify-center gap-2">
+                    <i class="fas fa-file-csv"></i> Export
+                </a>
             </div>
         </div>
 
@@ -84,7 +84,7 @@
                             <span class="font-black text-emerald-500 text-base lg:text-lg tracking-tight">{{ $player->coins_balance }} <span class="text-[10px] text-slate-300">PC</span></span>
                         </td>
                         <td class="px-8 py-6 hidden lg:table-cell">
-                            <span class="text-xs font-bold text-slate-500">Il y a {{ $player->updated_at->diffForHumans(null, true) }}</span>
+                            <span class="text-xs font-bold text-slate-500">{{ $player->updated_at->diffForHumans(null, true) }} ago</span>
                         </td>
                         <td class="px-4 lg:px-8 py-4 lg:py-6 text-right">
                             <div class="flex justify-end gap-2">

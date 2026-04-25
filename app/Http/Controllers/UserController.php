@@ -155,4 +155,55 @@ class UserController extends Controller
         $action = $user->is_blocked ? 'bloqué' : 'débloqué';
         return back()->with('success', "Le joueur {$user->name} a bien été {$action}.");
     }
+
+    // Export CSV des joueurs
+    public function exportPlayers()
+    {
+        // 1. Sécurité anti-intrus
+        if (\Illuminate\Support\Facades\Auth::user()->role !== 'admin') {
+            return redirect('/home');
+        }
+
+        // 2. On récupère tous les joueurs
+        $players = User::where('role', 'player')->latest()->get();
+        
+        // 3. Configuration du fichier
+        $filename = "padelplaza_joueurs_" . date('Ymd_His') . ".csv";
+        $headers = [
+            "Content-type"        => "text/csv; charset=UTF-8",
+            "Content-Disposition" => "attachment; filename=$filename",
+            "Pragma"              => "no-cache",
+            "Cache-Control"       => "must-revalidate, post-check=0, pre-check=0",
+            "Expires"             => "0"
+        ];
+
+        // 4. Les colonnes
+        $columns = ['ID', 'Nom', 'Email', 'PC Balance', 'XP Points', 'Niveau', 'Inscrit le', 'Statut'];
+
+        $callback = function() use($players, $columns) {
+            $file = fopen('php://output', 'w');
+            
+            // Correction pour l'encodage Excel (BOM UTF-8)
+            fprintf($file, chr(0xEF).chr(0xBB).chr(0xBF));
+            
+            fputcsv($file, $columns, ';');
+
+            foreach ($players as $player) {
+                fputcsv($file, [
+                    $player->id,
+                    $player->name,
+                    $player->email,
+                    $player->coins_balance,
+                    $player->xp_points,
+                    $player->level->level_name ?? 'ROOKIE',
+                    $player->created_at->format('d/m/Y H:i'),
+                    $player->is_blocked ? 'Bloqué' : 'Actif'
+                ], ';');
+            }
+
+            fclose($file);
+        };
+
+        return response()->stream($callback, 200, $headers);
+    }
 }
