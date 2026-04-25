@@ -57,7 +57,7 @@
                                 <!-- Photo ou Initiales -->
                                 <div class="w-10 h-10 lg:w-12 lg:h-12 rounded-full bg-emerald-100 border-2 border-white shadow-sm flex items-center justify-center font-black text-emerald-600 uppercase overflow-hidden shrink-0">
                                     @if($player->profile_image)
-<img src="{{ Str::startsWith($player->profile_image, 'http') ? $player->profile_image : asset('storage/' . $player->profile_image) }}" class="w-full h-full object-cover">
+                                        <img src="{{ str_contains($player->profile_image, 'http') ? $player->profile_image : asset('storage/' . $player->profile_image) }}" class="w-full h-full object-cover">
                                     @else
                                         {{ substr($player->name, 0, 2) }}
                                     @endif

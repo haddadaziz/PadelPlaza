@@ -8,7 +8,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
-        body { font-family: 'Inter', sans-serif; background-color: #F8FAFC; overflow: hidden; }
+        body { font-family: 'Inter', sans-serif; background-color: #F8FAFC; }
+        @media (min-width: 1024px) { body { overflow: hidden; } }
         
         .payment-card { border: 2px solid transparent; transition: all 0.3s ease; }
         input[type="radio"]:checked + .payment-card { 
@@ -34,26 +35,26 @@
 
     @include('components.player-sidebar')
 
-    <main class="flex-1 lg:ml-64 p-6 lg:p-8 mt-16 lg:mt-0 min-h-screen flex flex-col lg:overflow-hidden">
+    <main class="flex-1 lg:ml-64 p-6 lg:p-8 mt-16 lg:mt-0 min-h-screen flex flex-col lg:h-screen lg:overflow-hidden">
         
-        <div class="flex items-center gap-4 mb-8 shrink-0">
+        <div class="flex flex-wrap items-center gap-y-4 gap-x-6 mb-8 shrink-0">
             <div class="flex items-center gap-2">
-                <span class="w-8 h-8 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center text-[10px] font-black border border-emerald-200"><i class="fas fa-check"></i></span>
-                <span class="text-[10px] font-black uppercase tracking-widest text-slate-400">Terrain</span>
+                <span class="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center text-[10px] font-black border border-emerald-200"><i class="fas fa-check"></i></span>
+                <span class="text-[9px] sm:text-[10px] font-black uppercase tracking-widest text-slate-400">Terrain</span>
             </div>
-            <div class="h-px w-12 bg-emerald-200"></div>
+            <div class="hidden sm:block h-px w-8 lg:w-12 bg-emerald-200"></div>
             <div class="flex items-center gap-2">
-                <span class="w-8 h-8 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center text-[10px] font-black border border-emerald-200"><i class="fas fa-check"></i></span>
-                <span class="text-[10px] font-black uppercase tracking-widest text-slate-400">Options</span>
+                <span class="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center text-[10px] font-black border border-emerald-200"><i class="fas fa-check"></i></span>
+                <span class="text-[9px] sm:text-[10px] font-black uppercase tracking-widest text-slate-400">Options</span>
             </div>
-            <div class="h-px w-12 bg-emerald-200"></div>
+            <div class="hidden sm:block h-px w-8 lg:w-12 bg-emerald-200"></div>
             <div class="flex items-center gap-2">
-                <span class="w-8 h-8 rounded-full bg-emerald-500 text-white flex items-center justify-center text-[10px] font-black shadow-lg shadow-emerald-200">03</span>
-                <span class="text-[10px] font-black uppercase tracking-widest text-slate-900">Paiement</span>
+                <span class="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-emerald-500 text-white flex items-center justify-center text-[10px] font-black shadow-lg shadow-emerald-200">03</span>
+                <span class="text-[9px] sm:text-[10px] font-black uppercase tracking-widest text-slate-900">Paiement</span>
             </div>
         </div>
 
-        <form action="{{ route('player.reservations.process') }}" method="POST" id="payment-form" class="grid grid-cols-12 gap-10 flex-1 min-h-0">
+        <form action="{{ route('player.reservations.process') }}" method="POST" id="payment-form" class="grid grid-cols-1 lg:grid-cols-12 gap-10 flex-1 overflow-y-auto lg:overflow-hidden min-h-0 pb-10">
             @csrf
             <input type="hidden" name="court_id" value="{{ $court->id }}">
             <input type="hidden" name="date" value="{{ $date }}">
@@ -62,7 +63,7 @@
                 <input type="hidden" name="equipments[{{ $id }}]" value="{{ $data['qty'] }}">
             @endforeach
 
-            <div class="col-span-5 flex flex-col min-h-0">
+            <div class="col-span-1 lg:col-span-5 flex flex-col min-h-0">
                 <h3 class="text-xl font-black text-slate-900 uppercase tracking-tight mb-6 shrink-0">Récapitulatif</h3>
                 <div class="bg-white rounded-[2.5rem] border border-slate-100 shadow-sm p-8 flex-1 overflow-y-auto space-y-8 custom-scrollbar">
                     <div class="space-y-4">
@@ -109,8 +110,8 @@
                         <p class="text-sm font-black text-slate-900 uppercase">Total à payer</p>
                         <div class="text-right">
                             <p class="text-4xl font-[900] text-emerald-500 leading-none tracking-tight">
-                                <span id="display-total" data-base="{{ $totalPrice }}">{{ $totalPrice }}</span> 
-                                <span class="currency-label text-xs uppercase">PC</span>
+                                <span id="display-total" data-base="{{ $totalPrice }}" class="text-3xl sm:text-4xl font-[900] text-emerald-500 leading-none tracking-tight">{{ $totalPrice }}</span> 
+                                <span class="currency-label text-[10px] sm:text-xs uppercase">PC</span>
                             </p>
                             <p id="promo-text" class="text-[9px] font-bold text-slate-400 uppercase tracking-widest mt-2 transition-all">
                                 5% de CashBack si vous réservez avec vos PPC !
@@ -120,7 +121,7 @@
                 </div>
             </div>
 
-            <div class="col-span-7 flex flex-col min-h-0">
+            <div class="col-span-1 lg:col-span-7 flex flex-col min-h-0">
                 <h3 class="text-xl font-black text-slate-900 uppercase tracking-tight mb-6 shrink-0">Méthode de paiement</h3>
                 
                 <div class="flex-1 overflow-y-auto pr-4 space-y-4 custom-scrollbar pb-6">

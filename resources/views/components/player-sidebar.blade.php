@@ -70,7 +70,7 @@
         <a href="{{ route('profile') }}" class="group block bg-slate-800/50 rounded-[1.5rem] p-4 flex items-center gap-3 shadow-xl border border-white/5 hover:bg-emerald-600 transition-all duration-500">
             <div class="w-10 h-10 rounded-xl bg-emerald-500 group-hover:bg-white group-hover:text-emerald-600 flex items-center justify-center font-black text-white text-xs shadow-lg transition-colors overflow-hidden">
                 @if(Auth::user()->profile_image)
-                    <img src="{{ asset('storage/' . Auth::user()->profile_image) }}" class="w-full h-full object-cover">
+                    <img src="{{ str_contains(Auth::user()->profile_image, 'http') ? Auth::user()->profile_image : asset('storage/' . Auth::user()->profile_image) }}" class="w-full h-full object-cover">
                 @else
                     {{ strtoupper(substr(Auth::user()->name, 0, 2)) }} 
                 @endif

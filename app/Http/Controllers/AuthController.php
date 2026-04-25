@@ -62,9 +62,10 @@ class AuthController extends Controller
             'password' => 'required',
         ]);
 
-        // 2. Tentative de connexion (Auth::attempt gère tout seul la vérification du mot de passe)
-        if (Auth::attempt($credentials)) {
-            $request->session()->regenerate(); // Régénère la session pour éviter les failles de sécurité (Fixation de session)
+        // 2. Tentative de connexion
+        $remember = $request->has('remember');
+        if (Auth::attempt($credentials, $remember)) {
+            $request->session()->regenerate(); 
 
             return redirect()->route('home')->with('success', 'Connexion réussie ! Bon retour parmis nous, ' . Auth::user()->name . '');
         }

@@ -253,7 +253,7 @@
                 <div class="w-full lg:flex-1 flex items-center gap-5">
                     <div class="w-14 h-14 lg:w-16 lg:h-16 rounded-[1.5rem] lg:rounded-[1.8rem] bg-slate-900 border-4 border-white shadow-xl flex items-center justify-center text-white font-[900] text-lg lg:text-xl overflow-hidden shrink-0">
                         @if($reservation->user->profile_image)
-                            <img src="{{ asset('storage/' . $reservation->user->profile_image) }}" class="w-full h-full object-cover">
+                            <img src="{{ str_contains($reservation->user->profile_image, 'http') ? $reservation->user->profile_image : asset('storage/' . $reservation->user->profile_image) }}" class="w-full h-full object-cover">
                         @else
                             {{ strtoupper(substr($reservation->user->name, 0, 2)) }}
                         @endif

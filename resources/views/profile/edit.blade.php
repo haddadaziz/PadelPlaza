@@ -9,6 +9,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
         body { font-family: 'Inter', sans-serif; background-color: #F8FAFC; }
+        @media (min-width: 1024px) { body { overflow: hidden; } }
         .locked-input { background-color: #F1F5F9; cursor: not-allowed; border-color: transparent !important; }
     </style>
 </head>
@@ -20,7 +21,7 @@
         @include('components.player-sidebar')
     @endif
 
-    <main class="flex-1 lg:ml-64 p-6 lg:p-10 mt-16 lg:mt-0">
+    <main class="flex-1 lg:ml-64 p-6 lg:p-10 mt-16 lg:mt-0 lg:h-screen lg:overflow-hidden">
         <div class="mb-10">
             <nav class="flex text-slate-400 text-[10px] font-black uppercase tracking-widest mb-4 gap-2">
                 <a href="{{ route('home') }}" class="hover:text-emerald-500 transition-colors">Accueil</a>
@@ -41,7 +42,7 @@
                     @method('PATCH')
                     <div class="w-32 h-32 rounded-[2.5rem] bg-emerald-500 overflow-hidden shadow-2xl border-4 border-slate-800 relative transition-transform group-hover:scale-105 duration-500">
                         @if(Auth::user()->profile_image)
-                            <img src="{{ asset('storage/' . Auth::user()->profile_image) }}" class="w-full h-full object-cover">
+                            <img src="{{ str_contains(Auth::user()->profile_image, 'http') ? Auth::user()->profile_image : asset('storage/' . Auth::user()->profile_image) }}" class="w-full h-full object-cover">
                         @else
                             <div class="w-full h-full flex items-center justify-center text-white text-4xl font-black">
                                 {{ strtoupper(substr(Auth::user()->name, 0, 2)) }}

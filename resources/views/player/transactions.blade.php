@@ -8,7 +8,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
-        body { font-family: 'Inter', sans-serif; background-color: #F8FAFC; overflow: hidden; }
+        body { font-family: 'Inter', sans-serif; background-color: #F8FAFC; }
+        @media (min-width: 1024px) { body { overflow: hidden; } }
         .custom-scrollbar::-webkit-scrollbar { width: 4px; }
         .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: #E2E8F0; border-radius: 10px; }
@@ -45,16 +46,16 @@
 
     @include('components.player-sidebar')
 
-    <main class="flex-1 lg:ml-64 p-6 lg:p-8 mt-16 lg:mt-0 min-h-screen flex flex-col lg:overflow-hidden">
+    <main class="flex-1 lg:ml-64 p-6 lg:p-8 mt-16 lg:mt-0 min-h-screen flex flex-col lg:h-screen lg:overflow-hidden">
         
-        <div class="flex justify-between items-end mb-8 shrink-0">
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-8 shrink-0 gap-6">
             <div>
-                <h2 class="text-3xl font-[900] text-slate-900 tracking-tight uppercase">Flux <span class="text-emerald-500">Financier</span></h2>
+                <h2 class="text-3xl font-[900] text-slate-900 tracking-tight uppercase leading-none">Flux <span class="text-emerald-500">Financier</span></h2>
                 
-                <form action="{{ route('player.transactions') }}" method="GET" class="flex items-center gap-3 mt-6">
+                <form action="{{ route('player.transactions') }}" method="GET" class="flex flex-wrap items-center gap-3 mt-6">
                     {{-- Type --}}
-                    <div class="dark-select-wrap">
-                        <select name="type" onchange="this.form.submit()" class="dark-select">
+                    <div class="dark-select-wrap w-full sm:w-auto">
+                        <select name="type" onchange="this.form.submit()" class="dark-select w-full sm:w-auto">
                             <option value="">Tous les types</option>
                             <option value="reservation" {{ request('type') == 'reservation' ? 'selected' : '' }}>Réservations</option>
                             <option value="recharge" {{ request('type') == 'recharge' ? 'selected' : '' }}>Recharges</option>
@@ -64,8 +65,8 @@
                     </div>
 
                     {{-- Mois --}}
-                    <div class="dark-select-wrap">
-                        <select name="month" onchange="this.form.submit()" class="dark-select" style="min-width: 110px;">
+                    <div class="dark-select-wrap w-full sm:w-auto">
+                        <select name="month" onchange="this.form.submit()" class="dark-select w-full sm:w-auto" style="min-width: 110px;">
                             <option value="">Tous les mois</option>
                             @foreach(range(1, 12) as $m)
                                 <option value="{{ $m }}" {{ request('month') == $m ? 'selected' : '' }}>
@@ -77,8 +78,8 @@
                     </div>
 
                     {{-- Année --}}
-                    <div class="dark-select-wrap">
-                        <select name="year" onchange="this.form.submit()" class="dark-select" style="min-width: 90px;">
+                    <div class="dark-select-wrap w-full sm:w-auto">
+                        <select name="year" onchange="this.form.submit()" class="dark-select w-full sm:w-auto" style="min-width: 90px;">
                             <option value="">Années</option>
                             @foreach(range(date('Y'), date('Y')-2) as $y)
                                 <option value="{{ $y }}" {{ request('year') == $y ? 'selected' : '' }}>{{ $y }}</option>
@@ -94,15 +95,15 @@
                 </form>
             </div>
             
-            <div class="bg-slate-900 px-6 py-4 rounded-[2rem] shadow-xl border border-slate-800">
+            <div class="bg-slate-900 px-6 py-4 rounded-[2rem] shadow-xl border border-slate-800 w-full md:w-auto">
                 <p class="text-[9px] font-black text-emerald-500 uppercase tracking-[0.2em] mb-1 text-center">Ton Solde</p>
-                <p class="text-2xl font-[900] text-white leading-none">{{ Auth::user()->coins_balance }} <span class="text-xs text-slate-500">PC</span></p>
+                <p class="text-2xl font-[900] text-white leading-none text-center">{{ Auth::user()->coins_balance }} <span class="text-xs text-slate-500">PC</span></p>
             </div>
         </div>
 
 
         <div class="bg-white rounded-[3rem] border border-slate-100 shadow-sm flex-1 flex flex-col min-h-0 overflow-hidden">
-            <div class="grid grid-cols-12 px-8 py-6 border-b border-slate-50 text-[10px] font-black text-slate-400 uppercase tracking-widest shrink-0">
+            <div class="hidden lg:grid grid-cols-12 px-8 py-6 border-b border-slate-50 text-[10px] font-black text-slate-400 uppercase tracking-widest shrink-0">
                 <div class="col-span-5">Détails de l'opération</div>
                 <div class="col-span-3 text-center">Date & Heure</div>
                 <div class="col-span-2 text-center">Catégorie</div>
@@ -111,9 +112,9 @@
 
             <div class="flex-1 overflow-y-auto custom-scrollbar">
                 @forelse($transactions as $transaction)
-                <div class="grid grid-cols-12 px-8 py-5 items-center hover:bg-slate-50 transition-all border-b border-slate-50 group">
+                <div class="flex flex-col lg:grid lg:grid-cols-12 px-6 lg:px-8 py-5 items-center hover:bg-slate-50 transition-all border-b border-slate-50 group gap-4 lg:gap-0">
                     
-                    <div class="col-span-5 flex items-center gap-4">
+                    <div class="w-full lg:col-span-5 flex items-center gap-4">
                         <div class="w-11 h-11 rounded-2xl flex items-center justify-center text-sm shadow-sm transition-transform group-hover:scale-110 
                             {{ $transaction->amount > 0 ? ($transaction->type == 'cashback' ? 'bg-amber-50 text-amber-500' : 'bg-emerald-50 text-emerald-500') : 'bg-slate-100 text-slate-400' }}">
                             <i class="fas {{ $transaction->amount > 0 ? ($transaction->type == 'cashback' ? 'fa-gift' : 'fa-plus-circle') : 'fa-table-tennis-paddle-ball' }}"></i>
@@ -148,7 +149,8 @@
                         </div>
                     </div>
 
-                    <div class="col-span-3 text-center">
+                    <div class="w-full lg:col-span-3 flex justify-between lg:justify-center items-center">
+                        <span class="lg:hidden text-[9px] font-black text-slate-400 uppercase tracking-widest">Date</span>
                         <p class="text-xs font-black text-slate-600 uppercase leading-none">{{ $transaction->created_at->format('d M Y') }}</p>
 <p class="text-[9px] text-slate-300 font-bold mt-1 uppercase">
     @if(str_contains($transaction->type, 'recharge'))
@@ -161,7 +163,8 @@
 </p>
                     </div>
 
-                    <div class="col-span-2 flex justify-center">
+                    <div class="w-full lg:col-span-2 flex justify-between lg:justify-center items-center">
+                        <span class="lg:hidden text-[9px] font-black text-slate-400 uppercase tracking-widest">Type</span>
                         <span class="px-4 py-1.5 rounded-full text-[8px] font-black uppercase tracking-widest
                             {{ $transaction->amount > 0 ? ($transaction->type == 'cashback' ? 'bg-amber-500/10 text-amber-600' : 'bg-emerald-500/10 text-emerald-600') : 'bg-slate-100 text-slate-500' }}">
                             @if(str_contains($transaction->type, 'recharge')) RECHARGE
@@ -170,7 +173,8 @@
                         </span>
                     </div>
 
-                    <div class="col-span-2 text-right pr-4">
+                    <div class="w-full lg:col-span-2 flex justify-between lg:justify-end items-center lg:pr-4">
+                        <span class="lg:hidden text-[9px] font-black text-slate-400 uppercase tracking-widest">Montant</span>
                         <p class="text-base font-[900] leading-none {{ $transaction->amount > 0 ? ($transaction->type == 'cashback' ? 'text-amber-500' : 'text-emerald-500') : 'text-slate-900' }}">
                             {{ $transaction->amount > 0 ? '+' : '' }}{{ $transaction->amount }} <span class="text-[10px]">PC</span>
                         </p>

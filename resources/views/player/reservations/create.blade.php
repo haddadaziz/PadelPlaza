@@ -8,7 +8,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
-        body { font-family: 'Inter', sans-serif; background-color: #F8FAFC; overflow: hidden; }
+        body { font-family: 'Inter', sans-serif; background-color: #F8FAFC; }
+        @media (min-width: 1024px) { body { overflow: hidden; } }
         .slot-checkbox:checked + label { background-color: #10B981; color: white; border-color: #10B981; transform: scale(1.05); box-shadow: 0 10px 15px -3px rgba(16, 185, 129, 0.2); }
         .custom-scrollbar::-webkit-scrollbar { width: 4px; }
         .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
@@ -24,44 +25,44 @@
 
     @include('components.player-sidebar')
 
-    <main class="flex-1 lg:ml-64 p-6 lg:p-8 mt-16 lg:mt-0 min-h-screen flex flex-col lg:overflow-hidden">
+    <main class="flex-1 lg:ml-64 p-6 lg:p-8 mt-16 lg:mt-0 min-h-screen flex flex-col lg:h-screen lg:overflow-hidden">
         
-        <div class="flex items-center gap-4 mb-8 shrink-0">
+        <div class="flex flex-wrap items-center gap-y-4 gap-x-6 mb-8 shrink-0">
             <div class="flex items-center gap-2">
-                <span class="w-8 h-8 rounded-full bg-emerald-500 text-white flex items-center justify-center text-[10px] font-black">01</span>
-                <span class="text-[10px] font-black uppercase tracking-widest text-slate-900">Terrain & Heure</span>
+                <span class="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-emerald-500 text-white flex items-center justify-center text-[10px] font-black">01</span>
+                <span class="text-[9px] sm:text-[10px] font-black uppercase tracking-widest text-slate-900">Terrain & Heure</span>
             </div>
-            <div class="h-px w-12 bg-slate-200"></div>
+            <div class="hidden sm:block h-px w-8 lg:w-12 bg-slate-200"></div>
             <div class="flex items-center gap-2 opacity-30">
-                <span class="w-8 h-8 rounded-full bg-slate-200 text-slate-500 flex items-center justify-center text-[10px] font-black">02</span>
-                <span class="text-[10px] font-black uppercase tracking-widest text-slate-500">Options</span>
+                <span class="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-slate-200 text-slate-500 flex items-center justify-center text-[10px] font-black">02</span>
+                <span class="text-[9px] sm:text-[10px] font-black uppercase tracking-widest text-slate-500">Options</span>
             </div>
-            <div class="h-px w-12 bg-slate-200"></div>
+            <div class="hidden sm:block h-px w-8 lg:w-12 bg-slate-200"></div>
             <div class="flex items-center gap-2 opacity-30">
-                <span class="w-8 h-8 rounded-full bg-slate-200 text-slate-500 flex items-center justify-center text-[10px] font-black">03</span>
-                <span class="text-[10px] font-black uppercase tracking-widest text-slate-500">Paiement</span>
+                <span class="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-slate-200 text-slate-500 flex items-center justify-center text-[10px] font-black">03</span>
+                <span class="text-[9px] sm:text-[10px] font-black uppercase tracking-widest text-slate-500">Paiement</span>
             </div>
         </div>
 
-        <form action="{{ route('player.reservations.options') }}" method="GET" class="grid grid-cols-12 gap-8 flex-1 overflow-hidden min-h-0">
+        <form action="{{ route('player.reservations.options') }}" method="GET" class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:flex-1 lg:overflow-hidden min-h-0">
             
-            <div class="col-span-7 flex flex-col min-h-0">
+            <div class="col-span-1 lg:col-span-7 flex flex-col min-h-0">
                 <h3 class="text-xl font-black text-slate-900 uppercase tracking-tight mb-6 shrink-0">Choisissez votre Court</h3>
                 
-                <div class="flex-1 overflow-y-auto pr-4 space-y-4 pb-6 custom-scrollbar">
+                <div class="lg:flex-1 lg:overflow-y-auto pr-4 space-y-4 pb-6 custom-scrollbar">
 @foreach($courts as $court)
 <label class="relative block {{ $court->is_active ? 'cursor-pointer' : 'cursor-not-allowed opacity-60' }} group">
     <input type="radio" name="court_id" value="{{ $court->id }}" class="peer sr-only court-radio" required {{ !$court->is_active ? 'disabled' : '' }}>
     
-    <div class="bg-white p-6 rounded-[2.5rem] border-2 border-transparent {{ $court->is_active ? 'peer-checked:border-emerald-500 peer-checked:bg-emerald-50/30' : 'bg-slate-50' }} transition-all flex items-center gap-6 shadow-sm hover:shadow-md">
-        <div class="w-28 h-28 rounded-3xl bg-slate-100 overflow-hidden shrink-0">
+    <div class="bg-white p-4 sm:p-6 rounded-[2.5rem] border-2 border-transparent {{ $court->is_active ? 'peer-checked:border-emerald-500 peer-checked:bg-emerald-50/30' : 'bg-slate-50' }} transition-all flex items-center gap-4 sm:gap-6 shadow-sm hover:shadow-md">
+        <div class="w-20 h-20 sm:w-28 sm:h-28 rounded-2xl sm:rounded-3xl bg-slate-100 overflow-hidden shrink-0">
             <img src="{{ asset('storage/'.$court->image) }}" class="w-full h-full object-cover transition-all {{ !$court->is_active ? 'grayscale' : '' }}">
         </div>
         
         <div class="flex-1">
             <div class="flex justify-between items-start">
                 <div>
-                    <h4 class="text-lg font-black text-slate-900 uppercase tracking-tight leading-tight">{{ $court->name }}</h4>
+                    <h4 class="text-base sm:text-lg font-black text-slate-900 uppercase tracking-tight leading-tight">{{ $court->name }}</h4>
                     <div class="flex items-center gap-2 mt-1">
                         <span class="text-[9px] font-black {{ $court->is_active ? 'text-emerald-500' : 'text-red-500' }} uppercase tracking-widest">
                             {{ $court->is_active ? '● Disponible' : '● En Maintenance' }}
@@ -69,8 +70,8 @@
                     </div>
                 </div>
                 <div class="text-right">
-                    <p class="text-xl font-[900] text-emerald-500 leading-none">{{ $court->price_coins }} <span class="text-[10px]">PC</span></p>
-                    <p class="text-[8px] font-bold text-slate-300 uppercase tracking-widest mt-1">/ Heure</p>
+                    <p class="text-lg sm:text-xl font-[900] text-emerald-500 leading-none">{{ $court->price_coins }} <span class="text-[10px]">PC</span></p>
+                    <p class="text-[7px] sm:text-[8px] font-bold text-slate-300 uppercase tracking-widest mt-1">/ Heure</p>
                 </div>
             </div>
         </div>
@@ -91,7 +92,7 @@
                 </div>
             </div>
 
-            <div class="col-span-5 flex flex-col gap-6 min-h-0">
+            <div class="col-span-1 lg:col-span-5 flex flex-col gap-6 min-h-0">
                 <div class="bg-white p-6 rounded-[2.5rem] border border-slate-100 shadow-sm shrink-0">
                     <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-3 block">Date du match</label>
                     <input type="date" name="date" class="w-full bg-slate-50 border-none rounded-2xl px-6 py-3.5 font-black text-slate-900 focus:ring-2 focus:ring-emerald-500 transition-all">
@@ -112,7 +113,7 @@
                         </button>
                     </div>
 
-                    <div id="time-slots-container" class="flex-1 overflow-y-auto pr-2 pb-4 grid grid-cols-2 gap-3 custom-scrollbar">
+                    <div id="time-slots-container" class="lg:flex-1 lg:overflow-y-auto pr-2 pb-4 grid grid-cols-2 gap-3 custom-scrollbar min-h-[200px]">
                         <div class="col-span-2 text-center py-10">
                             <p class="text-[10px] font-bold text-slate-400">Veuillez choisir un terrain et une date.</p>
                         </div>

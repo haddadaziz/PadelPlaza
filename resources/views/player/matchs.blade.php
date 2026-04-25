@@ -9,7 +9,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
-        body { font-family: 'Inter', sans-serif; background-color: #F8FAFC; overflow: hidden; }
+        body { font-family: 'Inter', sans-serif; background-color: #F8FAFC; }
+        @media (min-width: 1024px) { body { overflow: hidden; } }
         .custom-scrollbar::-webkit-scrollbar { width: 4px; }
         .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: #E2E8F0; border-radius: 10px; }
@@ -57,20 +58,20 @@
 
     @include('components.player-sidebar')
 
-    <main class="flex-1 lg:ml-64 p-6 lg:p-8 mt-16 lg:mt-0 min-h-screen flex flex-col lg:overflow-hidden">
+    <main class="flex-1 lg:ml-64 p-6 lg:p-8 mt-16 lg:mt-0 min-h-screen flex flex-col lg:h-screen lg:overflow-hidden">
         
-        <div class="flex justify-between items-end mb-8 shrink-0">
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-end mb-8 shrink-0 gap-6">
             <div>
-                <h2 class="text-3xl font-[900] text-slate-900 tracking-tight uppercase">Arena <span class="text-emerald-500">Timeline</span></h2>
+                <h2 class="text-3xl font-[900] text-slate-900 tracking-tight uppercase leading-none">Arena <span class="text-emerald-500">Timeline</span></h2>
                 <p class="text-slate-400 font-bold text-sm mt-1">Vos prochains rendez-vous et votre historique de performance.</p>
             </div>
             
-            <div class="bg-slate-900 px-6 py-4 rounded-[2rem] shadow-xl border border-slate-800 flex items-center gap-4">
-                <div class="text-center border-r border-slate-700 pr-4">
+            <div class="bg-slate-900 px-6 py-4 rounded-[2rem] shadow-xl border border-slate-800 flex items-center gap-4 w-full sm:w-auto">
+                <div class="text-center border-r border-slate-700 pr-4 flex-1 sm:flex-none">
                     <p class="text-[8px] font-black text-emerald-500 uppercase tracking-widest mb-1">Total XP</p>
                     <p class="text-xl font-[900] text-white leading-none">{{ Auth::user()->xp_points }}</p>
                 </div>
-                <div>
+                <div class="flex-1 sm:flex-none">
                     <p class="text-[8px] font-black text-slate-500 uppercase tracking-widest mb-1">Niveau Actuel</p>
                     <p class="text-lg font-[900] text-white leading-none">{{ Auth::user()->level->level_name ?? 'ROOKIE' }}</p>
                 </div>
@@ -101,15 +102,16 @@
                             </div>
                         </div>
                         
-                        <div class="flex justify-between items-center pt-4 border-t border-slate-100">
+                        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 pt-4 border-t border-slate-100">
                             <div class="flex -space-x-2">
                                 @if(Auth::user()->profile_image)
-                                    <img src="{{ asset('storage/' . Auth::user()->profile_image) }}" class="w-7 h-7 rounded-full border-2 border-white object-cover shadow-sm">
+                                    <img src="{{ str_contains(Auth::user()->profile_image, 'http') ? Auth::user()->profile_image : asset('storage/' . Auth::user()->profile_image) }}" class="w-7 h-7 rounded-full border-2 border-white object-cover shadow-sm">
                                 @else
                                     <img src="https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->name) }}&background=0F172A&color=fff" class="w-7 h-7 rounded-full border-2 border-white object-cover">
                                 @endif
                                 <div class="w-7 h-7 rounded-full border-2 border-white bg-slate-200 flex items-center justify-center text-[8px] text-slate-400 font-black" title="En attente d'adversaires">?</div>
                             </div>
+                            <span class="text-[8px] font-black text-emerald-500 bg-emerald-50 px-3 py-1 rounded-full uppercase tracking-widest">Match à venir</span>
                         </div>
                     </div>
                     @empty
@@ -124,16 +126,23 @@
             </div>
 
             <div class="flex-1 flex flex-col min-h-0">
-                <div class="flex items-center justify-between mb-4 px-4">
-                    <div class="flex items-center gap-3">
-                        <div class="w-2 h-2 bg-slate-300 rounded-full"></div>
-                        <h3 class="text-[11px] font-black text-slate-400 uppercase tracking-[0.3em]">Historique</h3>
+                <div class="flex flex-col gap-4 mb-4 px-4">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <div class="w-2 h-2 bg-slate-300 rounded-full"></div>
+                            <h3 class="text-[11px] font-black text-slate-400 uppercase tracking-[0.3em]">Historique</h3>
+                        </div>
+                        
+                        {{-- Réinitialiser (Visible seulement sur desktop ici) --}}
+                        <a href="{{ route('player.matchs') }}" class="hidden lg:flex w-10 h-10 bg-slate-900 border border-slate-800 text-emerald-500 rounded-xl items-center justify-center hover:bg-emerald-500 hover:text-white transition-all shadow-lg active:scale-90" title="Réinitialiser les filtres">
+                            <i class="fas fa-undo-alt text-xs"></i>
+                        </a>
                     </div>
  
-                    <form action="{{ route('player.matchs') }}" method="GET" class="flex flex-wrap items-center gap-2">
+                    <form action="{{ route('player.matchs') }}" method="GET" class="grid grid-cols-2 sm:flex sm:flex-wrap items-center gap-2 w-full">
                         {{-- Mois --}}
-                        <div class="dark-select-wrap">
-                            <select name="month" onchange="this.form.submit()" class="dark-select" style="min-width: 110px;">
+                        <div class="dark-select-wrap col-span-1">
+                            <select name="month" onchange="this.form.submit()" class="dark-select w-full" style="min-width: 110px;">
                                 <option value="">Mois</option>
                                 @foreach(range(1, 12) as $m)
                                     <option value="{{ $m }}" {{ request('month') == $m ? 'selected' : '' }}>
@@ -145,8 +154,8 @@
                         </div>
 
                         {{-- Année --}}
-                        <div class="dark-select-wrap">
-                            <select name="year" onchange="this.form.submit()" class="dark-select" style="min-width: 80px;">
+                        <div class="dark-select-wrap col-span-1">
+                            <select name="year" onchange="this.form.submit()" class="dark-select w-full" style="min-width: 80px;">
                                 <option value="">Années</option>
                                 @foreach(range(date('Y'), date('Y')-2) as $y)
                                     <option value="{{ $y }}" {{ request('year') == $y ? 'selected' : '' }}>{{ $y }}</option>
@@ -156,17 +165,17 @@
                         </div>
 
                         {{-- Tri --}}
-                        <div class="dark-select-wrap">
-                            <select name="sort" onchange="this.form.submit()" class="dark-select" style="min-width: 120px;">
+                        <div class="dark-select-wrap col-span-2 sm:col-span-1">
+                            <select name="sort" onchange="this.form.submit()" class="dark-select w-full" style="min-width: 120px;">
                                 <option value="desc" {{ request('sort') == 'desc' ? 'selected' : '' }}>+ Récent</option>
                                 <option value="asc" {{ request('sort') == 'asc' ? 'selected' : '' }}>+ Ancien</option>
                             </select>
                             <i class="fas fa-chevron-down icon-chevron"></i>
                         </div>
 
-                        {{-- Réinitialiser --}}
-                        <a href="{{ route('player.matchs') }}" class="w-10 h-10 bg-slate-900 border border-slate-800 text-emerald-500 rounded-xl flex items-center justify-center hover:bg-emerald-500 hover:text-white transition-all shadow-lg active:scale-90" title="Réinitialiser les filtres">
-                            <i class="fas fa-undo-alt text-xs"></i>
+                        {{-- Reset (Mobile only full width) --}}
+                        <a href="{{ route('player.matchs') }}" class="lg:hidden col-span-2 bg-slate-900 border border-slate-800 text-emerald-500 rounded-xl flex items-center justify-center py-3 hover:bg-emerald-500 hover:text-white transition-all shadow-lg active:scale-95" title="Réinitialiser">
+                            <i class="fas fa-undo-alt text-xs mr-2"></i> Réinitialiser les filtres
                         </a>
                     </form>
                 </div>
@@ -176,19 +185,19 @@
                         <div class="space-y-4">
                             @forelse($pastMatches as $match)
 <div id="match-{{ $match->id }}"
-     class="flex items-center gap-6 p-5 rounded-[2rem] transition-all duration-500 group border-2
+     class="flex flex-col sm:flex-row items-center gap-4 sm:gap-6 p-5 rounded-[2.5rem] transition-all duration-500 group border-2
         {{ $match->result === 'win' ? 'bg-emerald-50 border-emerald-200' : ($match->result === 'loss' ? 'bg-red-50 border-red-200' : 'bg-transparent border-transparent hover:bg-slate-50') }}">
 
     {{-- Date --}}
-    <div class="text-center min-w-[50px]">
-        <p class="text-[10px] font-black text-slate-300 uppercase leading-none mb-1">{{ \Carbon\Carbon::parse($match->start_time)->format('d') }}</p>
-        <p class="text-[8px] font-bold text-slate-400 uppercase tracking-tight">{{ \Carbon\Carbon::parse($match->start_time)->translatedFormat('M') }}</p>
-        <p class="text-[8px] font-bold text-emerald-500 uppercase tracking-tight mt-1">{{ \Carbon\Carbon::parse($match->start_time)->format('H:i') }}</p>
+    <div class="text-center min-w-[50px] flex sm:flex-col items-center gap-2 sm:gap-0">
+        <p class="text-[11px] sm:text-[10px] font-black text-slate-300 uppercase leading-none mb-1">{{ \Carbon\Carbon::parse($match->start_time)->format('d') }}</p>
+        <p class="text-[9px] sm:text-[8px] font-bold text-slate-400 uppercase tracking-tight">{{ \Carbon\Carbon::parse($match->start_time)->translatedFormat('M') }}</p>
+        <p class="text-[9px] sm:text-[8px] font-bold text-emerald-500 uppercase tracking-tight sm:mt-1">{{ \Carbon\Carbon::parse($match->start_time)->format('H:i') }}</p>
     </div>
 
     {{-- Infos --}}
-    <div class="flex-1">
-        <p class="text-sm font-black text-slate-900 uppercase tracking-tight leading-none mb-1 group-hover:text-emerald-600 transition-colors">{{ $match->court->name }}</p>
+    <div class="flex-1 text-center sm:text-left">
+        <p class="text-base sm:text-sm font-black text-slate-900 uppercase tracking-tight leading-none mb-1 group-hover:text-emerald-600 transition-colors">{{ $match->court->name }}</p>
         <p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest">{{ $match->total_price }} PC — {{ \Carbon\Carbon::parse($match->start_time)->format('H:i') }}</p>
     </div>
 
@@ -196,16 +205,16 @@
     <p class="text-[10px] font-black text-emerald-500 uppercase tracking-widest">+{{ $match->total_price }} XP</p>
 
     {{-- Toggle Victoire / Défaite --}}
-    <div class="flex flex-col gap-1.5">
+    <div class="flex flex-row sm:flex-col gap-1.5 w-full sm:w-auto">
         <button onclick="setResult({{ $match->id }}, 'win')" id="win-{{ $match->id }}"
-            class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-[9px] font-black uppercase transition-all
+            class="flex-1 flex items-center justify-center gap-1.5 px-4 sm:px-3 py-2.5 sm:py-1.5 rounded-xl text-[9px] font-black uppercase transition-all
                 {{ $match->result === 'win' ? 'bg-emerald-500 text-white shadow-lg shadow-emerald-200' : 'bg-slate-100 text-slate-400 hover:bg-emerald-100 hover:text-emerald-600' }}">
-            <i class="fas fa-trophy text-[8px]"></i> Victoire
+            <i class="fas fa-trophy text-[8px]"></i> <span class="sm:inline">Victoire</span>
         </button>
         <button onclick="setResult({{ $match->id }}, 'loss')" id="loss-{{ $match->id }}"
-            class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-[9px] font-black uppercase transition-all
+            class="flex-1 flex items-center justify-center gap-1.5 px-4 sm:px-3 py-2.5 sm:py-1.5 rounded-xl text-[9px] font-black uppercase transition-all
                 {{ $match->result === 'loss' ? 'bg-red-500 text-white shadow-lg shadow-red-200' : 'bg-slate-100 text-slate-400 hover:bg-red-100 hover:text-red-500' }}">
-            <i class="fas fa-times text-[8px]"></i> Défaite
+            <i class="fas fa-times text-[8px]"></i> <span class="sm:inline">Défaite</span>
         </button>
     </div>
 </div>
@@ -280,7 +289,7 @@ function setResult(matchId, result) {
 
         // 2. Mise à jour de la couleur de la ligne (Match Card)
         const matchDiv = document.getElementById(`match-${matchId}`);
-        matchDiv.className = "flex items-center gap-6 p-5 rounded-[2rem] transition-all duration-500 group border-2";
+        matchDiv.className = "flex flex-col sm:flex-row items-center gap-4 sm:gap-6 p-5 rounded-[2.5rem] transition-all duration-500 group border-2";
         
         if (data.result === 'win') {
             matchDiv.classList.add('bg-emerald-50', 'border-emerald-200');
@@ -292,11 +301,11 @@ function setResult(matchId, result) {
 
         // 3. Mise à jour du bouton Victoire
         const winBtn = document.getElementById(`win-${matchId}`);
-        winBtn.className = `flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-[9px] font-black uppercase transition-all ${data.result === 'win' ? 'bg-emerald-500 text-white shadow-lg shadow-emerald-200' : 'bg-slate-100 text-slate-400 hover:bg-emerald-100 hover:text-emerald-600'}`;
+        winBtn.className = `flex-1 flex items-center justify-center gap-1.5 px-4 sm:px-3 py-2.5 sm:py-1.5 rounded-xl text-[9px] font-black uppercase transition-all ${data.result === 'win' ? 'bg-emerald-500 text-white shadow-lg shadow-emerald-200' : 'bg-slate-100 text-slate-400 hover:bg-emerald-100 hover:text-emerald-600'}`;
 
         // 4. Mise à jour du bouton Défaite
         const lossBtn = document.getElementById(`loss-${matchId}`);
-        lossBtn.className = `flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-[9px] font-black uppercase transition-all ${data.result === 'loss' ? 'bg-red-500 text-white shadow-lg shadow-red-200' : 'bg-slate-100 text-slate-400 hover:bg-red-100 hover:text-red-500'}`;
+        lossBtn.className = `flex-1 flex items-center justify-center gap-1.5 px-4 sm:px-3 py-2.5 sm:py-1.5 rounded-xl text-[9px] font-black uppercase transition-all ${data.result === 'loss' ? 'bg-red-500 text-white shadow-lg shadow-red-200' : 'bg-slate-100 text-slate-400 hover:bg-red-100 hover:text-red-500'}`;
     });
 }
 </script>

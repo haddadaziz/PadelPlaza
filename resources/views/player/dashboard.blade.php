@@ -27,7 +27,7 @@
 
 <main class="flex-1 lg:ml-64 p-6 lg:p-8 mt-16 lg:mt-0 min-h-screen flex flex-col lg:overflow-hidden">
     
-    <div class="flex justify-between items-center mb-8 shrink-0">
+    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 shrink-0 gap-6">
         <div>
             <h2 class="text-3xl font-[900] text-slate-900 tracking-tight uppercase leading-none">Mon Arena</h2>
             <p class="text-[10px] text-slate-400 font-black uppercase tracking-[0.3em] mt-2">
@@ -35,8 +35,8 @@
             </p>
         </div>
 
-        <div class="flex items-center gap-4 bg-white p-3 pr-8 rounded-[2rem] border border-slate-100 shadow-sm">
-            <div class="w-12 h-12 bg-slate-900 rounded-2xl flex items-center justify-center text-emerald-400 font-black text-lg shadow-lg overflow-hidden border border-emerald-500/30">
+        <div class="flex items-center gap-4 bg-white p-3 pr-8 rounded-[2rem] border border-slate-100 shadow-sm w-full sm:w-auto">
+            <div class="w-12 h-12 bg-slate-900 rounded-2xl flex items-center justify-center text-emerald-400 font-black text-lg shadow-lg overflow-hidden border border-emerald-500/30 shrink-0">
                 @if(Auth::user()->level && Auth::user()->level->badge_image)
                     <img src="{{ asset('storage/' . Auth::user()->level->badge_image) }}" alt="Badge" class="w-full h-full object-cover">
                 @else
@@ -45,7 +45,7 @@
             </div>
             <div>
                 <p class="text-[8px] font-black text-slate-400 uppercase tracking-widest">{{ Auth::user()->level->level_name ?? 'MEMBRE'}}</p>
-                <p class="text-sm font-black text-slate-900 uppercase">{{ Auth::user()->name }}</p>
+                <p class="text-sm font-black text-slate-900 uppercase truncate max-w-[150px]">{{ Auth::user()->name }}</p>
             </div>
         </div>
     </div>
@@ -58,19 +58,19 @@
                 <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-5"></div>
                 <div class="absolute top-0 right-0 w-96 h-96 bg-emerald-500/10 rounded-full -mr-20 -mt-20 blur-[100px]"></div>
                 
-                <div class="relative z-10 flex justify-between items-center">
+                <div class="relative z-10 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-8">
                     <div>
                         <p class="text-emerald-500 text-[10px] font-black uppercase tracking-[0.4em] mb-4">PPC Disponible</p>
-                        <h3 class="text-7xl font-[900] text-white tracking-tight leading-none">
-                            {{ Auth::user()->coins_balance }}<span class="text-2xl text-slate-600 ml-3 font-black uppercase">PC</span>
+                        <h3 class="text-5xl sm:text-7xl font-[900] text-white tracking-tight leading-none">
+                            {{ Auth::user()->coins_balance }}<span class="text-xl sm:text-2xl text-slate-600 ml-3 font-black uppercase">PC</span>
                         </h3>
                     </div>
 
-                    <div class="flex flex-col gap-3">
-                        <a href="{{ route('player.reservations.create') }}" class="bg-emerald-500 text-white px-10 py-4 rounded-2xl font-black text-[11px] uppercase tracking-widest hover:bg-white hover:text-emerald-600 transition-all shadow-xl shadow-emerald-500/20 text-center active:scale-95">
+                    <div class="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
+                        <a href="{{ route('player.reservations.create') }}" class="bg-emerald-500 text-white px-10 py-4 rounded-2xl font-black text-[11px] uppercase tracking-widest hover:bg-white hover:text-emerald-600 transition-all shadow-xl shadow-emerald-500/20 text-center active:scale-95 flex-1">
                             Réserver
                         </a>
-                        <a href="{{ route('player.recharge') }}" class="bg-white/5 border border-white/10 text-white px-10 py-4 rounded-2xl font-black text-[11px] uppercase tracking-widest hover:bg-white/10 transition-all text-center">
+                        <a href="{{ route('player.recharge') }}" class="bg-white/5 border border-white/10 text-white px-10 py-4 rounded-2xl font-black text-[11px] uppercase tracking-widest hover:bg-white/10 transition-all text-center flex-1">
                             Recharger
                         </a>
                     </div>
@@ -91,20 +91,20 @@
             <div class="flex items-center justify-between p-6 bg-emerald-50 rounded-[2.5rem] border-2 border-emerald-300 shadow-lg hover:scale-[1.02] hover:shadow-2xl hover:shadow-emerald-500/30 hover:bg-emerald-100 hover:border-emerald-400 transition-all duration-500 group relative overflow-hidden">
                 <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent progress-shine hidden group-hover:block"></div>
                 
-                <div class="flex items-center gap-8 relative z-10">
+                <div class="flex flex-col sm:flex-row items-center gap-6 sm:gap-8 relative z-10 text-center sm:text-left">
                     <!-- Date Dynamique -->
-                    <div class="w-20 h-20 bg-white rounded-3xl flex flex-col items-center justify-center border border-slate-100 shadow-sm group-hover:shadow-emerald-100 transition-all">
-                        <span class="text-[10px] font-black text-slate-300 uppercase">{{ \Carbon\Carbon::parse($nextMatch->start_time)->translatedFormat('M') }}</span>
-                        <span class="text-3xl font-[900] text-slate-900 leading-none">{{ \Carbon\Carbon::parse($nextMatch->start_time)->format('d') }}</span>
+                    <div class="w-16 h-16 sm:w-20 sm:h-20 bg-white rounded-3xl flex flex-col items-center justify-center border border-slate-100 shadow-sm group-hover:shadow-emerald-100 transition-all shrink-0">
+                        <span class="text-[9px] sm:text-[10px] font-black text-slate-300 uppercase">{{ \Carbon\Carbon::parse($nextMatch->start_time)->translatedFormat('M') }}</span>
+                        <span class="text-2xl sm:text-3xl font-[900] text-slate-900 leading-none">{{ \Carbon\Carbon::parse($nextMatch->start_time)->format('d') }}</span>
                     </div>
                     <div>
                         <!-- Nom du terrain -->
-                        <h5 class="font-[900] text-slate-900 uppercase text-xl tracking-tight mb-2">{{ $nextMatch->court->name }}</h5>
-                        <div class="flex items-center gap-4">
+                        <h5 class="font-[900] text-slate-900 uppercase text-lg sm:text-xl tracking-tight mb-2">{{ $nextMatch->court->name }}</h5>
+                        <div class="flex flex-wrap items-center justify-center sm:justify-start gap-4">
                             <!-- Heure Dynamique -->
-                            <p class="text-xs text-slate-400 font-bold uppercase"><i class="far fa-clock text-emerald-500 mr-2"></i> {{ \Carbon\Carbon::parse($nextMatch->start_time)->format('H:i') }} — {{ \Carbon\Carbon::parse($nextMatch->start_time)->addMinutes(60)->format('H:i') }}</p>
-                            <span class="w-1 h-1 bg-slate-200 rounded-full"></span>
-                            <span class="text-[9px] font-black text-emerald-500 uppercase">Confirmé</span>
+                            <p class="text-[10px] sm:text-xs text-slate-400 font-bold uppercase"><i class="far fa-clock text-emerald-500 mr-2"></i> {{ \Carbon\Carbon::parse($nextMatch->start_time)->format('H:i') }} — {{ \Carbon\Carbon::parse($nextMatch->start_time)->addMinutes(60)->format('H:i') }}</p>
+                            <span class="hidden sm:block w-1 h-1 bg-slate-200 rounded-full"></span>
+                            <span class="text-[8px] sm:text-[9px] font-black text-emerald-500 uppercase">Confirmé</span>
                         </div>
                     </div>
                 </div>

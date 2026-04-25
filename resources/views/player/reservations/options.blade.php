@@ -8,7 +8,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
-        body { font-family: 'Inter', sans-serif; background-color: #F8FAFC; overflow: hidden; }
+        body { font-family: 'Inter', sans-serif; background-color: #F8FAFC; }
+        @media (min-width: 1024px) { body { overflow: hidden; } }
         .qty-btn { transition: all 0.2s ease; }
         .qty-btn:active { transform: scale(0.9); }
         .equipment-card:has(input:checked) { border-color: #10B981; background-color: #F0FDF4; }
@@ -18,31 +19,31 @@
 
     @include('components.player-sidebar')
 
-    <main class="flex-1 lg:ml-64 p-6 lg:p-8 mt-16 lg:mt-0 min-h-screen flex flex-col">
+    <main class="flex-1 lg:ml-64 p-6 lg:p-8 mt-16 lg:mt-0 min-h-screen flex flex-col lg:h-screen lg:overflow-hidden">
         
-        <div class="flex items-center gap-4 mb-8">
+        <div class="flex flex-wrap items-center gap-y-4 gap-x-6 mb-8 shrink-0">
             <div class="flex items-center gap-2">
-                <span class="w-8 h-8 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center text-[10px] font-black border border-emerald-200"><i class="fas fa-check"></i></span>
-                <span class="text-[10px] font-black uppercase tracking-widest text-slate-400">Terrain & Heure</span>
+                <span class="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center text-[10px] font-black border border-emerald-200"><i class="fas fa-check"></i></span>
+                <span class="text-[9px] sm:text-[10px] font-black uppercase tracking-widest text-slate-400">Terrain & Heure</span>
             </div>
-            <div class="h-px w-12 bg-emerald-200"></div>
+            <div class="hidden sm:block h-px w-8 lg:w-12 bg-emerald-200"></div>
             <div class="flex items-center gap-2">
-                <span class="w-8 h-8 rounded-full bg-emerald-500 text-white flex items-center justify-center text-[10px] font-black shadow-lg shadow-emerald-200">02</span>
-                <span class="text-[10px] font-black uppercase tracking-widest text-slate-900">Options & Matos</span>
+                <span class="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-emerald-500 text-white flex items-center justify-center text-[10px] font-black shadow-lg shadow-emerald-200">02</span>
+                <span class="text-[9px] sm:text-[10px] font-black uppercase tracking-widest text-slate-900">Options & Matos</span>
             </div>
-            <div class="h-px w-12 bg-slate-200"></div>
+            <div class="hidden sm:block h-px w-8 lg:w-12 bg-slate-200"></div>
             <div class="flex items-center gap-2 opacity-30">
-                <span class="w-8 h-8 rounded-full bg-slate-200 text-slate-500 flex items-center justify-center text-[10px] font-black">03</span>
-                <span class="text-[10px] font-black uppercase tracking-widest text-slate-500">Paiement</span>
+                <span class="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-slate-200 text-slate-500 flex items-center justify-center text-[10px] font-black">03</span>
+                <span class="text-[9px] sm:text-[10px] font-black uppercase tracking-widest text-slate-500">Paiement</span>
             </div>
         </div>
 
-        <form action="{{ route('player.reservations.checkout') }}" method="GET" class="grid grid-cols-12 gap-8 flex-1 overflow-hidden">
+        <form action="{{ route('player.reservations.checkout') }}" method="GET" class="grid grid-cols-1 lg:grid-cols-12 gap-8 flex-1 overflow-y-auto lg:overflow-hidden min-h-0">
             <input type="hidden" name="court_id" value="{{ $court->id }}">
 <input type="hidden" name="date" value="{{ $date }}">
 <input type="hidden" name="time_slot" value="{{ $time_slot }}">
 
-            <div class="col-span-8 space-y-6 overflow-y-auto pr-4 pb-10">
+            <div class="col-span-1 lg:col-span-8 space-y-6 overflow-y-auto lg:pr-4 pb-10">
                 <div class="flex justify-between items-end mb-6">
                     <div>
                         <h3 class="text-2xl font-black text-slate-900 uppercase tracking-tight">Besoin de matériel ?</h3>
@@ -50,11 +51,11 @@
                     </div>
                 </div>
                 
-                <div class="grid grid-cols-2 gap-6">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
                     @foreach($equipments as $item)
                     <div class="bg-white p-6 rounded-[2.5rem] border-2 border-slate-50 shadow-sm hover:shadow-md transition-all group equipment-card">
                         <div class="flex gap-5 items-center">
-                            <div class="w-24 h-24 rounded-3xl bg-slate-50 flex items-center justify-center p-3 shrink-0">
+                            <div class="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl sm:rounded-3xl bg-slate-50 flex items-center justify-center p-3 shrink-0">
                                 <img src="{{ asset('storage/'.$item->image) }}" class="max-h-full object-contain group-hover:scale-110 transition-transform">
                             </div>
                             <div class="flex-1">
@@ -73,7 +74,7 @@
                 </div>
             </div>
 
-            <div class="col-span-4">
+            <div class="col-span-1 lg:col-span-4">
                 <div class="bg-slate-900 rounded-[3rem] p-8 text-white h-full flex flex-col relative overflow-hidden shadow-2xl">
                     <div class="absolute top-0 right-0 w-40 h-40 bg-emerald-500/20 rounded-full -mr-20 -mt-20 blur-3xl"></div>
                     

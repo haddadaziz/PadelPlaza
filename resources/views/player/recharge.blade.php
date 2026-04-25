@@ -8,7 +8,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
-        body { font-family: 'Inter', sans-serif; background-color: #F8FAFC; overflow: hidden; }
+        body { font-family: 'Inter', sans-serif; background-color: #F8FAFC; }
+        @media (min-width: 1024px) { body { overflow: hidden; } }
         
         /* Design des cartes non-sélectionnées */
         .pack-card { 
@@ -45,20 +46,20 @@
 
     @include('components.player-sidebar')
 
-    <main class="flex-1 lg:ml-64 p-6 lg:p-8 mt-16 lg:mt-0 min-h-screen flex flex-col lg:overflow-hidden">
+    <main class="flex-1 lg:ml-64 p-6 lg:p-8 mt-16 lg:mt-0 min-h-screen flex flex-col lg:h-screen lg:overflow-hidden">
         
         <div class="mb-8 shrink-0">
             <h2 class="text-3xl font-[900] text-slate-900 tracking-tight uppercase">Recharger mes Crédits</h2>
             <p class="text-slate-400 font-bold text-sm mt-1">Obtenez des Plaza Coins pour réserver vos terrains instantanément.</p>
         </div>
 
-        <form action="{{ route('player.recharge.process') }}" method="POST" id="recharge-form" class="grid grid-cols-12 gap-10 flex-1 min-h-0">
+        <form action="{{ route('player.recharge.process') }}" method="POST" id="recharge-form" class="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10 flex-1 min-h-0">
             @csrf
             
-            <div class="col-span-7 flex flex-col min-h-0">
+            <div class="col-span-1 lg:col-span-7 flex flex-col min-h-0">
                 <h3 class="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] mb-6 shrink-0">Sélectionnez un Pack de Coins</h3>
                 
-                <div class="grid grid-cols-2 gap-4 overflow-y-auto pr-4 pt-6 pb-10 custom-scrollbar">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 overflow-y-auto pr-4 pt-6 pb-10 custom-scrollbar">
                     
                     <label class="cursor-pointer">
                         <input type="radio" name="amount" value="100" class="peer sr-only" checked onchange="updateTotal(100)">
@@ -101,8 +102,8 @@
                 </div>
             </div>
 
-            <div class="col-span-5 flex flex-col min-h-0">
-                <h3 class="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] mb-6 shrink-0 text-right">Confirmation & Paiement</h3>
+            <div class="col-span-1 lg:col-span-5 flex flex-col min-h-0">
+                <h3 class="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] mb-6 shrink-0 lg:text-right">Confirmation & Paiement</h3>
                 
                 <div class="bg-white rounded-[3rem] border border-slate-100 shadow-sm p-8 flex flex-col flex-1 min-h-0">
                     <div class="bg-slate-900 rounded-[2.5rem] p-8 mb-8 text-center relative overflow-hidden group">
