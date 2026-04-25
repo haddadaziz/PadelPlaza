@@ -45,7 +45,7 @@
 
     @include('components.player-sidebar')
 
-    <main class="flex-1 ml-64 p-8 h-screen flex flex-col overflow-hidden">
+    <main class="flex-1 lg:ml-64 p-6 lg:p-8 mt-16 lg:mt-0 min-h-screen flex flex-col lg:overflow-hidden">
         
         <div class="flex justify-between items-end mb-8 shrink-0">
             <div>

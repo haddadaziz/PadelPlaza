@@ -16,14 +16,14 @@
 
     @include('components.admin-sidebar')
 
-    <main class="flex-1 ml-64 p-10">
-        <div class="mb-10 flex justify-between items-end">
+    <main class="flex-1 lg:ml-64 p-6 lg:p-10 mt-16 lg:mt-0">
+        <div class="mb-10 flex flex-col sm:flex-row justify-between items-start sm:items-end gap-6">
             <div>
                 <h2 class="text-3xl font-black text-slate-900 tracking-tight uppercase leading-none">Paramètres Compte</h2>
                 <p class="text-slate-400 font-medium text-sm mt-2 uppercase tracking-tight">Gérez vos accès et informations personnelles.</p>
             </div>
             @if(Auth::user()->role !== 'admin')
-                <span class="text-[9px] font-black text-emerald-600 bg-emerald-50 px-4 py-2 rounded-full uppercase border border-emerald-100">Compte Joueur Vérifié</span>
+                <span class="text-[9px] font-black text-emerald-600 bg-emerald-50 px-4 py-2 rounded-full uppercase border border-emerald-100 w-fit">Compte Joueur Vérifié</span>
             @endif
         </div>
 

@@ -15,8 +15,8 @@
 
     @include('components.admin-sidebar')
 
-    <main class="flex-1 ml-64 p-10">
-        <div class="flex justify-between items-end mb-10">
+    <main class="flex-1 lg:ml-64 p-6 lg:p-10 mt-16 lg:mt-0">
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-end mb-10 gap-6">
             <div>
                 <h2 class="text-3xl font-black text-slate-900 tracking-tight uppercase">Inventaire Équipements</h2>
                 <p class="text-slate-400 font-medium text-sm uppercase tracking-tight">Gérez les raquettes, balles et accessoires en location.</p>
@@ -27,29 +27,29 @@
 
         </div>
 
-<div class="flex gap-4 mb-8">
+<div class="flex flex-wrap gap-3 mb-8">
     <!-- TOUS -->
     <a href="{{ route('admin.equipments') }}" 
-       class="px-5 py-2.5 transition-all rounded-xl text-[10px] font-black uppercase tracking-widest {{ !request('type') ? 'bg-emerald-500 text-white shadow-lg shadow-emerald-100' : 'bg-white text-slate-400 border border-slate-100 hover:text-emerald-500' }}">
+       class="flex-1 sm:flex-none text-center px-5 py-3 transition-all rounded-xl text-[10px] font-black uppercase tracking-widest {{ !request('type') ? 'bg-emerald-500 text-white shadow-lg shadow-emerald-100' : 'bg-white text-slate-400 border border-slate-100 hover:text-emerald-500' }}">
         Tous
     </a>
     
     <!-- RAQUETTES -->
     <a href="{{ route('admin.equipments', ['type' => 'raquette']) }}" 
-       class="px-5 py-2.5 transition-all rounded-xl text-[10px] font-black uppercase tracking-widest {{ request('type') == 'raquette' ? 'bg-emerald-500 text-white shadow-lg shadow-emerald-100' : 'bg-white text-slate-400 border border-slate-100 hover:text-emerald-500' }}">
+       class="flex-1 sm:flex-none text-center px-5 py-3 transition-all rounded-xl text-[10px] font-black uppercase tracking-widest {{ request('type') == 'raquette' ? 'bg-emerald-500 text-white shadow-lg shadow-emerald-100' : 'bg-white text-slate-400 border border-slate-100 hover:text-emerald-500' }}">
         Raquettes
     </a>
     
-    <!-- BALLES (Corrigé avec un "s") -->
+    <!-- BALLES -->
     <a href="{{ route('admin.equipments', ['type' => 'balles']) }}" 
-       class="px-5 py-2.5 transition-all rounded-xl text-[10px] font-black uppercase tracking-widest {{ request('type') == 'balles' ? 'bg-emerald-500 text-white shadow-lg shadow-emerald-100' : 'bg-white text-slate-400 border border-slate-100 hover:text-emerald-500' }}">
+       class="flex-1 sm:flex-none text-center px-5 py-3 transition-all rounded-xl text-[10px] font-black uppercase tracking-widest {{ request('type') == 'balles' ? 'bg-emerald-500 text-white shadow-lg shadow-emerald-100' : 'bg-white text-slate-400 border border-slate-100 hover:text-emerald-500' }}">
         Balles
     </a>
 
-    <!-- ACCESSOIRES / AUTRES -->
+    <!-- ACCESSOIRES -->
     <a href="{{ route('admin.equipments', ['type' => 'accessoires']) }}" 
-       class="px-5 py-2.5 transition-all rounded-xl text-[10px] font-black uppercase tracking-widest {{ request('type') == 'accessoires' ? 'bg-emerald-500 text-white shadow-lg shadow-emerald-100' : 'bg-white text-slate-400 border border-slate-100 hover:text-emerald-500' }}">
-        Accessoires
+       class="flex-1 sm:flex-none text-center px-5 py-3 transition-all rounded-xl text-[10px] font-black uppercase tracking-widest {{ request('type') == 'accessoires' ? 'bg-emerald-500 text-white shadow-lg shadow-emerald-100' : 'bg-white text-slate-400 border border-slate-100 hover:text-emerald-500' }}">
+        Access.
     </a>
 </div>
 

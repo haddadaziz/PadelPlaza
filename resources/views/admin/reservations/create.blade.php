@@ -20,7 +20,7 @@
 
     @include('components.admin-sidebar')
 
-    <main class="flex-1 ml-64 p-8 h-screen flex flex-col overflow-hidden">
+    <main class="flex-1 lg:ml-64 p-6 lg:p-8 mt-16 lg:mt-0 min-h-screen flex flex-col lg:overflow-hidden">
         
         <div class="mb-8 shrink-0">
             <nav class="flex text-slate-400 text-[10px] font-black uppercase tracking-widest mb-2 gap-2">

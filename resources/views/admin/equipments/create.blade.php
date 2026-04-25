@@ -15,7 +15,7 @@
 
     @include('components.admin-sidebar')
 
-    <main class="flex-1 ml-64 p-10">
+    <main class="flex-1 lg:ml-64 p-6 lg:p-10 mt-16 lg:mt-0">
         <div class="mb-10">
             <nav class="flex text-slate-400 text-[10px] font-black uppercase tracking-widest mb-4 gap-2">
                 <a href="{{ route('home') }}" class="hover:text-emerald-500 transition-colors">Accueil</a>

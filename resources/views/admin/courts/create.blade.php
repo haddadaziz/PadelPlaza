@@ -15,7 +15,7 @@
 
     @include('components.admin-sidebar')
 
-    <main class="flex-1 ml-64 p-10">
+    <main class="flex-1 lg:ml-64 p-6 lg:p-10 mt-16 lg:mt-0">
         <div class="mb-10">
             <nav class="flex text-slate-400 text-[10px] font-black uppercase tracking-widest mb-4 gap-2">
                 <a href="{{ route('home') }}" class="hover:text-emerald-500 transition-colors">Accueil</a>
@@ -60,29 +60,16 @@
                             @enderror
                         </div>
 
-                        <div class="grid grid-cols-2 gap-6">
-                            <div class="group">
-                                <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 ml-1">Type d'installation</label>
-                                <select name="type" class="w-full px-6 py-4 bg-slate-50 border-2 @error('type') border-red-500 @else border-transparent @enderror rounded-2xl text-slate-900 font-bold focus:bg-white focus:border-emerald-500 transition-all outline-none shadow-sm appearance-none cursor-pointer">
-                                    <option value="indoor" {{ old('type') == 'indoor' ? 'selected' : '' }}>Indoor (Couvert)</option>
-                                    <option value="outdoor" {{ old('type') == 'outdoor' ? 'selected' : '' }}>Outdoor (Plein air)</option>
-                                </select>
-                                @error('type')
-                                    <p class="text-red-500 text-[10px] font-bold mt-2 ml-1">{{ $message }}</p>
-                                @enderror
+                        <div class="group">
+                            <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 ml-1">Tarif Horaire</label>
+                            <div class="relative">
+                                <input type="number" name="price_coins" value="{{ old('price_coins') }}" placeholder="250" 
+                                    class="w-full pl-6 pr-14 py-4 bg-slate-50 border-2 @error('price_coins') border-red-500 @else border-transparent @enderror rounded-2xl text-emerald-600 font-black focus:bg-white focus:border-emerald-500 transition-all outline-none shadow-sm text-xl tracking-tight">
+                                <span class="absolute right-6 top-1/2 -translate-y-1/2 text-slate-300 font-black text-xs uppercase">PC / HEURE</span>
                             </div>
-
-                            <div class="group">
-                                <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 ml-1">Tarif Horaire</label>
-                                <div class="relative">
-                                    <input type="number" name="price_coins" value="{{ old('price_coins') }}" placeholder="250" 
-                                        class="w-full pl-6 pr-14 py-4 bg-slate-50 border-2 @error('price_coins') border-red-500 @else border-transparent @enderror rounded-2xl text-emerald-600 font-black focus:bg-white focus:border-emerald-500 transition-all outline-none shadow-sm text-xl tracking-tight">
-                                    <span class="absolute right-6 top-1/2 -translate-y-1/2 text-slate-300 font-black text-xs uppercase">PC</span>
-                                </div>
-                                @error('price_coins')
-                                    <p class="text-red-500 text-[10px] font-bold mt-2 ml-1">{{ $message }}</p>
-                                @enderror
-                            </div>
+                            @error('price_coins')
+                                <p class="text-red-500 text-[10px] font-bold mt-2 ml-1">{{ $message }}</p>
+                            @enderror
                         </div>
 
                         <div class="group">

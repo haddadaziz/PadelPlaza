@@ -173,22 +173,22 @@
 
     @include('components.admin-sidebar')
 
-    <main class="flex-1 ml-64 p-8 flex flex-col h-screen overflow-hidden">
+    <main class="flex-1 lg:ml-64 p-6 lg:p-8 mt-16 lg:mt-0 flex flex-col h-screen lg:overflow-hidden">
         
-        <div class="flex justify-between items-end mb-8 shrink-0">
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-end mb-8 shrink-0 gap-6">
             <div>
-                <h2 class="text-4xl font-[900] text-slate-900 tracking-tight uppercase">Planning <span class="text-emerald-500">Global</span></h2>
-                <p class="text-slate-400 font-bold text-sm mt-1">Supervision et gestion des créneaux de l'Arena.</p>
+                <h2 class="text-3xl lg:text-4xl font-[900] text-slate-900 tracking-tight uppercase leading-none">Planning <span class="text-emerald-500">Global</span></h2>
+                <p class="text-slate-400 font-bold text-sm mt-2">Supervision et gestion des créneaux de l'Arena.</p>
             </div>
             
-            <a href="{{ route('admin.reservations.create') }}" class="arena-gradient text-white px-8 py-4 rounded-[2rem] font-black shadow-2xl shadow-slate-300 transition-all hover:scale-105 active:scale-95 flex items-center gap-3 uppercase text-xs tracking-widest">
+            <a href="{{ route('admin.reservations.create') }}" class="arena-gradient text-white px-8 py-4 rounded-[2rem] font-black shadow-2xl shadow-slate-300 transition-all hover:scale-105 active:scale-95 flex items-center gap-3 uppercase text-xs tracking-widest w-full sm:w-auto justify-center">
                 <i class="fas fa-plus-circle"></i> Ajouter un Match
             </a>
         </div>
 
-        <form action="{{ route('admin.reservations') }}" method="GET" class="bg-white p-6 rounded-[2.5rem] border border-slate-100 shadow-sm mb-8 flex items-end gap-4 shrink-0">
+        <form action="{{ route('admin.reservations') }}" method="GET" class="bg-white p-6 lg:p-8 rounded-[2.5rem] border border-slate-100 shadow-sm mb-8 flex flex-col md:flex-row md:items-end gap-4 shrink-0">
             
-            <div class="flex-1 flex flex-col gap-2">
+            <div class="w-full md:flex-1 flex flex-col gap-2">
                 <label class="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] ml-2">Jour de Match</label>
                 <div class="dark-select-wrap">
                     <i class="fas fa-calendar-day icon-left"></i>
@@ -200,7 +200,7 @@
                 </div>
             </div>
 
-            <div class="flex-1 flex flex-col gap-2">
+            <div class="w-full md:flex-1 flex flex-col gap-2">
                 <label class="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] ml-2">Sélection Terrain</label>
                 <div class="dark-select-wrap">
                     <i class="fas fa-table-tennis-paddle-ball icon-left"></i>
@@ -214,7 +214,7 @@
                 </div>
             </div>
 
-            <div class="flex-1 flex flex-col gap-2">
+            <div class="w-full md:flex-1 flex flex-col gap-2">
                 <label class="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] ml-2">Tranche Horaire</label>
                 <div class="dark-select-wrap">
                     <i class="fas fa-clock icon-left"></i>
@@ -228,41 +228,43 @@
                 </div>
             </div>
 
-            <a href="{{ route('admin.reservations') }}" class="w-14 h-14 bg-slate-50 border-2 border-slate-100 text-slate-400 rounded-[1.5rem] flex items-center justify-center hover:bg-red-50 hover:text-red-500 hover:border-red-100 transition-all active:scale-90" title="Réinitialiser">
-                <i class="fas fa-undo-alt text-sm"></i>
-            </a>
+            <div class="w-full md:w-auto flex gap-2">
+                <a href="{{ route('admin.reservations') }}" class="flex-1 md:w-14 h-14 bg-slate-50 border-2 border-slate-100 text-slate-400 rounded-[1.5rem] flex items-center justify-center hover:bg-red-50 hover:text-red-500 transition-all" title="Réinitialiser">
+                    <i class="fas fa-undo-alt text-sm"></i>
+                </a>
 
-            <button type="submit" class="bg-slate-900 text-white px-10 h-14 rounded-[1.5rem] font-black text-[11px] uppercase tracking-widest hover:bg-emerald-500 hover:shadow-xl hover:shadow-emerald-500/20 transition-all active:scale-95 flex items-center gap-3">
-                <span>Filtrer</span>
-                <i class="fas fa-filter text-[10px]"></i>
-            </button>
+                <button type="submit" class="flex-[2] md:px-10 h-14 bg-slate-900 text-white rounded-[1.5rem] font-black text-[11px] uppercase tracking-widest hover:bg-emerald-500 transition-all flex items-center justify-center gap-3">
+                    <span>Filtrer</span>
+                    <i class="fas fa-filter text-[10px]"></i>
+                </button>
+            </div>
         </form>
 
         <div class="flex-1 overflow-y-auto custom-scrollbar pr-4 space-y-4">
             @forelse($reservations as $reservation)
-            <div class="group bg-white rounded-[3rem] p-6 border border-slate-100 hover:border-emerald-200 transition-all duration-500 flex items-center gap-8 shadow-sm hover:shadow-xl">
+            <div class="group bg-white rounded-[3rem] p-6 lg:p-8 border border-slate-100 hover:border-emerald-200 transition-all duration-500 flex flex-col lg:flex-row items-center gap-6 lg:gap-8 shadow-sm hover:shadow-xl">
                 
-                <div class="w-36 flex flex-col items-center justify-center border-r border-slate-50 px-4 gap-1">
+                <div class="w-full lg:w-36 flex lg:flex-col items-center justify-between lg:justify-center lg:border-r border-slate-50 lg:px-4 gap-1 py-4 lg:py-0 border-b lg:border-b-0">
                     <span class="text-2xl font-[900] text-slate-900 leading-none">{{ \Carbon\Carbon::parse($reservation->start_time)->format('H:i') }}</span>
                     <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest">{{ \Carbon\Carbon::parse($reservation->start_time)->translatedFormat('d M Y') }}</span>
                     <span class="text-[9px] font-black text-emerald-500 uppercase tracking-widest">{{ $reservation->court->name }}</span>
                 </div>
 
-                <div class="flex-1 flex items-center gap-5">
-                    <div class="w-16 h-16 rounded-[1.8rem] bg-slate-900 border-4 border-white shadow-xl flex items-center justify-center text-white font-[900] text-xl overflow-hidden">
+                <div class="w-full lg:flex-1 flex items-center gap-5">
+                    <div class="w-14 h-14 lg:w-16 lg:h-16 rounded-[1.5rem] lg:rounded-[1.8rem] bg-slate-900 border-4 border-white shadow-xl flex items-center justify-center text-white font-[900] text-lg lg:text-xl overflow-hidden shrink-0">
                         @if($reservation->user->profile_image)
                             <img src="{{ asset('storage/' . $reservation->user->profile_image) }}" class="w-full h-full object-cover">
                         @else
                             {{ strtoupper(substr($reservation->user->name, 0, 2)) }}
                         @endif
                     </div>
-                    <div>
-                        <h4 class="text-xl font-[900] text-slate-900 uppercase tracking-tight leading-none">{{ $reservation->user->name }}</h4>
+                    <div class="overflow-hidden">
+                        <h4 class="text-lg lg:text-xl font-[900] text-slate-900 uppercase tracking-tight leading-none truncate">{{ $reservation->user->name }}</h4>
                         <p class="text-[10px] font-black text-slate-400 uppercase mt-1">SOLDE : {{ $reservation->user->coins_balance }} PPC</p>
                     </div>
                 </div>
 
-                <div class="flex-[0.8]">
+                <div class="w-full lg:flex-[0.8] border-t lg:border-t-0 pt-4 lg:pt-0">
                     <div class="flex flex-wrap gap-1 mb-2">
                         @forelse($reservation->equipments_info ?? [] as $item)
                             <span class="bg-slate-50 text-slate-500 text-[8px] font-black px-2 py-1 rounded-lg uppercase tracking-tighter border border-slate-100">
@@ -275,12 +277,11 @@
                     <p class="text-sm font-[900] text-slate-900">{{ $reservation->total_price }} <span class="text-[10px] text-slate-400">PC</span></p>
                 </div>
 
-                <div class="flex items-center gap-6">
-                    <div class="flex gap-2">
-                        <button class="w-12 h-12 rounded-2xl bg-white border border-slate-100 text-red-400 hover:bg-red-500 hover:text-white transition-all shadow-sm" title="Annuler la réservation">
-                            <i class="fas fa-trash-alt text-sm"></i>
-                        </button>
-                    </div>
+                <div class="w-full lg:w-auto flex justify-end lg:items-center pt-4 lg:pt-0 border-t lg:border-t-0">
+                    <button class="w-full lg:w-12 h-12 rounded-2xl bg-white border border-slate-100 text-red-400 hover:bg-red-500 hover:text-white transition-all shadow-sm flex items-center justify-center gap-2" title="Annuler la réservation">
+                        <i class="fas fa-trash-alt text-sm"></i>
+                        <span class="lg:hidden text-[10px] font-black uppercase tracking-widest">Supprimer</span>
+                    </button>
                 </div>
 
             </div>

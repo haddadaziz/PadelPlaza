@@ -57,7 +57,7 @@
 
     @include('components.player-sidebar')
 
-    <main class="flex-1 ml-64 p-8 h-screen flex flex-col overflow-hidden">
+    <main class="flex-1 lg:ml-64 p-6 lg:p-8 mt-16 lg:mt-0 min-h-screen flex flex-col lg:overflow-hidden">
         
         <div class="flex justify-between items-end mb-8 shrink-0">
             <div>
@@ -77,9 +77,9 @@
             </div>
         </div>
 
-        <div class="flex-1 flex gap-8 min-h-0 overflow-hidden">
+        <div class="flex-1 flex flex-col lg:flex-row gap-8 min-h-0 lg:overflow-hidden">
             
-            <div class="w-1/3 flex flex-col min-h-0">
+            <div class="w-full lg:w-1/3 flex flex-col min-h-0">
                 <div class="flex items-center justify-between mb-4 px-4">
                     <div class="flex items-center gap-3">
                         <div class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
@@ -127,10 +127,10 @@
                 <div class="flex items-center justify-between mb-4 px-4">
                     <div class="flex items-center gap-3">
                         <div class="w-2 h-2 bg-slate-300 rounded-full"></div>
-                        <h3 class="text-[11px] font-black text-slate-400 uppercase tracking-[0.3em]">Historique des Matchs</h3>
+                        <h3 class="text-[11px] font-black text-slate-400 uppercase tracking-[0.3em]">Historique</h3>
                     </div>
-
-                    <form action="{{ route('player.matchs') }}" method="GET" class="flex items-center gap-2">
+ 
+                    <form action="{{ route('player.matchs') }}" method="GET" class="flex flex-wrap items-center gap-2">
                         {{-- Mois --}}
                         <div class="dark-select-wrap">
                             <select name="month" onchange="this.form.submit()" class="dark-select" style="min-width: 110px;">
@@ -223,8 +223,8 @@
         </div>
 
                <!-- FOOTER : Statistiques Premium -->
-        <div class="mt-8 py-6 px-10 bg-white/70 backdrop-blur-md rounded-[3rem] border border-white shadow-[0_8px_30px_rgb(0,0,0,0.04)] flex justify-between items-center shrink-0">
-            <div class="flex gap-12">
+        <div class="mt-8 py-6 px-6 lg:px-10 bg-white/70 backdrop-blur-md rounded-[3rem] border border-white shadow-[0_8px_30px_rgb(0,0,0,0.04)] flex flex-col md:flex-row justify-between items-center shrink-0 gap-6">
+            <div class="flex flex-col sm:flex-row gap-6 lg:gap-12 w-full md:w-auto">
                 <!-- Bloc Ratio -->
                 <div class="flex items-center gap-4 group">
                     <div class="w-12 h-12 rounded-2xl bg-emerald-50 flex items-center justify-center text-emerald-500 border border-emerald-100/50 group-hover:scale-110 transition-transform duration-500">

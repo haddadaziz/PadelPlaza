@@ -16,6 +16,22 @@
 
     <div class="w-full max-w-[440px] fade-in-up">
 
+        <div class="bg-white rounded-[2.5rem] shadow-2xl shadow-emerald-900/5 border border-emerald-100 p-8 md:p-10">
+            
+            <div class="flex flex-col items-center mb-8">
+                <div class="w-16 h-16 bg-emerald-500 rounded-2xl flex items-center justify-center shadow-xl shadow-emerald-200 mb-4 transition-transform hover:rotate-3">
+                    <svg class="w-10 h-10 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                        <path d="M7 15V5c0-1.1.9-2 2-2h4a4 4 0 1 1 0 8H9" stroke-linecap="round"/>
+                        <circle cx="16" cy="16" r="4" fill="currentColor" fill-opacity="0.2"/>
+                        <circle cx="16" cy="16" r="1.5" fill="white"/>
+                    </svg>
+                </div>
+                <h1 class="text-3xl font-[900] text-slate-900 tracking-tight uppercase leading-none">PADEL<span class="text-emerald-500">PLAZA</span></h1>
+            </div>
+
+            <form action="{{ route('login') }}" method="POST" class="space-y-5">
+                @csrf 
+
                 <div class="group">
                     <label class="block text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-2 ml-1">Email Joueur</label>
                     <div class="relative">
@@ -57,20 +73,21 @@
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
                 </button>
             </form>
-        <div class="mt-8 text-center">
-            <p class="text-xs text-slate-400 font-bold tracking-tight uppercase">
-                Nouveau au Club ? 
-                <a href="{{ route('register') }}" class="text-emerald-600 hover:text-emerald-700 underline underline-offset-4 font-black">
-                    Créer un compte
-                </a>
-            </p>
-        </div>
+
+            <div class="mt-8 text-center">
+                <p class="text-xs text-slate-400 font-bold tracking-tight uppercase">
+                    Nouveau au Club ? 
+                    <a href="{{ route('register') }}" class="text-emerald-600 hover:text-emerald-700 underline underline-offset-4 font-black">
+                        Créer un compte
+                    </a>
+                </p>
+            </div>
 
         </div>
         
         <p class="text-center text-slate-400 text-[9px] mt-8 font-black uppercase tracking-[0.3em]">Padel Plaza</p>
     </div>
-        @include('components.notif')
+    @include('components.notif')
 
 </body>
 </html>

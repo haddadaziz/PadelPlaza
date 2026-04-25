@@ -1,5 +1,22 @@
-<aside class="w-64 bg-slate-900 border-r border-slate-800 flex flex-col fixed h-full transition-all z-50">
-    <div class="px-6 py-7">
+<!-- Header Mobile -->
+<div class="lg:hidden fixed top-0 left-0 right-0 h-16 bg-slate-900 border-b border-white/5 flex items-center justify-between px-6 z-[60]">
+    <div class="flex items-center gap-3">
+        <div class="w-8 h-8 bg-emerald-500 rounded-lg flex items-center justify-center shadow-lg shadow-emerald-500/30">
+            <i class="fas fa-table-tennis text-white text-sm"></i>
+        </div>
+        <span class="text-xl font-[900] text-white tracking-tighter uppercase leading-none">PADEL<span class="text-emerald-500">PLAZA</span></span>
+    </div>
+    <button onclick="toggleSidebar()" class="w-10 h-10 flex items-center justify-center text-slate-400 hover:text-emerald-500 transition-colors">
+        <i class="fas fa-bars text-xl"></i>
+    </button>
+</div>
+
+<!-- Overlay Mobile -->
+<div id="sidebar-overlay" onclick="toggleSidebar()" class="fixed inset-0 bg-slate-900/60 z-40 hidden lg:hidden backdrop-blur-sm transition-opacity duration-300"></div>
+
+<!-- Sidebar -->
+<aside id="sidebar" class="w-64 bg-slate-900 border-r border-slate-800 flex flex-col fixed h-full transition-all duration-300 z-50 -translate-x-full lg:translate-x-0">
+    <div class="px-6 py-7 hidden lg:block">
         <a href="{{ route('player.dashboard') }}" class="flex items-center gap-3 group w-full">
             <div class="w-10 h-10 bg-emerald-500 rounded-xl flex items-center justify-center shadow-lg shadow-emerald-500/30 shrink-0 group-hover:scale-110 transition-transform duration-300">
                 <i class="fas fa-table-tennis text-white text-lg"></i>
@@ -11,7 +28,13 @@
         </a>
     </div>
 
-    <nav class="flex-1 px-4 space-y-2 mt-4">
+    <!-- Mobile close button -->
+    <div class="lg:hidden p-6 flex justify-between items-center border-b border-white/5 mb-4">
+        <span class="text-[10px] font-black text-slate-500 uppercase tracking-widest">Navigation</span>
+        <button onclick="toggleSidebar()" class="text-slate-500"><i class="fas fa-times"></i></button>
+    </div>
+
+    <nav class="flex-1 px-4 space-y-2 overflow-y-auto mt-4">
         <div class="px-4 py-4 text-[10px] font-black text-slate-500 uppercase tracking-[0.25em]">Mon Espace</div>
         
         <a href="/player/dashboard" class="flex items-center gap-4 px-4 py-3 rounded-2xl transition-all group {{ request()->is('player/dashboard','player/recharge') ? 'bg-emerald-500 text-white shadow-lg shadow-emerald-500/20' : 'text-slate-400 hover:bg-slate-800 hover:text-white' }}">
@@ -34,13 +57,13 @@
             </div>
             <span class="font-bold text-[11px] uppercase tracking-widest">Mes Matchs</span>
         </a>
-                <a href="{{ route('player.transactions') }}" class="flex items-center gap-4 px-4 py-3 rounded-2xl transition-all group {{ request()->is('player/transactions*') ? 'bg-emerald-500 text-white shadow-lg shadow-emerald-500/20' : 'text-slate-400 hover:bg-slate-800 hover:text-white' }}">
+        
+        <a href="{{ route('player.transactions') }}" class="flex items-center gap-4 px-4 py-3 rounded-2xl transition-all group {{ request()->is('player/transactions*') ? 'bg-emerald-500 text-white shadow-lg shadow-emerald-500/20' : 'text-slate-400 hover:bg-slate-800 hover:text-white' }}">
             <div class="w-8 h-8 rounded-xl flex items-center justify-center {{ request()->is('player/transactions*') ? 'bg-white/20' : 'bg-slate-800 group-hover:bg-slate-700' }}">
                <i class="fas fa-receipt text-sm"></i>
            </div>
            <span class="font-bold text-[11px] uppercase tracking-widest">Transactions</span>
-       </a>
-
+        </a>
     </nav>
 
     <div class="p-6 mt-auto border-t border-slate-800 space-y-3">
@@ -68,3 +91,19 @@
         </form>
     </div>
 </aside>
+
+<script>
+    function toggleSidebar() {
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('sidebar-overlay');
+        const isHidden = sidebar.classList.contains('-translate-x-full');
+        
+        if (isHidden) {
+            sidebar.classList.remove('-translate-x-full');
+            overlay.classList.remove('hidden');
+        } else {
+            sidebar.classList.add('-translate-x-full');
+            overlay.classList.add('hidden');
+        }
+    }
+</script>

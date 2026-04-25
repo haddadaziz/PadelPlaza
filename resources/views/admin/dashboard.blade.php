@@ -23,8 +23,8 @@
 
     @include('components.admin-sidebar')
 
-    <main class="flex-1 ml-64 p-10">
-        <div class="flex justify-between items-center mb-10">
+    <main class="flex-1 lg:ml-64 p-6 lg:p-10 mt-16 lg:mt-0">
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-10 gap-6">
             <div>
                 <h2 class="text-3xl font-black text-slate-900 tracking-tight">Tableau de bord</h2>
                 <p class="text-slate-400 font-medium">Suivez l'activité de votre club en temps réel.</p>
@@ -34,7 +34,7 @@
 </a>
         </div>
 
-        <div class="grid grid-cols-4 gap-6 mb-10">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
             <!-- [TES 4 CARTES DE STATISTIQUES SONT GARDÉES EXACTEMENT PAREIL ICI] -->
             <div class="bg-white p-6 rounded-[2rem] border border-slate-100 shadow-sm hover:shadow-md transition-all group">
                 <div class="flex justify-between items-start mb-4">
@@ -89,10 +89,10 @@
                 <table class="w-full text-left">
                     <thead>
                         <tr class="text-slate-400 text-[10px] font-black uppercase tracking-[0.2em] bg-slate-50/50">
-                            <th class="px-8 py-4">Nom du Terrain</th>
-                            <th class="px-8 py-4">Type</th>
+                            <th class="px-8 py-4">Terrain</th>
+                            <th class="px-8 py-4 hidden sm:table-cell">Type</th>
                             <th class="px-8 py-4 text-center">Tarif</th>
-                            <th class="px-8 py-4">Statut</th>
+                            <th class="px-8 py-4 hidden md:table-cell">Statut</th>
                             <th class="px-8 py-4 text-right">Actions</th>
                         </tr>
                     </thead>
@@ -102,7 +102,7 @@
                             <td class="px-8 py-5">
                                 <span class="font-bold text-slate-900 text-base">{{ $court->name }}</span>
                             </td>
-                            <td class="px-8 py-5">
+                            <td class="px-8 py-5 hidden sm:table-cell">
                                 <span class="px-3 py-1 bg-slate-100 rounded-lg text-[10px] font-black text-slate-500 uppercase tracking-tight">
                                     {{ $court->type ?? 'Indoor' }}
                                 </span>
@@ -110,10 +110,10 @@
                             <td class="px-8 py-5 text-center">
                                 <span class="font-black text-emerald-500 tracking-tight">{{ $court->price_coins }} PC</span>
                             </td>
-<td class="px-8 py-5">
+<td class="px-8 py-5 hidden md:table-cell">
     <div class="flex items-center gap-2 {{ $court->is_active ? 'text-emerald-500' : 'text-red-400' }} font-bold text-[11px] uppercase tracking-tight">
         <span class="w-2 h-2 {{ $court->is_active ? 'bg-emerald-500 animate-pulse' : 'bg-red-400' }} rounded-full"></span>
-        {{ $court->is_active ? 'Opérationnel' : 'En Maintenance' }}
+        {{ $court->is_active ? 'Actif' : 'Mainten.' }}
     </div>
 </td>
 

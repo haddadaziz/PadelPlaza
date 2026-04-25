@@ -17,9 +17,9 @@
     @include('components.admin-sidebar')
 
 
-    <main class="flex-1 ml-64 p-10">
+    <main class="flex-1 lg:ml-64 p-6 lg:p-10 mt-16 lg:mt-0">
         
-        <div class="flex justify-between items-end mb-10">
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-end mb-10 gap-6">
             <div>
                 <h2 class="text-3xl font-black text-slate-900 tracking-tight uppercase">Configuration des Courts</h2>
                 <p class="text-slate-400 font-medium">Gérez la disponibilité et les tarifs de vos terrains.</p>

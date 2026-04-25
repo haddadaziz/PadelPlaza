@@ -18,7 +18,7 @@
 
     @include('components.player-sidebar')
 
-    <main class="flex-1 ml-64 p-8 h-screen flex flex-col">
+    <main class="flex-1 lg:ml-64 p-6 lg:p-8 mt-16 lg:mt-0 min-h-screen flex flex-col">
         
         <div class="flex items-center gap-4 mb-8">
             <div class="flex items-center gap-2">

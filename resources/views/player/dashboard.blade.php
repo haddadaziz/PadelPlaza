@@ -25,7 +25,7 @@
 
     @include('components.player-sidebar')
 
-<main class="flex-1 ml-64 p-8 h-screen overflow-hidden flex flex-col">
+<main class="flex-1 lg:ml-64 p-6 lg:p-8 mt-16 lg:mt-0 min-h-screen flex flex-col lg:overflow-hidden">
     
     <div class="flex justify-between items-center mb-8 shrink-0">
         <div>
@@ -50,9 +50,9 @@
         </div>
     </div>
 
-    <div class="grid grid-cols-12 gap-8 flex-1 min-h-0">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 flex-1 min-h-0">
         
-        <div class="col-span-8 flex flex-col gap-8 min-h-0">
+        <div class="lg:col-span-8 flex flex-col gap-8 min-h-0">
             
             <div class="bg-slate-900 rounded-[3rem] p-10 shadow-2xl relative overflow-hidden group shrink-0">
                 <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-5"></div>
@@ -127,7 +127,7 @@
 
         </div>
 
-        <div class="col-span-4 flex flex-col gap-8 min-h-0">
+        <div class="lg:col-span-4 flex flex-col gap-8 min-h-0">
             
             <div class="bg-white rounded-[3.5rem] border border-slate-100 p-10 shadow-sm flex flex-col items-center text-center">
                 <p class="text-[9px] font-black text-black-300 uppercase tracking-[0.3em] mb-8">Rang de Prestige</p>

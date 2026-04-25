@@ -45,7 +45,7 @@
 
     @include('components.player-sidebar')
 
-    <main class="flex-1 ml-64 p-8 h-screen overflow-hidden flex flex-col">
+    <main class="flex-1 lg:ml-64 p-6 lg:p-8 mt-16 lg:mt-0 min-h-screen flex flex-col lg:overflow-hidden">
         
         <div class="mb-8 shrink-0">
             <h2 class="text-3xl font-[900] text-slate-900 tracking-tight uppercase">Recharger mes Crédits</h2>

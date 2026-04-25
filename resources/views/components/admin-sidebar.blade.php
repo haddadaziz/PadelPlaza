@@ -1,5 +1,22 @@
-<aside class="w-64 bg-white border-r border-slate-100 flex flex-col fixed h-full transition-all z-50">
-    <div class="px-6 py-7">
+<!-- Header Mobile -->
+<div class="lg:hidden fixed top-0 left-0 right-0 h-16 bg-white border-b border-slate-100 flex items-center justify-between px-6 z-[60]">
+    <div class="flex items-center gap-3">
+        <div class="w-8 h-8 bg-emerald-500 rounded-lg flex items-center justify-center shadow-lg shadow-emerald-200">
+            <i class="fas fa-table-tennis text-white text-sm"></i>
+        </div>
+        <span class="text-xl font-[900] text-slate-900 tracking-tighter uppercase leading-none">PADEL<span class="text-emerald-500">PLAZA</span></span>
+    </div>
+    <button onclick="toggleSidebar()" class="w-10 h-10 flex items-center justify-center text-slate-400 hover:text-emerald-500 transition-colors">
+        <i class="fas fa-bars text-xl"></i>
+    </button>
+</div>
+
+<!-- Overlay Mobile -->
+<div id="sidebar-overlay" onclick="toggleSidebar()" class="fixed inset-0 bg-slate-900/40 z-40 hidden lg:hidden backdrop-blur-sm transition-opacity duration-300"></div>
+
+<!-- Sidebar -->
+<aside id="sidebar" class="w-64 bg-white border-r border-slate-100 flex flex-col fixed h-full transition-all duration-300 z-50 -translate-x-full lg:translate-x-0">
+    <div class="px-6 py-7 hidden lg:block">
         <a href="{{ route('home') }}" class="flex items-center gap-3 group w-full">
             <div class="w-10 h-10 bg-emerald-500 rounded-xl flex items-center justify-center shadow-lg shadow-emerald-200 shrink-0 group-hover:scale-110 transition-transform duration-300">
                 <i class="fas fa-table-tennis text-white text-lg"></i>
@@ -10,9 +27,14 @@
             </div>
         </a>
     </div>
+
+    <!-- Mobile close button -->
+    <div class="lg:hidden p-6 flex justify-between items-center border-b border-slate-50 mb-4">
+        <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Navigation</span>
+        <button onclick="toggleSidebar()" class="text-slate-300"><i class="fas fa-times"></i></button>
     </div>
 
-    <nav class="flex-1 px-4 space-y-2">
+    <nav class="flex-1 px-4 space-y-2 overflow-y-auto">
         <div class="px-4 py-4 text-[10px] font-black text-slate-400 uppercase tracking-[0.25em]">Menu Principal</div>
         
         <a href="{{ route('home') }}" 
@@ -77,3 +99,19 @@
         </form>
     </div>
 </aside>
+
+<script>
+    function toggleSidebar() {
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('sidebar-overlay');
+        const isHidden = sidebar.classList.contains('-translate-x-full');
+        
+        if (isHidden) {
+            sidebar.classList.remove('-translate-x-full');
+            overlay.classList.remove('hidden');
+        } else {
+            sidebar.classList.add('-translate-x-full');
+            overlay.classList.add('hidden');
+        }
+    }
+</script>

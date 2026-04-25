@@ -34,11 +34,11 @@
 
     <nav class="fixed top-0 w-full z-50 bg-white/90 backdrop-blur-xl border-b border-slate-100 px-6 py-4">
         <div class="max-w-7xl mx-auto flex justify-between items-center">
-            <div class="flex items-center gap-3 group">
-                <div class="w-10 h-10 bg-emerald-500 rounded-xl flex items-center justify-center shadow-lg shadow-emerald-200 group-hover:rotate-6 transition-transform">
-                    <i class="fas fa-table-tennis text-white text-lg"></i>
+            <div class="flex items-center gap-2 sm:gap-3 group">
+                <div class="w-8 h-8 sm:w-10 sm:h-10 bg-emerald-500 rounded-lg sm:rounded-xl flex items-center justify-center shadow-lg shadow-emerald-200 group-hover:rotate-6 transition-transform">
+                    <i class="fas fa-table-tennis text-white text-base sm:text-lg"></i>
                 </div>
-                <span class="text-2xl font-[900] text-slate-900 tracking-tight uppercase leading-none">PADEL<span class="text-emerald-500">PLAZA</span></span>
+                <span class="text-lg sm:text-2xl font-[900] text-slate-900 tracking-tight uppercase leading-none">PADEL<span class="text-emerald-500">PLAZA</span></span>
             </div>
 
             <div class="hidden md:flex items-center gap-10 text-[11px] font-black uppercase tracking-[0.2em] text-slate-500">
@@ -47,11 +47,11 @@
                 <a href="#avantages" class="hover:text-emerald-500 transition-colors">Avantages</a>
             </div>
 
-            <div class="flex items-center gap-6">
+            <div class="flex items-center gap-4 sm:gap-6">
                 <a href="{{ route('login') }}"
-                    class="text-xs font-black uppercase tracking-tight hover:text-emerald-500 transition-colors">Connexion</a>
+                    class="text-[10px] sm:text-xs font-black uppercase tracking-tight hover:text-emerald-500 transition-colors">Connexion</a>
                 <a href="{{ route('register') }}"
-                    class="bg-slate-900 text-white px-7 py-3.5 rounded-2xl font-black text-[11px] uppercase tracking-[0.15em] hover:bg-emerald-500 transition-all shadow-xl shadow-slate-200 active:scale-95">
+                    class="bg-slate-900 text-white px-4 py-2.5 sm:px-7 sm:py-3.5 rounded-xl sm:rounded-2xl font-black text-[10px] sm:text-[11px] uppercase tracking-[0.15em] hover:bg-emerald-500 transition-all shadow-xl shadow-slate-200 active:scale-95 whitespace-nowrap">
                     S'inscrire
                 </a>
             </div>
