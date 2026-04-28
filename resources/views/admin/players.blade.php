@@ -26,11 +26,18 @@
                 <p class="text-slate-400 font-medium">Gérez les comptes, les niveaux et les Plaza Coins.</p>
             </div>
             <div class="flex flex-col sm:flex-row gap-4 w-full md:w-auto">
-                <div class="relative w-full">
-                    <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
-                    <input type="text" id="player-search" placeholder="Recherche..." 
-                           class="pl-12 pr-6 py-3.5 bg-white border border-slate-100 rounded-2xl text-sm font-semibold outline-none focus:ring-2 focus:ring-emerald-500 transition-all w-full md:w-64 shadow-sm">
-                </div>
+                <form action="{{ route('admin.players') }}" method="GET" class="relative w-full flex items-center gap-2">
+                    <div class="relative w-full">
+                        <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                        <input type="text" name="q" value="{{ request('q') }}" placeholder="Recherche..." 
+                               class="pl-12 pr-6 py-3.5 bg-white border border-slate-100 rounded-2xl text-sm font-semibold outline-none focus:ring-2 focus:ring-emerald-500 transition-all w-full md:w-64 shadow-sm">
+                    </div>
+                    @if(request('q'))
+                        <a href="{{ route('admin.players') }}" class="text-slate-400 hover:text-red-500 transition-colors p-2" title="Effacer la recherche">
+                            <i class="fas fa-times"></i>
+                        </a>
+                    @endif
+                </form>
 
                 <a href="{{ route('admin.players.export') }}" class="bg-slate-900 text-white px-6 py-3.5 rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-emerald-600 transition-all w-full sm:w-auto flex items-center justify-center gap-2">
                     <i class="fas fa-file-csv"></i> Export
@@ -132,21 +139,7 @@
     </main>
     @include('components.notif')
 
-    <script>
-        document.getElementById('player-search').addEventListener('keyup', function() {
-            let filter = this.value.toLowerCase();
-            let rows = document.querySelectorAll('.player-row');
-            
-            rows.forEach(row => {
-                let name = row.getAttribute('data-name');
-                if (name.includes(filter)) {
-                    row.style.display = "";
-                } else {
-                    row.style.display = "none";
-                }
-            });
-        });
-    </script>
+
 
 </body>
 </html>

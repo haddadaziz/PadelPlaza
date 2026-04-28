@@ -38,9 +38,16 @@
                         <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-6">Image du Terrain</label>
                         
                         <div class="relative group cursor-pointer">
-                            <div class="w-full aspect-square rounded-[2rem] bg-slate-200 overflow-hidden relative border-4 border-white shadow-lg">
-                                <img id="preview" src="{{ $court->image_path ? asset('storage/'.$court->image) : 'https://images.unsplash.com/photo-1626224583764-f87db24ac4ea?q=80&w=400' }}" 
-                                     class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                            <div class="w-full aspect-square rounded-[2rem] bg-slate-100 overflow-hidden relative border-4 border-white shadow-lg flex items-center justify-center">
+                                @if($court->image)
+                                    <img id="preview" src="{{ asset('storage/'.$court->image) }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                                @else
+                                    <div id="placeholder" class="flex flex-col items-center text-slate-300">
+                                        <i class="fas fa-image text-4xl mb-2"></i>
+                                        <span class="text-[8px] font-black uppercase tracking-widest">Aucune image</span>
+                                    </div>
+                                    <img id="preview" src="" class="hidden w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                                @endif
                                 
                                 <div class="absolute inset-0 bg-slate-900/40 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center text-white">
                                     <i class="fas fa-camera text-2xl mb-2"></i>
@@ -105,7 +112,10 @@
             const reader = new FileReader();
             reader.onload = function() {
                 const output = document.getElementById('preview');
+                const placeholder = document.getElementById('placeholder');
                 output.src = reader.result;
+                output.classList.remove('hidden');
+                if(placeholder) placeholder.classList.add('hidden');
             }
             reader.readAsDataURL(event.target.files[0]);
         }

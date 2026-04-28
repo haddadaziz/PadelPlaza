@@ -60,9 +60,9 @@
 
     <section class="relative pt-32 pb-24 px-6 min-h-screen flex items-center overflow-hidden">
         <div class="absolute inset-0 z-0">
-            <img src="https://plus.unsplash.com/premium_photo-1708692921020-e58a86c83b5a?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                class="w-full h-full object-cover" alt="Padel Court">
-            <div class="absolute inset-0 bg-gradient-to-r from-white via-white/95 to-transparent"></div>
+            <img src="https://images.unsplash.com/photo-1646649853703-7645147474ba?q=80&w=1920&auto=format&fit=crop"
+                class="w-full h-full object-cover blur-[2px] opacity-60" alt="Padel Player Background">
+            <div class="absolute inset-0 bg-gradient-to-r from-white via-white/70 to-transparent"></div>
         </div>
 
         <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center relative z-10">
@@ -91,32 +91,7 @@
                 </div>
             </div>
 
-            <div class="hidden md:flex justify-end fade-in-up" style="animation-delay: 0.2s;">
-                <div
-                    class="bg-white/10 backdrop-blur-2xl p-10 rounded-[3.5rem] border border-white/30 shadow-2xl transform rotate-3 hover:rotate-0 transition-all duration-700">
-                    <div class="flex items-center gap-5 mb-8">
-                        <div
-                            class="w-16 h-16 bg-emerald-500 rounded-2xl flex items-center justify-center text-white text-3xl shadow-lg">
-                            <i class="fas fa-trophy"></i>
-                        </div>
-                        <div>
-                            <p class="text-[10px] font-black text-white/70 uppercase tracking-widest">Membre Elite</p>
-                            <p class="text-2xl font-black text-white uppercase tracking-tight">Haddad Aziz</p>
-                        </div>
-                    </div>
-                    <div class="space-y-5">
-                        <div class="flex justify-between text-[10px] font-black text-white/80 uppercase">
-                            <span>Progression Niveau</span>
-                            <span>85%</span>
-                        </div>
-                        <div class="h-2.5 w-full bg-white/20 rounded-full overflow-hidden">
-                            <div class="h-full bg-emerald-400 w-[85%] shadow-[0_0_20px_rgba(52,211,153,0.8)]"></div>
-                        </div>
-                        <p class="text-white/50 text-[10px] font-bold tracking-widest uppercase text-right">
-                            Prochaine récompense : 500 PC</p>
-                    </div>
-                </div>
-            </div>
+            <div class="hidden md:block"></div>
         </div>
     </section>
 

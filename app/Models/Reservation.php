@@ -30,6 +30,13 @@ class Reservation extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function equipments()
+    {
+        return $this->belongsToMany(Equipment::class)
+                    ->withPivot(['quantity', 'price_at_res'])
+                    ->withTimestamps();
+    }
+
     // Une Réservation appartient à un Court
     public function court()
     {

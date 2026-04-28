@@ -19,7 +19,6 @@ class User extends Authenticatable
         'email',
         'password',
         'role',
-        'avatar',
         'coins_balance',
         'xp_points',
         'level_id',

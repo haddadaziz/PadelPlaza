@@ -16,4 +16,11 @@ class Equipment extends Model
         'stock',
         'image'
     ];
+
+    public function reservations()
+    {
+        return $this->belongsToMany(Reservation::class)
+                    ->withPivot(['quantity', 'price_at_res'])
+                    ->withTimestamps();
+    }
 }

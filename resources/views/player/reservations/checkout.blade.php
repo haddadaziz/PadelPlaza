@@ -133,7 +133,7 @@
                             </div>
                             <div class="flex-1">
                                 <h4 class="text-base font-black text-slate-900 uppercase leading-none mb-1">Plaza Coins</h4>
-                                <p class="text-[9px] font-bold text-slate-400 uppercase">Solde : <span class="text-emerald-500">{{ Auth::user()->_balance }} PC</span></p>
+                                <p class="text-[9px] font-bold text-slate-400 uppercase">Solde : <span class="text-emerald-500">{{ Auth::user()->coins_balance }} PC</span></p>
                             </div>
                             <div class="check-icon w-6 h-6 rounded-full border-2 border-slate-100 flex items-center justify-center shrink-0">
                                 <i class="fas fa-check text-[10px] hidden"></i>
