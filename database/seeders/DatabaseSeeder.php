@@ -15,7 +15,8 @@ class DatabaseSeeder extends Seeder
         // 1. On crée les niveaux en premier (Indispensable !)
         $this->call([LevelSeeder::class]);
 
-        $boisLevel = Level::where('level_name', 'Bois')->first();
+        // On charge tous les niveaux disponibles pour pouvoir piocher au hasard
+        $allLevels = Level::all();
 
         // 2. Création du compte ADMIN
         User::create([
@@ -40,14 +41,19 @@ class DatabaseSeeder extends Seeder
         foreach ($tennisStars as $name) {
             $email = Str::slug($name) . '@example.com';
             
+            // Piocher un niveau au hasard parmi les 7 niveaux (Bois à Saphir)
+            $randomLevel = $allLevels->random();
+            // On lui donne une XP cohérente (son palier minimum + un petit bonus aléatoire)
+            $randomXp = $randomLevel->min_xp + rand(0, 800);
+
             User::create([
                 'name' => $name,
                 'email' => $email,
                 'password' => Hash::make('password'),
                 'role' => 'player',
                 'coins_balance' => rand(100, 2000), // Un peu d'argent aléatoire
-                'xp_points' => rand(0, 500),         // Un peu d'XP
-                'level_id' => $boisLevel->id,
+                'xp_points' => $randomXp,           // XP cohérente avec le niveau
+                'level_id' => $randomLevel->id,     // Le niveau au hasard
                 // On utilise un avatar aléatoire basé sur le nom
                 'profile_image' => 'https://i.pravatar.cc/150?u=' . $email,
             ]);
