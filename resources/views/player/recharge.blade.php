@@ -165,7 +165,7 @@
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
             
-            // 1. On repère ce que le joueur a sélectionné comme montant
+            // recuperer le montant sélectionné par le joueur
             let requestedPC = 0;
             const customInput = document.getElementById('custom-amount').value;
             const selectedRadio = document.querySelector('input[name="amount"]:checked');
@@ -181,7 +181,6 @@
             submitBtn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Liaison bancaire...';
 
             try {
-                // 2. Sécurité : On demande le vrai prix à NOTRE Serveur !
                 const response = await fetch('/api/create-recharge-intent', {
                     method: 'POST',
                     headers: {
@@ -200,7 +199,7 @@
                     return;
                 }
 
-                // 3. Paiement validé par Stripe
+                // paiement validé par Stripe
                 const {error, paymentIntent} = await stripe.confirmCardPayment(data.clientSecret, {
                     payment_method: { card: cardElement }
                 });
@@ -210,7 +209,6 @@
                     submitBtn.disabled = false;
                     submitBtn.innerHTML = 'Payer maintenant';
                 } else if (paymentIntent.status === 'succeeded') {
-                    // 4. Succès magique ! On greffe la somme validée pour la route PHP !
                     form.insertAdjacentHTML('beforeend', `<input type="hidden" name="verified_pc" value="${data.pc}">`);
                     form.submit();
                 }

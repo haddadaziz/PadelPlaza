@@ -15,7 +15,7 @@
         .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: #E2E8F0; border-radius: 10px; }
 
-        /* ===== DARK SELECT THEME (matching Flatpickr) ===== */
+        /* DARK SELECT THEME ( Flatpickr)*/
         .dark-select {
             background: #0F172A;
             color: white;

@@ -78,7 +78,7 @@
                     </div>
                     
                     <div class="flex items-center gap-2 mb-6">
-                        <!-- PETITE LOGIQUE POUR LE STOCK ! -->
+                        <!--  LOGIQUE POUR LE STOCK ! -->
                         @if($equipment->stock > 0)
                             <span class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></span>
                             <span class="text-[9px] font-black text-emerald-600 uppercase tracking-widest">Disponible</span>
@@ -101,7 +101,6 @@
                 </div>
             </div>
             @endforeach
-            <!-- FIN DE LA BOUCLE -->
 
             <a href="{{ route('admin.equipments.create') }}" class="border-4 border-dashed border-slate-100 rounded-[2.5rem] flex flex-col items-center justify-center p-10 group hover:border-emerald-200 transition-all min-h-[400px]">
                 <div class="w-16 h-16 bg-slate-50 text-slate-300 rounded-full flex items-center justify-center mb-4 group-hover:bg-emerald-500 group-hover:text-white transition-all shadow-inner">
@@ -115,7 +114,7 @@
     </main>
     @include('components.notif')
 
-    <!-- LA MODALE DE SUPPRESSION (Cachée par défaut) -->
+    <!-- LA MODALE DE SUPPRESSION -->
     <div id="deleteModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-900/40 backdrop-blur-sm opacity-0 transition-opacity duration-300">
         <div class="bg-white rounded-[2.5rem] p-8 max-w-sm w-full mx-4 shadow-2xl transform scale-95 transition-transform duration-300" id="deleteModalContent">
             

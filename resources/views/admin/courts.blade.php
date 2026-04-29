@@ -96,7 +96,7 @@
 
     </main>
     @include('components.notif')
-        <!-- LA MODALE DE SUPPRESSION (Cachée par défaut) -->
+        <!-- LA MODALE DE SUPPRESSION-->
     <div id="deleteModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-900/40 backdrop-blur-sm opacity-0 transition-opacity duration-300">
         <div class="bg-white rounded-[2.5rem] p-8 max-w-sm w-full mx-4 shadow-2xl transform scale-95 transition-transform duration-300" id="deleteModalContent">
             
@@ -129,12 +129,12 @@
             const modalContent = document.getElementById('deleteModalContent');
             const form = document.getElementById('confirmDeleteForm');
             
-            form.action = url; // On donne la bonne URL de suppression au formulaire
+            form.action = url;
             
             modal.classList.remove('hidden');
             modal.classList.add('flex');
             
-            setTimeout(() => { // Petit délai pour fluidifier l'animation (Fade In)
+            setTimeout(() => {
                 modal.classList.remove('opacity-0');
                 modalContent.classList.remove('scale-95');
             }, 10);
@@ -147,7 +147,7 @@
             modal.classList.add('opacity-0');
             modalContent.classList.add('scale-95');
             
-            setTimeout(() => { // On attend la fin du Fade Out
+            setTimeout(() => {
                 modal.classList.add('hidden');
                 modal.classList.remove('flex');
             }, 300);

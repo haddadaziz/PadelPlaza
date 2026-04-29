@@ -10,17 +10,15 @@
     <style>
         body { font-family: 'Inter', sans-serif; background-color: #F8FAFC; overflow: hidden; }
         
-        /* Design de base des cartes */
         .pack-card { 
             border: 2px solid #F1F5F9; 
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
             position: relative;
         }
 
-        /* Effet au survol */
         .pack-card:hover { border-color: #E2E8F0; transform: translateY(-2px); }
 
-        /* DÉCORATION AUTOUR DE CELLE SÉLECTIONNÉE */
+        /* decoration autour du pack selectionné*/
         input[type="radio"]:checked + .pack-card { 
             border-color: #10B981; 
             background-color: #F0FDF4; 
@@ -142,7 +140,6 @@
     </main>
 
     <script>
-        // Logique JS de mise à jour du Recap
         function updateTotal(val) {
             document.getElementById('display-amount').innerText = val;
             document.getElementById('custom-amount').value = '';

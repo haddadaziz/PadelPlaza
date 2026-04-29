@@ -92,7 +92,6 @@
         <div class="mt-6 text-center">
             <p class="text-xs text-slate-400 font-bold tracking-tight">
                 Déjà inscrit ? 
-                <!-- Lien cliquable vers la route de connexion -->
                 <a href="{{ route('login') }}" class="text-emerald-600 hover:text-emerald-700 underline underline-offset-4 font-black">Connexion</a>
             </p>
         </div>

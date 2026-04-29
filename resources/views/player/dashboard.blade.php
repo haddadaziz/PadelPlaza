@@ -118,8 +118,7 @@
             </div>
         @endif
     </div>
-
-    <!-- LE BOUTON VOIR TOUT (fixé en bas de la carte) -->
+    
     <a href="{{ route('player.matchs') }}" class="mt-4 pt-4 text-center text-[10px] font-black text-slate-400 uppercase tracking-widest hover:text-emerald-500 transition-colors border-t border-slate-50 block w-full">
         Consulter mon calendrier complet <i class="fas fa-chevron-right ml-1 text-[8px]"></i>
     </a>

@@ -127,7 +127,7 @@
     </main>
 
 <script>
-    // 1. On mémorise le prix de base du terrain grâce à Blade
+    // garder le prix du terrain en memoire
     const courtPrice = {{ $court->price_coins }};
 
     function changeQty(id, delta) {
@@ -135,26 +135,24 @@
         let val = parseInt(input.value) + delta;
         if (val >= 0 && val <= parseInt(input.max)) {
             input.value = val;
-            updateTotal(); // On appelle la fonction de calcul
+            updateTotal();
         }
     }
 
     function updateTotal() {
-        let total = courtPrice; // On repart du prix du terrain
+        let total = courtPrice;
         
-        // 2. On récupère tous nos inputs d'équipements
         const equipmentInputs = document.querySelectorAll('input[name^="equipments["]');
         
-        // 3. Pour chaque équipement, on additionne (Quantité * Prix)
+        // pour chaque équipement on additionne quantité * prix
         equipmentInputs.forEach(input => {
             const qty = parseInt(input.value) || 0;
             const price = parseInt(input.getAttribute('data-price')) || 0;
             total += (qty * price);
         });
 
-        // 4. On injecte le nouveau total avec un petit effet d'animation sympa (optionnel mais cool)
         const displayElement = document.getElementById('total-display');
-        displayElement.style.transform = 'scale(1.1)'; // Petit bump
+        displayElement.style.transform = 'scale(1.1)';
         setTimeout(() => { displayElement.style.transform = 'scale(1)'; }, 150);
         
         displayElement.innerText = total;

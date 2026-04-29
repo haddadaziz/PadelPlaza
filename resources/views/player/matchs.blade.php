@@ -16,7 +16,7 @@
         .custom-scrollbar::-webkit-scrollbar-thumb { background: #E2E8F0; border-radius: 10px; }
         .glass-dark { background: rgba(15, 23, 42, 0.9); backdrop-filter: blur(8px); }
 
-        /* ===== DARK SELECT THEME (matching admin) ===== */
+        /* DARK SELECT THEME */
         .dark-select {
             background: #0F172A;
             color: white;
@@ -173,7 +173,7 @@
                             <i class="fas fa-chevron-down icon-chevron"></i>
                         </div>
 
-                        {{-- Reset (Mobile only full width) --}}
+                        {{-- bouton reinitialiser seulement visible sur mobile --}}
                         <a href="{{ route('player.matchs') }}" class="lg:hidden col-span-2 bg-slate-900 border border-slate-800 text-emerald-500 rounded-xl flex items-center justify-center py-3 hover:bg-emerald-500 hover:text-white transition-all shadow-lg active:scale-95" title="Réinitialiser">
                             <i class="fas fa-undo-alt text-xs mr-2"></i> Réinitialiser les filtres
                         </a>
@@ -231,7 +231,7 @@
 
         </div>
 
-               <!-- FOOTER : Statistiques Premium -->
+               <!-- Statistiques -->
         <div class="mt-8 py-6 px-6 lg:px-10 bg-white/70 backdrop-blur-md rounded-[3rem] border border-white shadow-[0_8px_30px_rgb(0,0,0,0.04)] flex flex-col md:flex-row justify-between items-center shrink-0 gap-6">
             <div class="flex flex-col sm:flex-row gap-6 lg:gap-12 w-full md:w-auto">
                 <!-- Bloc Ratio -->
@@ -257,7 +257,7 @@
                 </div>
             </div>
 
-            <!-- Badge saisonnier -->
+            <!-- Badge de la saison actuelle -->
             <div class="text-right">
                 <div class="inline-flex items-center gap-2 px-4 py-2 bg-slate-900 rounded-full shadow-lg shadow-slate-200">
                     <div class="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-pulse"></div>
@@ -281,13 +281,13 @@ function setResult(matchId, result) {
     })
     .then(response => response.json())
     .then(data => {
-        // 1. Mise à jour du Ratio en bas de page
+        // mise a jour du ratio winrate
         const rateDisplay = document.getElementById('win-rate-display');
         if (rateDisplay) {
             rateDisplay.innerText = data.newRate + '%';
         }
 
-        // 2. Mise à jour de la couleur de la ligne (Match Card)
+        // mise a jour de la couleur de la ligne
         const matchDiv = document.getElementById(`match-${matchId}`);
         matchDiv.className = "flex flex-col sm:flex-row items-center gap-4 sm:gap-6 p-5 rounded-[2.5rem] transition-all duration-500 group border-2";
         
@@ -299,11 +299,11 @@ function setResult(matchId, result) {
             matchDiv.classList.add('bg-transparent', 'border-transparent', 'hover:bg-slate-50');
         }
 
-        // 3. Mise à jour du bouton Victoire
+        // mise a jour du bouton victoire
         const winBtn = document.getElementById(`win-${matchId}`);
         winBtn.className = `flex-1 flex items-center justify-center gap-1.5 px-4 sm:px-3 py-2.5 sm:py-1.5 rounded-xl text-[9px] font-black uppercase transition-all ${data.result === 'win' ? 'bg-emerald-500 text-white shadow-lg shadow-emerald-200' : 'bg-slate-100 text-slate-400 hover:bg-emerald-100 hover:text-emerald-600'}`;
 
-        // 4. Mise à jour du bouton Défaite
+        // mise a jour du bouton defaite
         const lossBtn = document.getElementById(`loss-${matchId}`);
         lossBtn.className = `flex-1 flex items-center justify-center gap-1.5 px-4 sm:px-3 py-2.5 sm:py-1.5 rounded-xl text-[9px] font-black uppercase transition-all ${data.result === 'loss' ? 'bg-red-500 text-white shadow-lg shadow-red-200' : 'bg-slate-100 text-slate-400 hover:bg-red-100 hover:text-red-500'}`;
     });
