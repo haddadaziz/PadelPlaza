@@ -52,7 +52,6 @@ class CourtController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255|unique:courts,name',
-            'type' => 'required|string|in:indoor,outdoor',
             'price_coins' => 'required|numeric',
             'is_active' => 'nullable',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
